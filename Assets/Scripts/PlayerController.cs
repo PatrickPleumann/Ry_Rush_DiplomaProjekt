@@ -15,12 +15,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        jump.action.started += movement.PlayerJump;
-        //move.action.started += movement.SetDesiredDirection;
+
     }
 
     private void OnDisable()
     {
-        //move.action.started -= movement.SetDesiredDirection;
     }
 }

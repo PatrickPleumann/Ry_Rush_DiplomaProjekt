@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashSpeed;
     [SerializeField] private float jumpForce = 10;
     private float tempAcc = 0f;
-    private Vector2 clampVector;
 
     private void Start()
     {
@@ -41,11 +41,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        PlayerGravity();
         PlayerMove();
 
         Debug.Log(moveDir);
 
-        PlayerGravity();
     }
 
     public void SetDesiredRotation(/*decoupled params with goal rotation, still need to figure out how and which*/)
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerMove()
     {
-        tempAcc = collisionCheck.isGrounded ? groundAccel : airAccel;
+        tempAcc = collisionCheck.IsGrounded ? groundAccel : airAccel;
 
         moveDir = SetDesiredDirection();
 
@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity.y = 0f;
 
         targetVelocity = new Vector3(moveDir.x, 0f, moveDir.z);
+
+        currentVelocity.y = 0f;
 
         if (moveDir == Vector3.zero)
             targetVelocity = currentVelocity * -tempAcc;
@@ -96,7 +98,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerJump(InputAction.CallbackContext context)
     {
-        rb_body.AddForce(0f, rb_body.mass * jumpForce, 0f, ForceMode.Impulse);
+        Debug.Log(collisionCheck.IsGrounded);
+        if (collisionCheck.IsGrounded == true)
+        {
+            Debug.Log("JUMP");
+            rb_body.AddForce(0f, rb_body.mass * jumpForce, 0f, ForceMode.Impulse);
+        }
     }
     public void PlayerDash()
     {

@@ -2,17 +2,25 @@ using UnityEngine;
 
 public class PlayerCollisionCheck : MonoBehaviour
 {
-    //checks for Ground and for Walls >> sets different bools for each
-    public bool isGrounded;
-    public bool touchesWall;
-    public Collider[] wallsTouched;
+    [SerializeField] private Transform groundCheckRoot;
+    [SerializeField] private Transform wallCheckRoot;
 
-    private void Start()
-    {
-        isGrounded = true;
-    }
+    [SerializeField] private Vector3 groundCheckPos;
+    [SerializeField] private Vector3 groundCheckSize;
+
+    [SerializeField] private LayerMask groundCheckLayers;
+    [SerializeField] private LayerMask wallCheckLayers;
+
+    [SerializeField] private float wallCheckRadius;
+
+    public bool IsGrounded = true;
+    public bool TouchesWall;
+
+    public Collider[] WallsTouched;
+
     private void FixedUpdate()
     {
-        //is Grounded && touchesWall
+        IsGrounded = Physics.OverlapBox(groundCheckRoot.position, groundCheckSize / 2, Quaternion.identity, groundCheckLayers).Length > 0;
+        // hier noch Walls Toched in etwa dasselbe + TouchesWall als bool abfragen
     }
 }
