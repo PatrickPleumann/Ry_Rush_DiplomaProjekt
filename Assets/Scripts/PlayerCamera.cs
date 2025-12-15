@@ -22,7 +22,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        ySmoothRot = mousePos.x;
+        xSmoothRot = mousePos.y;// needs to get at least one value otherwise lerped values can stuck the camera
     }
     private void Update()
     {
@@ -44,9 +45,8 @@ public class PlayerCamera : MonoBehaviour
         xSmoothRot = Mathf.Lerp(xSmoothRot, xRotation, smoothingTime * Time.deltaTime);
         ySmoothRot = Mathf.Lerp(ySmoothRot, yRotation, smoothingTime * Time.deltaTime);
 
-        xSmoothRot = Mathf.Clamp(xSmoothRot, cameraClampDown, cameraClampUp);
-
         transform.rotation = Quaternion.Euler(xSmoothRot, ySmoothRot, 0f);
         playerOrientation.rotation = Quaternion.Euler(0f, ySmoothRot, 0f);
+
     }
 }
