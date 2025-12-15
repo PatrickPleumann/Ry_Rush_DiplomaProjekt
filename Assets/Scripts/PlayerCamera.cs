@@ -25,12 +25,12 @@ public class PlayerCamera : MonoBehaviour
         ySmoothRot = mousePos.x;
         xSmoothRot = mousePos.y;// needs to get at least one value otherwise lerped values can stuck the camera
     }
-    private void Update()
+    private void LateUpdate()
     {
-        HandleMouseInput();
+        UpdateCamera();
     }
 
-    private void HandleMouseInput()
+    private void UpdateCamera()
     {
         mousePos = controller.look.action.ReadValue<Vector2>();
 

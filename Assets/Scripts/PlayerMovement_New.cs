@@ -1,6 +1,185 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement_New : MonoBehaviour
 {
-    
+    [SerializeField] private PlayerController controller;
+    [SerializeField] private PlayerCollisionCheck collisionCheck;
+
+    [SerializeField] private Transform orientation;
+
+    [Header("Ground Movement")]
+    [SerializeField] private float maxMoveSpeed = 4f;
+    [SerializeField] private float acceleration = 70f;
+    [SerializeField] private float groundDragValue = 5f;
+
+    [Header("Jump & Air Movement")]
+    [SerializeField] private float jumpForce = 12f;
+    [SerializeField] private float jumpCooldown = 0.25f;
+    [SerializeField] private float airMultiplier = 0.4f;
+    private bool canJump = true;
+
+    private Vector3 moveDir; // from readValue<Vector2>()
+    private Vector3 moveDirection;
+    private Vector3 speedControl;
+    private Vector3 speedControlLimit;
+    private Rigidbody rb_player;
+    private bool exitingSlope;
+
+    [Header("Movement States")]
+    public MovementState State;
+    [SerializeField] private float stateTransitionTimerValue = 0.1f;
+    private bool canSwitchState;
+    public enum MovementState
+    {
+        GroundMoving,
+        OnSlope,
+        Air
+    }
+
+    private void Awake()
+    {
+        rb_player = GetComponent<Rigidbody>();
+        rb_player.freezeRotation = true;
+        speedControl = new Vector3(0f, 0f, 0f); // y value won´t get touched anymore
+        canSwitchState = true;
+    }
+
+    private void Update()
+    {
+        GetMoveDirection();
+        StateHandler();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+        PlayerSpeedControl();
+
+        ApplyGroundDrag(collisionCheck.IsGrounded);
+    }
+
+    private void GetMoveDirection()
+    {
+        moveDir.x = controller.move.action.ReadValue<Vector2>().x;
+        moveDir.z = controller.move.action.ReadValue<Vector2>().y;
+    }
+
+    private void MovePlayer()
+    {
+        moveDirection = orientation.forward * moveDir.z + orientation.right * moveDir.x;
+
+        if (exitingSlope == false && collisionCheck.OnSlope() == true)
+        {
+            rb_player.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);
+            if (rb_player.linearVelocity.y > 0)
+                rb_player.AddForce(Vector3.down * acceleration);
+        }
+
+        else if (collisionCheck.IsGrounded == true)
+            rb_player.AddForce(moveDirection.normalized * acceleration, ForceMode.Force);
+
+        else if (collisionCheck.IsGrounded == false)
+            rb_player.AddForce(moveDirection.normalized * acceleration * airMultiplier, ForceMode.Force);
+
+        rb_player.useGravity = !collisionCheck.OnSlope();
+    }
+
+    private void PlayerSpeedControl()
+    {
+        if (exitingSlope == false && collisionCheck.OnSlope() == true)
+        {
+            if (rb_player.linearVelocity.sqrMagnitude > (maxMoveSpeed * maxMoveSpeed))
+                rb_player.linearVelocity = rb_player.linearVelocity.normalized * maxMoveSpeed;
+        }
+
+        else
+        {
+            speedControl.x = rb_player.linearVelocity.x;
+            speedControl.z = rb_player.linearVelocity.z;
+
+            speedControlLimit = speedControl.normalized * maxMoveSpeed;
+
+            if (speedControl.sqrMagnitude > (maxMoveSpeed * maxMoveSpeed))
+            {
+                speedControlLimit.y = rb_player.linearVelocity.y;
+                rb_player.linearVelocity = speedControlLimit;
+            }
+
+            speedControlLimit.y = 0f;
+        }
+    }
+
+    private void ApplyGroundDrag(bool _isGrounded)
+    {
+        rb_player.linearDamping = _isGrounded ? groundDragValue : 0;
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (canJump && collisionCheck.IsGrounded)
+        {
+            canJump = false;
+            exitingSlope = true;
+            SwitchState(MovementState.Air);
+            rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
+            rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
+
+            StartCoroutine(ResetJump(jumpCooldown));
+        }
+        else
+        {
+            if (canJump != true)
+                Debug.Log("Cannot Jump: Can Jump Bool is not true or not initialized");
+
+            if (collisionCheck.IsGrounded != true)
+                Debug.Log("Cannot Jump: Is Grounded bool is not true or not initialized");
+        }
+    }
+
+    private IEnumerator ResetJump(float _jumpCooldown)
+    {
+        yield return new WaitForSeconds(_jumpCooldown);
+        canJump = true;
+        yield break;
+    }
+
+    private IEnumerator StateTransitionTimer(float _transitionTimer)
+    {
+        yield return new WaitForSecondsRealtime(_transitionTimer);
+        canSwitchState = true;
+        exitingSlope = false;
+    }
+
+    private void SwitchState(MovementState _state)
+    {
+        if (canSwitchState == true)
+        {
+            State = _state;
+        }
+    }
+
+    private void StateHandler()
+    {
+        if (collisionCheck.IsGrounded && !collisionCheck.OnSlope())
+        {
+            SwitchState(MovementState.GroundMoving);
+            
+        }
+        else if (collisionCheck.OnSlope())
+        {
+            SwitchState(MovementState.OnSlope);
+        }
+        else if (!collisionCheck.IsGrounded && !collisionCheck.OnSlope())
+        {
+            SwitchState(MovementState.Air);
+        }
+    }
+
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, collisionCheck.slopeHit.normal).normalized;
+    }
 }

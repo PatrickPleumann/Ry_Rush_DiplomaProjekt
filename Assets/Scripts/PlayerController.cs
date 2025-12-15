@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement movement;
+    [SerializeField] private PlayerMovement_New movement;
 
     [SerializeField] public InputActionReference move;
     [SerializeField] public InputActionReference look;
@@ -12,13 +12,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public InputActionReference dash;
     [SerializeField] public InputActionReference shoot;
     [SerializeField] public InputActionReference wallJump;
+    [SerializeField] public InputActionReference sprint;
+
 
     private void OnEnable()
     {
-
+        jump.action.started += movement.Jump;
     }
 
     private void OnDisable()
     {
+        jump.action.started -= movement.Jump;
     }
 }
