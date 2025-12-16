@@ -21,6 +21,11 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float airMultiplier = 0.4f;
     private bool canJump = true;
 
+    [Header("Wallrunning & Walljumping")]
+    [SerializeField] private float wallRunForce;
+    [SerializeField] private float maxWallRunTime;
+    private float wallRunTimer;
+
     private Vector3 moveDir; // from readValue<Vector2>()
     private Vector3 moveDirection;
     private Vector3 speedControl;
@@ -57,7 +62,6 @@ public class PlayerMovement_New : MonoBehaviour
     {
         MovePlayer();
         PlayerSpeedControl();
-
         ApplyGroundDrag(collisionCheck.IsGrounded);
     }
 
@@ -143,39 +147,31 @@ public class PlayerMovement_New : MonoBehaviour
     {
         yield return new WaitForSeconds(_jumpCooldown);
         canJump = true;
-        yield break;
+        exitingSlope = false;
     }
 
     private IEnumerator StateTransitionTimer(float _transitionTimer)
     {
         yield return new WaitForSecondsRealtime(_transitionTimer);
         canSwitchState = true;
-        exitingSlope = false;
     }
 
     private void SwitchState(MovementState _state)
     {
         if (canSwitchState == true)
-        {
             State = _state;
-        }
     }
 
     private void StateHandler()
     {
         if (collisionCheck.IsGrounded && !collisionCheck.OnSlope())
-        {
             SwitchState(MovementState.GroundMoving);
-            
-        }
+
         else if (collisionCheck.OnSlope())
-        {
             SwitchState(MovementState.OnSlope);
-        }
+
         else if (!collisionCheck.IsGrounded && !collisionCheck.OnSlope())
-        {
             SwitchState(MovementState.Air);
-        }
     }
 
     private Vector3 GetSlopeMoveDirection()

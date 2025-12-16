@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public InputActionReference jump;
     [SerializeField] public InputActionReference dash;
     [SerializeField] public InputActionReference shoot;
-    [SerializeField] public InputActionReference wallJump;
     [SerializeField] public InputActionReference sprint;
 
 

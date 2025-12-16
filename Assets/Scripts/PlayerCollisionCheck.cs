@@ -2,34 +2,36 @@ using UnityEngine;
 
 public class PlayerCollisionCheck : MonoBehaviour
 {
-    [SerializeField] private Transform groundCheckRoot;
-    [SerializeField] private Transform wallCheckRoot;
 
+    [Header("Ground Check")]
+    [SerializeField] public bool IsGrounded = true;
+    [SerializeField] private LayerMask groundCheckLayers;
+    [SerializeField] private Transform groundCheckRoot;
     [SerializeField] private Vector3 groundCheckPos;
     [SerializeField] private Vector3 groundCheckSize;
 
-    [SerializeField] private LayerMask groundCheckLayers;
+
+    [Header("Wallruning Detection")]
     [SerializeField] private LayerMask wallCheckLayers;
+    [SerializeField] private Transform wallCheckRoot;
+    [SerializeField] private float wallCheckDistance;
+    [SerializeField] private float minJumpHeight;
+    private RaycastHit hitLeftWall;
+    private RaycastHit hitRightWall;
+    private bool onLeftWall;
+    private bool onRightWall;
+
 
     [Header("Slope Handling")]
+    [SerializeField] public RaycastHit slopeHit;
     [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float slopeRayLength = 0.1f;
-    public RaycastHit slopeHit;
-
     [SerializeField] private float wallCheckRadius;
-
-    public bool IsGrounded = true;
-    public bool TouchesWall;
-    public bool onSlope;
-
-    public Collider[] WallsTouched;
 
     private void FixedUpdate()
     {
         IsGrounded = Physics.OverlapBox(groundCheckRoot.position, groundCheckSize / 2, Quaternion.identity, groundCheckLayers).Length > 0;
-        // hier noch Walls Toched in etwa dasselbe + TouchesWall als bool abfragen
         Debug.Log(IsGrounded);
-        onSlope = OnSlope();
     }
 
     private void OnDrawGizmos()
@@ -46,6 +48,4 @@ public class PlayerCollisionCheck : MonoBehaviour
         }
         return false;
     }
-
-
 }

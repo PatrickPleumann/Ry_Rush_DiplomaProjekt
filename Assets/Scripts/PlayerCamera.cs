@@ -5,10 +5,10 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private PlayerController controller;
     [SerializeField] private float sensitivityX;
     [SerializeField] private float sensitivityY;
-    [SerializeField] private float smoothingTime = 20f;
-
+    [SerializeField] private float smoothingTime = 20f; //TODO: if player option, this value HAS to be clamped between aproximatly 10 - 30 depends on framerate
+                                                        //TODO: below 10 appears to be too slow and above 30 can cause issues while having very low frames
     [SerializeField] private float cameraClampUp = 89f;
-    [SerializeField] private float cameraClampDown = -89f;
+    [SerializeField] private float cameraClampDown = -85f;
 
     [SerializeField] private Transform playerOrientation;
 
@@ -47,6 +47,5 @@ public class PlayerCamera : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xSmoothRot, ySmoothRot, 0f);
         playerOrientation.rotation = Quaternion.Euler(0f, ySmoothRot, 0f);
-
     }
 }
