@@ -5,13 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement_New : MonoBehaviour
 {
+
+    [Header("General")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private PlayerCollisionCheck collisionCheck;
-
     [SerializeField] private Transform orientation;
 
+    private Rigidbody rb_player;
+    private Vector3 moveInput; // from readValue<Vector2>()
+    private Vector3 moveDirection;
+    private Vector3 speedControl;
+    private Vector3 speedControlLimit;
+    private Vector3 wallForward;
+    private float currentMaxMoveSpeed;
+    private bool exitingSlope;
+
+
     [Header("Ground Movement")]
-    [SerializeField] private float maxMoveSpeed = 4f;
+    [SerializeField] private float groundMoveSpeed = 4f;
     [SerializeField] private float acceleration = 70f;
     [SerializeField] private float groundDragValue = 5f;
 
@@ -23,15 +34,11 @@ public class PlayerMovement_New : MonoBehaviour
 
     [Header("Wallrunning & Walljumping")]
     [SerializeField] private float wallRunForce;
+    [SerializeField] private float maxWallRunSpeed;
     [SerializeField] private float maxWallRunTime;
+    [SerializeField] public bool Wallrunning;
     private float wallRunTimer;
 
-    private Vector3 moveDir; // from readValue<Vector2>()
-    private Vector3 moveDirection;
-    private Vector3 speedControl;
-    private Vector3 speedControlLimit;
-    private Rigidbody rb_player;
-    private bool exitingSlope;
 
     [Header("Movement States")]
     public MovementState State;
@@ -40,6 +47,7 @@ public class PlayerMovement_New : MonoBehaviour
     public enum MovementState
     {
         GroundMoving,
+        WallRunning,
         OnSlope,
         Air
     }
@@ -55,25 +63,33 @@ public class PlayerMovement_New : MonoBehaviour
     private void Update()
     {
         GetMoveDirection();
+
         StateHandler();
+
+        StateMachine();
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (Wallrunning)
+            WallRunning();
+        else
+            MovePlayer();
+
         PlayerSpeedControl();
         ApplyGroundDrag(collisionCheck.IsGrounded);
+
     }
 
     private void GetMoveDirection()
     {
-        moveDir.x = controller.move.action.ReadValue<Vector2>().x;
-        moveDir.z = controller.move.action.ReadValue<Vector2>().y;
+        moveInput.x = controller.move.action.ReadValue<Vector2>().x;
+        moveInput.z = controller.move.action.ReadValue<Vector2>().y;
     }
 
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * moveDir.z + orientation.right * moveDir.x;
+        moveDirection = orientation.forward * moveInput.z + orientation.right * moveInput.x;
 
         if (exitingSlope == false && collisionCheck.OnSlope() == true)
         {
@@ -95,8 +111,8 @@ public class PlayerMovement_New : MonoBehaviour
     {
         if (exitingSlope == false && collisionCheck.OnSlope() == true)
         {
-            if (rb_player.linearVelocity.sqrMagnitude > (maxMoveSpeed * maxMoveSpeed))
-                rb_player.linearVelocity = rb_player.linearVelocity.normalized * maxMoveSpeed;
+            if (rb_player.linearVelocity.sqrMagnitude > (currentMaxMoveSpeed * currentMaxMoveSpeed))
+                rb_player.linearVelocity = rb_player.linearVelocity.normalized * currentMaxMoveSpeed;
         }
 
         else
@@ -104,9 +120,9 @@ public class PlayerMovement_New : MonoBehaviour
             speedControl.x = rb_player.linearVelocity.x;
             speedControl.z = rb_player.linearVelocity.z;
 
-            speedControlLimit = speedControl.normalized * maxMoveSpeed;
+            speedControlLimit = speedControl.normalized * currentMaxMoveSpeed;
 
-            if (speedControl.sqrMagnitude > (maxMoveSpeed * maxMoveSpeed))
+            if (speedControl.sqrMagnitude > (currentMaxMoveSpeed * currentMaxMoveSpeed))
             {
                 speedControlLimit.y = rb_player.linearVelocity.y;
                 rb_player.linearVelocity = speedControlLimit;
@@ -164,8 +180,17 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void StateHandler()
     {
-        if (collisionCheck.IsGrounded && !collisionCheck.OnSlope())
+        if (Wallrunning)
+        {
+            SwitchState(MovementState.WallRunning);
+            currentMaxMoveSpeed = maxWallRunSpeed;
+        }
+
+        else if (collisionCheck.IsGrounded && !collisionCheck.OnSlope())
+        {
             SwitchState(MovementState.GroundMoving);
+            currentMaxMoveSpeed = groundMoveSpeed;
+        }
 
         else if (collisionCheck.OnSlope())
             SwitchState(MovementState.OnSlope);
@@ -176,6 +201,45 @@ public class PlayerMovement_New : MonoBehaviour
 
     private Vector3 GetSlopeMoveDirection()
     {
-        return Vector3.ProjectOnPlane(moveDirection, collisionCheck.slopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(moveDirection, collisionCheck.SlopeHit.normal).normalized;
     }
+
+    private void StateMachine()
+    {
+        if (collisionCheck.AllowWallRun() == true && moveInput.z > 0)
+        {
+            if (!Wallrunning)
+                StartWallRun();
+        }
+        else
+        {
+            if (Wallrunning)
+                StopWallRun();
+        }
+    }
+
+    private void StartWallRun()
+    {
+        Wallrunning = true;
+    }
+
+    private void WallRunning()
+    {
+        rb_player.useGravity = false;
+        rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
+
+        //TODO: figure out how to get rid of new Vector3 step below
+        Vector3 wallNormal = collisionCheck.OnRightWall ? collisionCheck.hitWallRight.normal : collisionCheck.hitWallLeft.normal;
+
+        Vector3 wallForward = Vector3.Cross(wallNormal, collisionCheck.wallCheckRoot.up);
+
+        rb_player.AddForce(wallForward * wallRunForce, ForceMode.Force);
+    }
+
+    private void StopWallRun()
+    {
+        Wallrunning = false;
+        //rb_player.useGravity = true;
+    }
+
 }

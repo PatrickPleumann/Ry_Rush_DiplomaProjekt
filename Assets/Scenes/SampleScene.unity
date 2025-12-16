@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 8673600}
   - component: {fileID: 8673601}
   - component: {fileID: 8673602}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player_New
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,6 +179,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1308312657}
   - {fileID: 692994661}
   - {fileID: 728169819}
   - {fileID: 1518877807}
@@ -218,14 +219,16 @@ MonoBehaviour:
   controller: {fileID: 8673600}
   collisionCheck: {fileID: 8673602}
   orientation: {fileID: 728169819}
-  maxMoveSpeed: 4
+  groundMoveSpeed: 4
   acceleration: 70
   groundDragValue: 5
   jumpForce: 6
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  wallRunForce: 0
+  wallRunForce: 70
+  maxWallRunSpeed: 6
   maxWallRunTime: 0
+  Wallrunning: 0
   State: 0
   stateTransitionTimerValue: 0
 --- !u!114 &8673602
@@ -240,7 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87456745c3a520419596b53cf2927ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionCheck
-  IsGrounded: 1
   groundCheckLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -249,10 +251,11 @@ MonoBehaviour:
   groundCheckSize: {x: 0.5, y: 0.05, z: 0.5}
   wallCheckLayers:
     serializedVersion: 2
-    m_Bits: 0
-  wallCheckRoot: {fileID: 0}
-  wallCheckDistance: 0
-  minJumpHeight: 0
+    m_Bits: 64
+  orientation: {fileID: 728169819}
+  wallCheckRoot: {fileID: 1308312657}
+  wallCheckDistance: 0.7
+  minJumpHeight: 1
   maxSlopeAngle: 40
   slopeRayLength: 0.2
   wallCheckRadius: 0
@@ -982,7 +985,7 @@ GameObject:
   - component: {fileID: 692994664}
   - component: {fileID: 692994663}
   - component: {fileID: 692994662}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1092,7 +1095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728169819}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1234,7 +1237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 762696892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1592,6 +1595,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8153845720735757604, guid: d03850986c5cdea4ba1a8735b2c91bb2, type: 3}
   m_PrefabInstance: {fileID: 1071654568}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1308312656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1308312657}
+  m_Layer: 2
+  m_Name: WallCheckRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1308312657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308312656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8673599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1396899112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1725,7 +1759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1518877807}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CameraRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1791,7 +1825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87456745c3a520419596b53cf2927ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionCheck
-  IsGrounded: 1
   groundCheckLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -1801,6 +1834,7 @@ MonoBehaviour:
   wallCheckLayers:
     serializedVersion: 2
     m_Bits: 64
+  orientation: {fileID: 0}
   wallCheckRoot: {fileID: 0}
   wallCheckDistance: 0
   minJumpHeight: 0
