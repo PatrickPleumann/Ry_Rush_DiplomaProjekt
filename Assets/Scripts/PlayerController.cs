@@ -17,10 +17,12 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         jump.action.started += movement.Jump;
+        jump.action.started += movement.WallJump;
     }
 
     private void OnDisable()
     {
         jump.action.started -= movement.Jump;
+        jump.action.started -= movement.WallJump;
     }
 }

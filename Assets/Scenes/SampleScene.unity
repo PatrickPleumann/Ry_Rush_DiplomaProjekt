@@ -225,12 +225,16 @@ MonoBehaviour:
   jumpForce: 6
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  wallJumpUpForce: 7
+  wallJumpSideForce: 12
+  pushToWallForce: 50
   wallRunForce: 70
   maxWallRunSpeed: 6
   maxWallRunTime: 0
   Wallrunning: 0
+  exitWallTime: 0.25
   State: 0
-  stateTransitionTimerValue: 0
+  stateTransitionTimerValue: 0.1
 --- !u!114 &8673602
 MonoBehaviour:
   m_ObjectHideFlags: 0

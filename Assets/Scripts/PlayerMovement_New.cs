@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,11 +34,20 @@ public class PlayerMovement_New : MonoBehaviour
     private bool canJump = true;
 
     [Header("Wallrunning & Walljumping")]
+    [SerializeField] private float wallJumpUpForce;
+    [SerializeField] private float wallJumpSideForce;
+    [SerializeField] private float pushToWallForce;
     [SerializeField] private float wallRunForce;
     [SerializeField] private float maxWallRunSpeed;
     [SerializeField] private float maxWallRunTime;
     [SerializeField] public bool Wallrunning;
     private float wallRunTimer;
+    private bool allowWallJump;
+    private Vector3 wallJumpForceApplied;
+
+    [Header("Exiting Wall")]
+    private bool exitingWall;
+    [SerializeField] private float exitWallTime;
 
 
     [Header("Movement States")]
@@ -48,6 +58,7 @@ public class PlayerMovement_New : MonoBehaviour
     {
         GroundMoving,
         WallRunning,
+        WallJumping,
         OnSlope,
         Air
     }
@@ -149,14 +160,6 @@ public class PlayerMovement_New : MonoBehaviour
 
             StartCoroutine(ResetJump(jumpCooldown));
         }
-        else
-        {
-            if (canJump != true)
-                Debug.Log("Cannot Jump: Can Jump Bool is not true or not initialized");
-
-            if (collisionCheck.IsGrounded != true)
-                Debug.Log("Cannot Jump: Is Grounded bool is not true or not initialized");
-        }
     }
 
     private IEnumerator ResetJump(float _jumpCooldown)
@@ -168,14 +171,13 @@ public class PlayerMovement_New : MonoBehaviour
 
     private IEnumerator StateTransitionTimer(float _transitionTimer)
     {
-        yield return new WaitForSecondsRealtime(_transitionTimer);
+        yield return new WaitForSeconds(_transitionTimer);
         canSwitchState = true;
     }
 
     private void SwitchState(MovementState _state)
     {
-        if (canSwitchState == true)
-            State = _state;
+        State = _state;
     }
 
     private void StateHandler()
@@ -206,15 +208,27 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void StateMachine()
     {
-        if (collisionCheck.AllowWallRun() == true && moveInput.z > 0)
+        if (collisionCheck.AllowWallRun() == true && moveInput.z > 0 && !exitingWall)
         {
             if (!Wallrunning)
+            {
                 StartWallRun();
+                allowWallJump = true;
+            }
         }
-        else
+        else if (exitingWall)
         {
             if (Wallrunning)
                 StopWallRun();
+        }
+
+        else
+        {
+            if (Wallrunning)
+            {
+                StopWallRun();
+                allowWallJump = false;
+            }
         }
     }
 
@@ -233,13 +247,42 @@ public class PlayerMovement_New : MonoBehaviour
 
         Vector3 wallForward = Vector3.Cross(wallNormal, collisionCheck.wallCheckRoot.up);
 
-        rb_player.AddForce(wallForward * wallRunForce, ForceMode.Force);
+        if ((orientation.forward - wallForward).sqrMagnitude > (orientation.forward - -wallForward).sqrMagnitude)
+            wallForward = -wallForward;
+
+        if (Wallrunning)
+            rb_player.AddForce(wallForward * wallRunForce, ForceMode.Force);
+
+        if (!(collisionCheck.OnLeftWall && moveInput.x > 0) && !(collisionCheck.OnRightWall && moveInput.x < 0))
+            rb_player.AddForce(-wallNormal * pushToWallForce, ForceMode.Force);
     }
 
     private void StopWallRun()
     {
         Wallrunning = false;
-        //rb_player.useGravity = true;
     }
 
+    public void WallJump(InputAction.CallbackContext context)
+    {
+        if (exitingWall == false && Wallrunning)
+        {
+            exitingWall = true;
+            StartCoroutine(ExitWallTimer());
+            SwitchState(MovementState.WallJumping);
+            Vector3 wallNormal = collisionCheck.OnRightWall ? collisionCheck.hitWallRight.normal : collisionCheck.hitWallLeft.normal;
+
+            wallJumpForceApplied = rb_player.transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
+
+            rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
+            rb_player.AddForce(wallJumpForceApplied, ForceMode.Impulse);
+        }
+    }
+
+
+    private IEnumerator ExitWallTimer() // takes a float and a bool and set´s boo
+    {
+        yield return new WaitForSeconds(exitWallTime);
+        exitingWall = false;
+        yield break;
+    }
 }
