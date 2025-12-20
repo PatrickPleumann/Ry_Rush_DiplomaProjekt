@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] public Animator animator;
     [SerializeField] public Transform player;
+    [SerializeField] public NavMeshAgent agent;
+
 
 
     private void Start()
