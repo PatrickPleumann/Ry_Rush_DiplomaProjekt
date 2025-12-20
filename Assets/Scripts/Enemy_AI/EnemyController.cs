@@ -8,11 +8,10 @@ public class EnemyController : MonoBehaviour
     [Header("References")]
     [SerializeField] public Animator animator;
     [SerializeField] public Transform player;
-    [SerializeField] private Transform enemySightRoot;
+    [SerializeField] public Transform sightRoot;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public EnemyFSM_Data data;
     
-    public float SqrCurrentDistanceToPlayer { get; private set; }
     public float SqrDistanceToPlayer { get; private set; }
     public float SqrMinDistanceToPlayer { get; private set; }
     public float SqrMaxDistanceToPlayer { get; private set; }
@@ -35,6 +34,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this at LEAST once before entering any state
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); //point of entry
     }
@@ -47,6 +47,7 @@ public class EnemyController : MonoBehaviour
 
     private float CheckDistanceToPlayer()
     {
-        return Vector3.SqrMagnitude(player.position - enemySightRoot.position);
+
+        return Mathf.Abs(Vector3.SqrMagnitude(player.position - sightRoot.position));
     }
 }

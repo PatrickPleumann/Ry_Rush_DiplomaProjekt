@@ -16,8 +16,12 @@ MonoBehaviour:
   maxShootingDistance: 10
   minDistanceToPlayer: 5
   maxDistanceToPlayer: 20
-  idleTimer: 2
-  enemyMaxSpeedWalking: 0
-  enemyMaxSpeedRunning: 0
-  walkToPlayerRange: 0
-  runToPlayerRange: 0
+  enemyMaxSpeedWalking: 2
+  enemyMaxSpeedRunning: 4
+  walkToPlayerRange: 10
+  runToPlayerRange: 25
+  playerFledRange: 30
+  idleAnimTimer: 20
+  idleTimer: 35
+  swapStateTimer: 2
+  canSeePlayer: 1

@@ -6,7 +6,7 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
 
     public override BaseState<T> CheckConditions()
     {
-        if (controller.SqrCurrentDistanceToPlayer < controller.SqrMaxShootingDistance)
+        if (controller.SqrDistanceToPlayer <= controller.SqrMaxShootingDistance)
         {
             return new ShootState<T>(controller);
         }
@@ -15,6 +15,8 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
+        Debug.Log(controller.SqrDistanceToPlayer);
+        Debug.Log("Enter State: Walk");
         controller.animator.SetTrigger("Walk");
         controller.agent.speed = controller.data.enemyMaxSpeedWalking;
     }

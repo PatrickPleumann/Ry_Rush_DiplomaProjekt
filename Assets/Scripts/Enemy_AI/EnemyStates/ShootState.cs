@@ -13,6 +13,7 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
+        Debug.Log("Enter State: Shoot");
         controller.animator.SetTrigger("Shoot");
     }
 
