@@ -4,18 +4,28 @@ using UnityEngine;
 public class ShootState<T> : BaseState<T> where T : EnemyController
 {
     private bool canShoot = true;
-    private float shootingTimer;
-    private float min;
-    private float max;
+    private float min; // for shortness
+    private float max; // for shortness
     public ShootState(T _controller) : base(_controller)
     {
-        shootingTimer = 0f;
         min = controller.SqrMinShootingDistance;
         max = controller.SqrMaxShootingDistance;
     }
 
     public override BaseState<T> CheckConditions()
     {
+        if (controller.SqrDistanceToPlayer > max)
+        {
+            return new ChaseState<T>(controller);
+        }
+        if (controller.SqrDistanceToPlayer > controller.SqrDistancePlayerInSight)
+        {
+            return new IdleState<T>(controller);
+        }
+        if (controller.SqrDistanceToPlayer < controller.SqrMinShootingDistance)
+        {
+            return new WalkBackwardsState<T>(controller);
+        }
         return null;
     }
 
@@ -29,19 +39,15 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
 
     public override void UpdateState()
     {
-        //shoot
-        shootingTimer -= Time.deltaTime;
         if (controller.SqrDistanceToPlayer > min && controller.SqrDistanceToPlayer < max)
         {
             controller.agent.destination = controller.player.position;
-            Debug.Log(controller.SqrDistanceToPlayer);
         }
 
-        if (canShoot == true && shootingTimer <= 0f && (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange))
+        if (canShoot == true &&  (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange))
         {
             controller.animator.SetTrigger("ShootAnim");
             canShoot = false;
-            shootingTimer = controller.data.betweenShotsTimer;
         }
     }
 

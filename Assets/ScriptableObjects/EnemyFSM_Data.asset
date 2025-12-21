@@ -16,12 +16,12 @@ MonoBehaviour:
   maxShootingDistance: 10
   betweenShotsTimer: 3
   minDistanceToPlayer: 5
-  maxDistanceToPlayer: 15
+  maxDistanceToPlayer: 30
   enemyMaxSpeedWalking: 2
   enemyMaxSpeedRunning: 4
-  walkToPlayerInRange: 10
-  runToPlayerInRange: 20
-  playerFledRange: 30
+  walkToPlayerInRange: 15
+  runToPlayerInRange: 30
+  playerFledRange: 40
   desiredShootingDistance: 8
   idleAnimTimer: 5
   idleTimer: 35

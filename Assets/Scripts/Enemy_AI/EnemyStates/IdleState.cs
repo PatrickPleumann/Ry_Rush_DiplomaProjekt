@@ -20,7 +20,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
 
     public override BaseState<T> CheckConditions()
     {
-        if (controller.SqrDistancePlayerInSight <= sqrDistanceToPlayer)
+        if (controller.SqrDistanceToPlayer <= sqrDistanceToPlayer)
         {
             sawPlayer = true;
             if (swapStateTimer <= 0)

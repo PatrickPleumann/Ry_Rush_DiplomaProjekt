@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyController : MonoBehaviour
 {
@@ -14,7 +15,10 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] public EnemyFSM_Data data;
-    
+
+    public static UnityAction EnemyShootEvent; // probably no use for that
+
+    #region Sqare Distances for better Performace
     public float SqrDistanceToPlayer { get; private set; }
     public float SqrMinDistanceToPlayer { get; private set; }
     public float SqrMaxDistanceToPlayer { get; private set; }
@@ -26,7 +30,7 @@ public class EnemyController : MonoBehaviour
     public float SqrDistancePlayerInSight { get; private set; }
 
     public float SqrDesiredShootingRange { get; private set; }
-
+    #endregion
     private void Awake()
     {
         SqrMinShootingDistance = data.minShootingDistance * data.minShootingDistance;
@@ -39,12 +43,12 @@ public class EnemyController : MonoBehaviour
         SqrRunToPlayerInRange  = data.runToPlayerInRange  * data.runToPlayerInRange;
 
         SqrDesiredShootingRange = data.desiredShootingDistance * data.desiredShootingDistance;
+        SqrDistancePlayerInSight = data.playerInSightDistance * data.playerInSightDistance;
     }
 
     private void Start()
     {
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this at LEAST once before entering any state
-        SqrDistancePlayerInSight = CheckDistanceInSightingRange();
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); //point of entry
     }
@@ -53,15 +57,10 @@ public class EnemyController : MonoBehaviour
     {
         controller.Update();
         SqrDistanceToPlayer = CheckDistanceToPlayer();
-        SqrDistancePlayerInSight = CheckDistanceInSightingRange();
     }
 
     private float CheckDistanceToPlayer()
     {
         return Mathf.Abs(Vector3.SqrMagnitude(player.position - transform.position));
-    }
-    private float CheckDistanceInSightingRange()
-    {
-        return Mathf.Abs(Vector3.SqrMagnitude(player.position - sightRoot.position));
     }
 }

@@ -6,6 +6,7 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
     //local for shortness
     private float walk;
     private float run;
+    private float chaseStateTimer = 1f;
     public ChaseState(T _controller) : base(_controller) 
     {
         walk = controller.SqrWalkToPlayerInRange;
@@ -36,12 +37,13 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
 
     public override void UpdateState()
     {
-        if (controller.SqrDistanceToPlayer >= walk && controller.SqrDistanceToPlayer <= run)
+        chaseStateTimer -= Time.deltaTime;
+        if (controller.SqrDistanceToPlayer >= walk && controller.SqrDistanceToPlayer <= run && chaseStateTimer <= 0f)
         {
             controller.animator.SetTrigger("RunAnim");
             controller.agent.speed = controller.data.enemyMaxSpeedRunning;
         }
-        else if(controller.SqrDistanceToPlayer < walk)
+        else if(controller.SqrDistanceToPlayer < walk && chaseStateTimer <= 0f)
         {
             controller.animator.SetTrigger("WalkAnim");
             controller.agent.speed = controller.data.enemyMaxSpeedWalking;

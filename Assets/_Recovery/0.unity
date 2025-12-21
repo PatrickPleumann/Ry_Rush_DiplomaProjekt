@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 8673597}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70112836, z: -0, w: 0.71303517}
-  m_LocalPosition: {x: -36.29, y: 0, z: 10.12}
+  m_LocalPosition: {x: -19.25, y: 0, z: 0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -811,8 +811,6 @@ GameObject:
   m_Component:
   - component: {fileID: 465080767}
   - component: {fileID: 465080770}
-  - component: {fileID: 465080772}
-  - component: {fileID: 465080771}
   - component: {fileID: 465080769}
   - component: {fileID: 465080768}
   m_Layer: 0
@@ -901,47 +899,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &465080771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465080766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8633ce4a6113b6545a7168ae21e67a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventTest
---- !u!114 &465080772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465080766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e15d1aa9e627f74daa82b3980b126f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventReceiver
-  AnimationEvents:
-  - eventName: OnShoot
-    OnAnimationEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 465080771}
-          m_TargetAssemblyTypeName: AnimationEventTest, Assembly-CSharp
-          m_MethodName: EnemyShootsGun
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &553213462
 GameObject:
   m_ObjectHideFlags: 0

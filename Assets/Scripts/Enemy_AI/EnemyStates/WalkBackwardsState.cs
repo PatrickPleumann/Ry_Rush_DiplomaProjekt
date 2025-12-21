@@ -1,16 +1,25 @@
 using UnityEngine;
 
-public class WalkBackwardsState : MonoBehaviour
+public class WalkBackwardsState<T> : BaseState<T> where T : EnemyController
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public WalkBackwardsState(T _controller) : base(_controller)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override BaseState<T> CheckConditions()
     {
-        
+        return null;
+    }
+
+    public override void EnterState()
+    {
+    }
+
+    public override void ExitState()
+    {
+    }
+
+    public override void UpdateState()
+    {
     }
 }
