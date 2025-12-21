@@ -23,8 +23,8 @@ MonoBehaviour:
   runToPlayerInRange: 20
   playerFledRange: 30
   desiredShootingDistance: 8
-  idleAnimTimer: 20
+  idleAnimTimer: 5
   idleTimer: 35
   swapStateTimer: 1
-  playerInSightDistance: 15
+  playerInSightDistance: 50
   canSeePlayer: 1
