@@ -1,39 +1,37 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState<T> : BaseState<T> where T : EnemyController
 {
-    //walk & run distance to player (for shortness)
+    //local for shortness
     private float walk;
     private float run;
     public ChaseState(T _controller) : base(_controller) 
     {
-        walk = controller.SqrWalkToPlayerRange;
-        run = controller.SqrRunToPlayerRange;
+        walk = controller.SqrWalkToPlayerInRange;
+        run = controller.SqrRunToPlayerInRange;
     }
 
     public override BaseState<T> CheckConditions()
     {
-
+        if (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange)
+        {
+            return new ShootState<T>(controller);
+        }
         return null;
     }
 
     public override void EnterState()
     {
         Debug.Log("Enter State: Chase");
-
-        Debug.Log(controller.SqrDistanceToPlayer);
-        Debug.Log(controller.SqrMaxDistanceToPlayer);
         controller.data.canSeePlayer = true;
         controller.agent.destination = controller.player.position;
     }
 
     public override void ExitState()
     {
-        controller.agent.isStopped = true;
-        controller.agent.ResetPath();
-        controller.data.canSeePlayer = false;
+        controller.animator.ResetTrigger("RunAnim");
+        controller.animator.ResetTrigger("WalkAnim");
     }
 
     public override void UpdateState()

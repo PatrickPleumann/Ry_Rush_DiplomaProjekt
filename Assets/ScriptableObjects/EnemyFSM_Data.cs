@@ -3,11 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyFSM_Data", menuName = "Scriptable Objects/EnemyFSM_Data")]
 public class EnemyFSM_Data : ScriptableObject
 {
-    [Header("Shooting Distance")]
+    [Header("Enemy Shooting Values")]
     [SerializeField] public float minShootingDistance;
     [SerializeField] public float maxShootingDistance;
+    [SerializeField] public float betweenShotsTimer;
 
-    [Header("Chasing Distance")]
+    [Header("Enemy Chasing Distance")]
     [SerializeField] public float minDistanceToPlayer;
     [SerializeField] public float maxDistanceToPlayer;
 
@@ -16,15 +17,17 @@ public class EnemyFSM_Data : ScriptableObject
     [SerializeField] public float enemyMaxSpeedRunning;
 
     [Header("Enemy Range Behaviour Values")]
-    [SerializeField] public float walkToPlayerRange;
-    [SerializeField] public float runToPlayerRange;
+    [SerializeField] public float walkToPlayerInRange;
+    [SerializeField] public float runToPlayerInRange;
     [SerializeField] public float playerFledRange;
+    [SerializeField] public float desiredShootingDistance;
 
-    [Header("Timer Values")]
+    [Header("Enemy Timer Values")]
     [SerializeField] public float idleAnimTimer;
     [SerializeField] public float idleTimer;
     [SerializeField] public float swapStateTimer;
 
-    [Header("Player in Sight Values")]
+    [Header("Enemy Player in Sight Values")]
+    [SerializeField] public float playerInSightDistance;
     [SerializeField] public bool canSeePlayer;
 }

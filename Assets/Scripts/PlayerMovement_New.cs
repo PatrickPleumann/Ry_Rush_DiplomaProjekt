@@ -51,7 +51,6 @@ public class PlayerMovement_New : MonoBehaviour
     [Header("Movement States")]
     public MovementState State;
     [SerializeField] private float stateTransitionTimerValue = 0.1f;
-    private bool canSwitchState;
     public enum MovementState
     {
         GroundMoving,
@@ -66,7 +65,6 @@ public class PlayerMovement_New : MonoBehaviour
         rb_player = GetComponent<Rigidbody>();
         rb_player.freezeRotation = true;
         speedControl = new Vector3(0f, 0f, 0f); // y value won´t get touched anymore
-        canSwitchState = true;
     }
 
     private void Update()
@@ -170,7 +168,6 @@ public class PlayerMovement_New : MonoBehaviour
     private IEnumerator StateTransitionTimer(float _transitionTimer)
     {
         yield return new WaitForSeconds(_transitionTimer);
-        canSwitchState = true;
     }
 
     private void SwitchState(MovementState _state)

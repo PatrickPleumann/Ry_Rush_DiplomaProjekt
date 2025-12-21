@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFSM_Data
   minShootingDistance: 5
   maxShootingDistance: 10
+  betweenShotsTimer: 3
   minDistanceToPlayer: 5
-  maxDistanceToPlayer: 20
+  maxDistanceToPlayer: 15
   enemyMaxSpeedWalking: 2
   enemyMaxSpeedRunning: 4
-  walkToPlayerRange: 10
-  runToPlayerRange: 25
+  walkToPlayerInRange: 10
+  runToPlayerInRange: 20
   playerFledRange: 30
+  desiredShootingDistance: 8
   idleAnimTimer: 20
   idleTimer: 35
-  swapStateTimer: 2
+  swapStateTimer: 1
+  playerInSightDistance: 15
   canSeePlayer: 1

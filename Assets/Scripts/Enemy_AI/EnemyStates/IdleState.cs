@@ -4,21 +4,23 @@ using UnityEngine;
 using UnityEngine.AI;
 public class IdleState<T> : BaseState<T> where T : EnemyController
 {
-    private float swapStateTimer;
     private bool sawPlayer = false;
+
+    private float swapStateTimer;
     private float animTimer;
-    private float sqrMaxDistanceToPlayer;
+    private float sqrDistanceToPlayer;
+
     public IdleState(T _controller) : base(_controller) // animator state is called "breathes"
     {
         swapStateTimer = controller.data.swapStateTimer;
         animTimer = controller.data.idleAnimTimer;
 
-        sqrMaxDistanceToPlayer = controller.data.maxDistanceToPlayer * controller.data.maxDistanceToPlayer;
+        sqrDistanceToPlayer = controller.data.maxDistanceToPlayer * controller.data.maxDistanceToPlayer;
     }
 
     public override BaseState<T> CheckConditions()
     {
-        if (controller.SqrDistanceToPlayer <= sqrMaxDistanceToPlayer)
+        if (controller.SqrDistancePlayerInSight <= sqrDistanceToPlayer)
         {
             sawPlayer = true;
             if (swapStateTimer <= 0)

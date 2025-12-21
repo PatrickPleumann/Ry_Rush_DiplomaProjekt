@@ -174,8 +174,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8673597}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.61, y: -0, z: 24.79}
+  m_LocalRotation: {x: -0, y: 0.70112836, z: -0, w: 0.71303517}
+  m_LocalPosition: {x: -19.25, y: 0, z: 0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -183,7 +183,7 @@ Transform:
   - {fileID: 728169819}
   - {fileID: 692994661}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 89.035, z: 0}
 --- !u!114 &8673600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +847,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.4
-  m_Speed: 3.5
+  m_Speed: 0
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -874,6 +874,7 @@ MonoBehaviour:
   animator: {fileID: 465080770}
   player: {fileID: 8673599}
   sightRoot: {fileID: 1389352322}
+  thisEnemy: {fileID: 465080767}
   agent: {fileID: 465080768}
   data: {fileID: 11400000, guid: 83c03fc1c1f82cc41b85180a30ae9027, type: 2}
 --- !u!95 &465080770
@@ -1905,9 +1906,9 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1396899112
 PrefabInstance:
