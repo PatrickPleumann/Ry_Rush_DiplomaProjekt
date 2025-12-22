@@ -33,20 +33,20 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
     {
         Debug.Log("Enter State: ShootState");
         //controller.agent.updatePosition = false; // could work maybe
-        controller.agent.updateRotation = true;
-        controller.agent.speed = 0.05f; // just for turning the enemy while shooting
+        controller.Agent.updateRotation = true;
+        controller.Agent.speed = 0.05f; // just for turning the enemy while shooting
     }
 
     public override void UpdateState()
     {
         if (controller.SqrDistanceToPlayer > min && controller.SqrDistanceToPlayer < max)
         {
-            controller.agent.destination = controller.player.position;
+            controller.Agent.destination = controller.Player.position;
         }
 
         if (canShoot == true &&  (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange))
         {
-            controller.animator.SetTrigger("ShootAnim");
+            controller.Animator.SetTrigger("ShootAnim");
             canShoot = false;
         }
     }
@@ -54,6 +54,6 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
     public override void ExitState()
     {
         Debug.Log("Exit State: ShootState");
-        controller.animator.ResetTrigger("ShootAnim");
+        controller.Animator.ResetTrigger("ShootAnim");
     }
 }

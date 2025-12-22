@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4f8a67f3812cda409df0a530634c65c, type: 3}
   m_Name: EnemyFSM_Data
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFSM_Data
+  enemyHealth: 100
   minShootingDistance: 5
   maxShootingDistance: 10
   betweenShotsTimer: 3

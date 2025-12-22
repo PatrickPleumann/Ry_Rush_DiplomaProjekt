@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyFSM_Data", menuName = "Scriptable Objects/EnemyFSM_Data")]
 public class EnemyFSM_Data : ScriptableObject
 {
+    [Header("Enemy Health")]
+    [SerializeField] public float enemyHealth;
+
     [Header("Enemy Shooting Values")]
     [SerializeField] public float minShootingDistance;
     [SerializeField] public float maxShootingDistance;

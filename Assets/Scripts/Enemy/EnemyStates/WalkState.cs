@@ -17,13 +17,13 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
     {
         Debug.Log(controller.SqrDistanceToPlayer);
         Debug.Log("Enter State: Walk");
-        controller.animator.SetTrigger("Walk");
-        controller.agent.speed = controller.data.enemyMaxSpeedWalking;
+        controller.Animator.SetTrigger("Walk");
+        controller.Agent.speed = controller.Data.enemyMaxSpeedWalking;
     }
 
     public override void ExitState()
     {
-        controller.animator.ResetTrigger("Walk");
+        controller.Animator.ResetTrigger("Walk");
     }
 
     public override void UpdateState()

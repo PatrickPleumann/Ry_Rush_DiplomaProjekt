@@ -25,14 +25,14 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
     public override void EnterState()
     {
         Debug.Log("Enter State: Chase");
-        controller.data.canSeePlayer = true;
-        controller.agent.destination = controller.player.position;
+        controller.Data.canSeePlayer = true;
+        controller.Agent.destination = controller.Player.position;
     }
 
     public override void ExitState()
     {
-        controller.animator.ResetTrigger("RunAnim");
-        controller.animator.ResetTrigger("WalkAnim");
+        controller.Animator.ResetTrigger("RunAnim");
+        controller.Animator.ResetTrigger("WalkAnim");
     }
 
     public override void UpdateState()
@@ -40,15 +40,15 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
         chaseStateTimer -= Time.deltaTime;
         if (controller.SqrDistanceToPlayer >= walk && controller.SqrDistanceToPlayer <= run && chaseStateTimer <= 0f)
         {
-            controller.animator.SetTrigger("RunAnim");
-            controller.agent.speed = controller.data.enemyMaxSpeedRunning;
+            controller.Animator.SetTrigger("RunAnim");
+            controller.Agent.speed = controller.Data.enemyMaxSpeedRunning;
         }
-        else if(controller.SqrDistanceToPlayer < walk && chaseStateTimer <= 0f)
+        else if(controller.SqrDistanceToPlayer < (walk - 1) && chaseStateTimer <= 0f)
         {
-            controller.animator.SetTrigger("WalkAnim");
-            controller.agent.speed = controller.data.enemyMaxSpeedWalking;
+            controller.Animator.SetTrigger("WalkAnim");
+            controller.Agent.speed = controller.Data.enemyMaxSpeedWalking;
         }
 
-        controller.agent.destination = controller.player.position;
+        controller.Agent.destination = controller.Player.position;
     }
 }

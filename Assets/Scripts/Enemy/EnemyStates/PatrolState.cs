@@ -15,7 +15,7 @@ public class PatrolState<T> : BaseState<T> where T : EnemyController
     public override void EnterState()
     {
         Debug.Log("Enter State: Patrol");
-        controller.animator.SetTrigger("WalkAnim");
+        controller.Animator.SetTrigger("WalkAnim");
     }
 
     public override void UpdateState()
@@ -25,7 +25,7 @@ public class PatrolState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
-        controller.animator.ResetTrigger("WalkAnim");
+        controller.Animator.ResetTrigger("WalkAnim");
     }
 
 }

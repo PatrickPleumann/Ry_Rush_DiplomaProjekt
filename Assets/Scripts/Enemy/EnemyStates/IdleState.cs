@@ -12,10 +12,10 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
 
     public IdleState(T _controller) : base(_controller) // animator state is called "breathes"
     {
-        swapStateTimer = controller.data.swapStateTimer;
-        animTimer = controller.data.idleAnimTimer;
+        swapStateTimer = controller.Data.swapStateTimer;
+        animTimer = controller.Data.idleAnimTimer;
 
-        sqrDistanceToPlayer = controller.data.maxDistanceToPlayer * controller.data.maxDistanceToPlayer;
+        sqrDistanceToPlayer = controller.Data.maxDistanceToPlayer * controller.Data.maxDistanceToPlayer;
     }
 
     public override BaseState<T> CheckConditions()
@@ -35,8 +35,8 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
     {
         Debug.Log("Enter State: Idle");
         //set all agent properties here
-        controller.animator.SetTrigger("IdleAnim");
-        controller.agent.ResetPath();
+        controller.Animator.SetTrigger("IdleAnim");
+        controller.Agent.ResetPath();
 
     }
 
@@ -48,7 +48,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
         animTimer -= Time.deltaTime;
         if (animTimer <= 0f)
         {
-            controller.animator.SetTrigger("IdleAnim2");
+            controller.Animator.SetTrigger("IdleAnim2");
             animTimer = 15f;
         }
 
@@ -58,7 +58,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
     public override void ExitState()
     {
         //reset all agent properties here
-        controller.animator.ResetTrigger("IdleAnim");
-        controller.animator.ResetTrigger("IdleAnim2");
+        controller.Animator.ResetTrigger("IdleAnim");
+        controller.Animator.ResetTrigger("IdleAnim2");
     }
 }
