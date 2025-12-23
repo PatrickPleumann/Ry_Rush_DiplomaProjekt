@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ShootState<T> : BaseState<T> where T : EnemyController
 {
+
+    
     private bool canShoot = true;
     private float min; // for shortness
     private float max; // for shortness
@@ -32,17 +34,13 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
     public override void EnterState()
     {
         Debug.Log("Enter State: ShootState");
-        //controller.agent.updatePosition = false; // could work maybe
-        controller.Agent.updateRotation = true;
-        controller.Agent.speed = 0.05f; // just for turning the enemy while shooting
+
+        controller.Agent.speed = 0f; // just for turning the enemy while shooting
     }
 
     public override void UpdateState()
     {
-        if (controller.SqrDistanceToPlayer > min && controller.SqrDistanceToPlayer < max)
-        {
-            controller.Agent.destination = controller.Player.position;
-        }
+
 
         if (canShoot == true &&  (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange))
         {

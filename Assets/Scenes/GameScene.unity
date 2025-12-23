@@ -812,7 +812,6 @@ GameObject:
   - component: {fileID: 465080767}
   - component: {fileID: 465080770}
   - component: {fileID: 465080772}
-  - component: {fileID: 465080771}
   - component: {fileID: 465080769}
   - component: {fileID: 465080768}
   m_Layer: 0
@@ -831,13 +830,13 @@ Transform:
   m_GameObject: {fileID: 465080766}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.23063, y: -1.799, z: -0.6553397}
+  m_LocalPosition: {x: -1.16997, y: 0, z: -5.31622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2114805414}
   - {fileID: 1389352322}
-  m_Father: {fileID: 636717413}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &465080768
 NavMeshAgent:
@@ -880,6 +879,7 @@ MonoBehaviour:
   Agent: {fileID: 465080768}
   Data: {fileID: 11400000, guid: 83c03fc1c1f82cc41b85180a30ae9027, type: 2}
   ThisEnemy: {fileID: 465080767}
+  EnemyDirSmoothSpeed: 0
   EnemyHealth: 0
 --- !u!95 &465080770
 Animator:
@@ -903,18 +903,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &465080771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465080766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8633ce4a6113b6545a7168ae21e67a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventTest
 --- !u!114 &465080772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,7 +920,7 @@ MonoBehaviour:
     OnAnimationEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 465080771}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: AnimationEventTest, Assembly-CSharp
           m_MethodName: EnemyShootsGun
           m_Mode: 1
@@ -1040,8 +1028,7 @@ Transform:
   m_LocalPosition: {x: -4.4006, y: 1.799, z: -4.66088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 465080767}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &674842414
@@ -2781,6 +2768,7 @@ SceneRoots:
   - {fileID: 553213463}
   - {fileID: 762696892}
   - {fileID: 8673599}
+  - {fileID: 465080767}
   - {fileID: 1681825854}
   - {fileID: 1790525547}
   - {fileID: 636717413}

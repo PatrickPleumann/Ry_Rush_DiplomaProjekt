@@ -33,6 +33,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
+        controller.Agent.updateRotation = false;
         Debug.Log("Enter State: Idle");
         //set all agent properties here
         controller.Animator.SetTrigger("IdleAnim");

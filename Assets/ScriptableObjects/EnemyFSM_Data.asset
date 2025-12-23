@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EnemyFSM_Data
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFSM_Data
   enemyHealth: 100
+  enemyDirSmoothSpeed: 1.5
   minShootingDistance: 5
   maxShootingDistance: 10
   betweenShotsTimer: 3

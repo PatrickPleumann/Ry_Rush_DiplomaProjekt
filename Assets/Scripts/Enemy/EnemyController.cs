@@ -15,7 +15,12 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public EnemyFSM_Data Data;
     [SerializeField] public Transform ThisEnemy;
 
-    [SerializeField] public float EnemyHealth;
+    public float EnemyDirSmoothSpeed;
+    public float EnemyHealth;    
+    
+    private Vector3 targetDirection;
+    private Vector3 newDirection;
+    private Vector3 newDirectionSmoothed;
 
     #region Sqare Distances for better Performace
     public float SqrDistanceToPlayer { get; private set; }
@@ -32,6 +37,7 @@ public class EnemyController : MonoBehaviour
     #endregion
     private void Awake()
     {
+        EnemyDirSmoothSpeed = Data.enemyDirSmoothSpeed;
         EnemyHealth = Data.enemyHealth;
         SqrMinShootingDistance = Data.minShootingDistance * Data.minShootingDistance;
         SqrMaxShootingDistance = Data.maxShootingDistance * Data.maxShootingDistance;
@@ -62,5 +68,15 @@ public class EnemyController : MonoBehaviour
     private float CheckDistanceToPlayer()
     {
         return Mathf.Abs(Vector3.SqrMagnitude(Player.position - transform.position));
+    }
+
+    public void UpdateEnemyRotation()
+    {
+        targetDirection = Player.position - transform.position;
+        newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 100, 0);
+
+        newDirectionSmoothed = Vector3.Slerp(transform.forward, newDirection, EnemyDirSmoothSpeed * Time.deltaTime);
+
+        transform.rotation = Quaternion.LookRotation(newDirectionSmoothed);
     }
 }

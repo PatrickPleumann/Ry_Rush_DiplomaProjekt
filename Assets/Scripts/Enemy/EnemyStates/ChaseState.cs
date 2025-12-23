@@ -37,7 +37,10 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
 
     public override void UpdateState()
     {
+        controller.UpdateEnemyRotation();
+
         chaseStateTimer -= Time.deltaTime;
+
         if (controller.SqrDistanceToPlayer >= walk && controller.SqrDistanceToPlayer <= run && chaseStateTimer <= 0f)
         {
             controller.Animator.SetTrigger("RunAnim");
