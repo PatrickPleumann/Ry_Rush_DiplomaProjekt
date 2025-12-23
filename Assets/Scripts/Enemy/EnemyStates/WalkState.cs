@@ -28,6 +28,7 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
 
     public override void UpdateState()
     {
+        
         // set agent destination to patrol transforms array
     }
 }

@@ -16,11 +16,13 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public Transform ThisEnemy;
 
     public float EnemyDirSmoothSpeed;
-    public float EnemyHealth;    
-    
+    public float EnemyHealth;
+
+
     private Vector3 targetDirection;
     private Vector3 newDirection;
     private Vector3 newDirectionSmoothed;
+    private bool enemyIsDead;
 
     #region Sqare Distances for better Performace
     public float SqrDistanceToPlayer { get; private set; }
@@ -28,7 +30,7 @@ public class EnemyController : MonoBehaviour
     public float SqrMaxDistanceToPlayer { get; private set; }
     public float SqrWalkToPlayerInRange { get; private set; }
     public float SqrRunToPlayerInRange { get; private set; }
-    public float SqrMinShootingDistance { get; private set;}
+    public float SqrMinShootingDistance { get; private set; }
     public float SqrMaxShootingDistance { get; private set; }
 
     public float SqrDistancePlayerInSight { get; private set; }
@@ -36,6 +38,10 @@ public class EnemyController : MonoBehaviour
     public float SqrDesiredShootingRange { get; private set; }
     #endregion
     private void Awake()
+    {
+
+    }
+    private void OnEnable()
     {
         EnemyDirSmoothSpeed = Data.enemyDirSmoothSpeed;
         EnemyHealth = Data.enemyHealth;
@@ -46,12 +52,13 @@ public class EnemyController : MonoBehaviour
         SqrMaxDistanceToPlayer = Data.maxDistanceToPlayer * Data.maxDistanceToPlayer;
 
         SqrWalkToPlayerInRange = Data.walkToPlayerInRange * Data.walkToPlayerInRange;
-        SqrRunToPlayerInRange  = Data.runToPlayerInRange  * Data.runToPlayerInRange;
+        SqrRunToPlayerInRange = Data.runToPlayerInRange * Data.runToPlayerInRange;
 
         SqrDesiredShootingRange = Data.desiredShootingDistance * Data.desiredShootingDistance;
         SqrDistancePlayerInSight = Data.playerInSightDistance * Data.playerInSightDistance;
-    }
 
+        enemyIsDead = false;
+    }
     private void Start()
     {
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this once before entering any state, all following stateSwitchBehaviours depend on that value
@@ -73,7 +80,7 @@ public class EnemyController : MonoBehaviour
     public void UpdateEnemyRotation()
     {
         targetDirection = Player.position - transform.position;
-        newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 100, 0);
+        newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 1, 0);
 
         newDirectionSmoothed = Vector3.Slerp(transform.forward, newDirection, EnemyDirSmoothSpeed * Time.deltaTime);
 

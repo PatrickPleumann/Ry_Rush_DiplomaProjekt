@@ -40,7 +40,7 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
 
     public override void UpdateState()
     {
-
+        controller.UpdateEnemyRotation();
 
         if (canShoot == true &&  (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange))
         {
