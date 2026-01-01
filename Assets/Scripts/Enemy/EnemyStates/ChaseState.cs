@@ -6,11 +6,12 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
     //local for shortness
     private float walk;
     private float run;
-    private float chaseStateTimer = 1f;
+    private float chaseStateTimer;
     public ChaseState(T _controller) : base(_controller) 
     {
         walk = controller.SqrWalkToPlayerInRange;
         run = controller.SqrRunToPlayerInRange;
+        chaseStateTimer = 1f;
     }
 
     public override BaseState<T> CheckConditions()

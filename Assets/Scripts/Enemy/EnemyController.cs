@@ -37,10 +37,7 @@ public class EnemyController : MonoBehaviour
 
     public float SqrDesiredShootingRange { get; private set; }
     #endregion
-    private void Awake()
-    {
 
-    }
     private void OnEnable()
     {
         EnemyDirSmoothSpeed = Data.enemyDirSmoothSpeed;

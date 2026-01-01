@@ -41,7 +41,7 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
     public override void UpdateState()
     {
         controller.UpdateEnemyRotation();
-
+        Debug.Log(Mathf.Sqrt(controller.SqrDistanceToPlayer));
         if (canShoot == true &&  (controller.SqrDistanceToPlayer <= controller.SqrDesiredShootingRange))
         {
             controller.Animator.SetTrigger("ShootAnim");
