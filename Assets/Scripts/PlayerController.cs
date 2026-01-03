@@ -13,7 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public InputActionReference shoot;
     [SerializeField] public InputActionReference sprint;
 
-
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     private void OnEnable()
     {
         jump.action.started += movement.Jump;
