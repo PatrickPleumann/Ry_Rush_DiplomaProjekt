@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoveCamera : MonoBehaviour
 {
     [SerializeField] private Transform cameraPos;
-    void LateUpdate()
+    void Update()
     {
         gameObject.transform.position = cameraPos.position;
     }
