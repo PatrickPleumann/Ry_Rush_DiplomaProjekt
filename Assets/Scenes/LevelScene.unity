@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: afb910ee473a27642b2850ad30e73449
+  m_OcclusionCullingData: {fileID: 36300000, guid: a0a5e866f5c2c6a43ba9087b4a8c492d, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -80838,6 +80838,18 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 358316735}
+    - target: {fileID: 7640561011963031459, guid: 6ff5dd99bf9d72d40b869b0ff2033830, type: 3}
+      propertyPath: sensitivityX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640561011963031459, guid: 6ff5dd99bf9d72d40b869b0ff2033830, type: 3}
+      propertyPath: sensitivityY
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640561011963031459, guid: 6ff5dd99bf9d72d40b869b0ff2033830, type: 3}
+      propertyPath: smoothingTime
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7640561011963031459, guid: 6ff5dd99bf9d72d40b869b0ff2033830, type: 3}
       propertyPath: playerOrientation
       value: 

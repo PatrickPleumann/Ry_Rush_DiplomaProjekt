@@ -40,7 +40,7 @@ public class PlayerCamera : MonoBehaviour
         yRotation += mousePos.x;
         xRotation -= mousePos.y;
 
-        xRotation = Mathf.Clamp(xRotation, cameraClampDown + 1, cameraClampUp - 1);
+        xRotation = Mathf.Clamp(xRotation, cameraClampDown, cameraClampUp);
 
         xSmoothRot = Mathf.Lerp(xSmoothRot, xRotation, smoothingTime * Time.deltaTime);
         ySmoothRot = Mathf.Lerp(ySmoothRot, yRotation, smoothingTime * Time.deltaTime);
