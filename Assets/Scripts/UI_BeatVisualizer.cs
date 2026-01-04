@@ -6,44 +6,35 @@ public class UI_BeatVisualizer : MonoBehaviour
 {
     [SerializeField] private BeatTracking beatTracking;
     [Space]
-
-    [SerializeField] public Image leftBeatVisualizer;
     [SerializeField] public Image RightBeatVisualizer;
+    [SerializeField] public Image RightBeatVisualizer_2;
     [Space]
+    [SerializeField] public Image leftBeatVisualizer;
+    [SerializeField] public Image leftBeatVisualizer_2;
 
-    [SerializeField] public Image RightRoot;
-    [SerializeField] public Image LeftRoot;
-    [Space]
+    private float rightValue;
+    private float leftValue;
 
-    [SerializeField] private RectTransform RightStart;
-    [SerializeField] private RectTransform RightEnd;
-    [Space]
-
-    [SerializeField] private RectTransform LeftStart;
-    [SerializeField] private RectTransform LeftEnd;
-    [Space]
-
-    private float Left_Hit;
-    private float right_Hit;
-
-    private float beatTrackingToImageMultiplier;
-    private float interpolationValue;
+    private float valuePerSample;
     private void Start()
     {
-        interpolationValue = 1 / beatTracking.samplesPerBeat;
+        rightValue = RightBeatVisualizer.rectTransform.localPosition.x;
+        leftValue = leftBeatVisualizer.rectTransform.localPosition.x;
+
+        valuePerSample = (rightValue / (float)beatTracking.samplesPerBeat);
     }
 
     private void LateUpdate()
     {
-        InterpolateBetween();
+        BeatVisualization();
     }
 
-    private void InterpolateBetween()
+    private void BeatVisualization()
     {
-        RightBeatVisualizer.rectTransform.position = 
-            Vector3.Lerp(RightStart.position, RightEnd.position, interpolationValue * beatTracking.currentSamples);
-        //VisualMultiplier =  1 / samplesProBeat
-        //VisualMultiplier = currentSamples
-        //VisualMultiplier gehört in den wert T von Linearer Interpolation
+        RightBeatVisualizer.transform.localPosition = 
+            new Vector3(rightValue - (valuePerSample * beatTracking.currentSamples),0f,0f);
+
+        leftBeatVisualizer.transform.localPosition =
+            new Vector3(leftValue + (valuePerSample * beatTracking.currentSamples), 0f, 0f);
     }
 }

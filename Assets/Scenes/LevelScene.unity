@@ -19256,6 +19256,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4728338938568486, guid: c3948b16aa87194418d5ce554e4db267, type: 3}
   m_PrefabInstance: {fileID: 245997847}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &246365062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246365063}
+  - component: {fileID: 246365065}
+  - component: {fileID: 246365064}
+  m_Layer: 5
+  m_Name: BeatSliderRight_Start_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &246365063
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246365062}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1951600720}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 5, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &246365064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246365062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.7563808, g: 0.9496855, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &246365065
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246365062}
+  m_CullTransparentMesh: 1
 --- !u!4 &246415023 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 482502, guid: 197d81ed7aa643b43a1495d4ac835c6b, type: 3}
@@ -20853,6 +20928,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 457684, guid: 6abe4b7bc0713434f832437b74062e05, type: 3}
   m_PrefabInstance: {fileID: 277088663}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &279396723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 279396724}
+  - component: {fileID: 279396726}
+  - component: {fileID: 279396725}
+  m_Layer: 5
+  m_Name: BeatSliderLeft_Start_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &279396724
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279396723}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1203977534}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -200, y: 0}
+  m_SizeDelta: {x: 5, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &279396725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279396723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.7563808, g: 0.9496855, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &279396726
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279396723}
+  m_CullTransparentMesh: 1
 --- !u!114 &280447734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27797,7 +27947,7 @@ GameObject:
   - component: {fileID: 409192417}
   - component: {fileID: 409192416}
   m_Layer: 5
-  m_Name: BeatSliderLeft_Hit_1
+  m_Name: BeatSliderLeft_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31466,12 +31616,12 @@ GameObject:
   - component: {fileID: 456518154}
   - component: {fileID: 456518153}
   m_Layer: 5
-  m_Name: BeatSliderRight_Hit_2
+  m_Name: BeatSliderRight_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &456518152
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31488,7 +31638,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &456518153
@@ -37873,13 +38023,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatTracking
   source: {fileID: 0}
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 69d4a0cfc12cfaf448b4db12ea1fb169, type: 3}
   timeTillSongStarts: 3
-  asyncValue: 0
-  beatOffsetMultiplier: 0
-  samplesPerBeat: 30000
+  asyncValue: -6000
+  beatOffsetMultiplier: 0.1
+  samplesPerBeat: 0
   bpm: 90
-  currentSamples: 15000
+  currentSamples: 0
   currentTimeSamplesMin: 0
   currentTimeSamplesMax: 0
   isOnBeat: 0
@@ -73351,8 +73501,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1203977534}
   - {fileID: 1951600720}
+  - {fileID: 1203977534}
   m_Father: {fileID: 1601040972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -73373,14 +73523,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_BeatVisualizer
   beatTracking: {fileID: 577735996}
-  leftBeatVisualizer: {fileID: 409192416}
   RightBeatVisualizer: {fileID: 1693242755}
-  RightRoot: {fileID: 0}
-  LeftRoot: {fileID: 0}
-  RightStart: {fileID: 1693242754}
-  RightEnd: {fileID: 1951600720}
-  LeftStart: {fileID: 409192415}
-  LeftEnd: {fileID: 1203977534}
+  RightBeatVisualizer_2: {fileID: 246365064}
+  leftBeatVisualizer: {fileID: 409192416}
+  leftBeatVisualizer_2: {fileID: 279396725}
 --- !u!1001 &931217810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79288,12 +79434,12 @@ GameObject:
   - component: {fileID: 1037884853}
   - component: {fileID: 1037884852}
   m_Layer: 5
-  m_Name: BeatSliderLeft_Hit_2
+  m_Name: BeatSliderLeft_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1037884851
 RectTransform:
   m_ObjectHideFlags: 0
@@ -79310,7 +79456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1037884852
@@ -93464,7 +93610,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1203977534}
   - component: {fileID: 1203977536}
-  - component: {fileID: 1203977535}
   m_Layer: 5
   m_Name: BeatSliderLeft
   m_TagString: Untagged
@@ -93485,6 +93630,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 409192415}
+  - {fileID: 279396724}
   - {fileID: 1037884851}
   m_Father: {fileID: 930686559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -93493,36 +93639,6 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: 0}
   m_SizeDelta: {x: 5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1203977535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203977533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.7563808, g: 0.9496855, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1203977536
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -122668,7 +122784,7 @@ GameObject:
   - component: {fileID: 1693242756}
   - component: {fileID: 1693242755}
   m_Layer: 5
-  m_Name: BeatSliderRight_Hit_1
+  m_Name: BeatSliderRight_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141481,7 +141597,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1951600720}
   - component: {fileID: 1951600722}
-  - component: {fileID: 1951600721}
   m_Layer: 5
   m_Name: BeatSliderRight
   m_TagString: Untagged
@@ -141502,6 +141617,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1693242754}
+  - {fileID: 246365063}
   - {fileID: 456518152}
   m_Father: {fileID: 930686559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141510,36 +141626,6 @@ RectTransform:
   m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1951600721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951600719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.7563808, g: 0.9496855, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1951600722
 CanvasRenderer:
   m_ObjectHideFlags: 0
