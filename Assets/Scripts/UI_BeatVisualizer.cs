@@ -32,9 +32,9 @@ public class UI_BeatVisualizer : MonoBehaviour
     private void BeatVisualization()
     {
         RightBeatVisualizer.transform.localPosition = 
-            new Vector3(rightValue - (valuePerSample * beatTracking.currentSamples),0f,0f);
+            new Vector3(rightValue - (valuePerSample * beatTracking.currentSamples_UI),0f,0f);
 
         leftBeatVisualizer.transform.localPosition =
-            new Vector3(leftValue + (valuePerSample * beatTracking.currentSamples), 0f, 0f);
+            new Vector3(leftValue + (valuePerSample * beatTracking.currentSamples_UI), 0f, 0f);
     }
 }

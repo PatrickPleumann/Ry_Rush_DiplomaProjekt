@@ -259,7 +259,7 @@ public class PlayerMovement_New : MonoBehaviour
 
     public void WallJump(InputAction.CallbackContext context)
     {
-        if (exitingWall == false && Wallrunning)
+        if (exitingWall == false && Wallrunning && canJump == true)
         {
             exitingWall = true;
             StartCoroutine(ExitWallTimer());

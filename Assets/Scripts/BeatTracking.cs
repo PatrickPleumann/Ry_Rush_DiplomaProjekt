@@ -27,6 +27,10 @@ public class BeatTracking : MonoBehaviour
     public int onBeatOffset;
     public int beatCounter = 1;
 
+    [Header("Beattracking Values for UI Visualization")]
+    public int currentSamples_UI = 0;
+    public int samplesPerBeat_UI = 0;
+
     public int lastActionOnBeatCounter = 0;
     public bool lastActionOnBeat = false;
     [SerializeField] private int ComboOvershootValue = 3;
@@ -42,6 +46,9 @@ public class BeatTracking : MonoBehaviour
 
         samplesPerBeat = (int)(source.clip.frequency * (60f / bpm) * beatMultiplier);
         onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
+
+        currentSamples_UI += onBeatOffset;
+        samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
     }
 
     private void Start()
@@ -65,6 +72,8 @@ public class BeatTracking : MonoBehaviour
     public bool CheckForNewBeat()
     {
         currentSamples += source.timeSamples - lastFrameSamples;
+        currentSamples_UI += source.timeSamples - lastFrameSamples;
+
         lastFrameSamples = source.timeSamples;
         //update UI stuff for beat tracking visualization here
 
@@ -72,6 +81,11 @@ public class BeatTracking : MonoBehaviour
         {
             currentSamples -= samplesPerBeat;
             beatCounter++;
+        }
+
+        if ((currentSamples_UI / samplesPerBeat_UI) >= 1)
+        {
+            currentSamples_UI -= samplesPerBeat;
         }
 
         if ((currentSamples - samplesPerBeat) <= 0 && (currentSamples - samplesPerBeat) > (-onBeatOffset))
