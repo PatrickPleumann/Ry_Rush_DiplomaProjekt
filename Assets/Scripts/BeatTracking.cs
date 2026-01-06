@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 
@@ -13,12 +14,17 @@ public class BeatTracking : MonoBehaviour
     [Header("Gameplay Values")]
     [SerializeField] private float timeTillSongStarts = 3f;
 
+    [Header("Events")]
+    public UnityAction onBeatInvoke;
+
     [Header("Beat Tracking Values")]
 
     [SerializeField] public int asyncValue;
     [SerializeField] private float beatOffsetMultiplier;
     [SerializeField] public int samplesPerBeat = 0;
     [SerializeField] public float bpm = 0f;
+
+
 
     public int currentSamples = 0;
     public int currentTimeSamplesMin = 0;
@@ -47,14 +53,17 @@ public class BeatTracking : MonoBehaviour
         samplesPerBeat = (int)(source.clip.frequency * (60f / bpm) * beatMultiplier);
         onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
 
-        currentSamples_UI += onBeatOffset;
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
+        
     }
 
     private void Start()
     {
         //calculate with beat multiplier here 
         currentSamples += asyncValue;
+        currentSamples_UI = currentSamples;
+
+        currentSamples_UI += onBeatOffset;
 
         StartCoroutine(StartSongDelayed(timeTillSongStarts));
     }
@@ -80,12 +89,13 @@ public class BeatTracking : MonoBehaviour
         if ((currentSamples / samplesPerBeat) >= 1)
         {
             currentSamples -= samplesPerBeat;
+            onBeatInvoke.Invoke();
             beatCounter++;
         }
 
         if ((currentSamples_UI / samplesPerBeat_UI) >= 1)
         {
-            currentSamples_UI -= samplesPerBeat;
+            currentSamples_UI = currentSamples;
         }
 
         if ((currentSamples - samplesPerBeat) <= 0 && (currentSamples - samplesPerBeat) > (-onBeatOffset))
