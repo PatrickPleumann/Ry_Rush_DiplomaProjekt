@@ -16,13 +16,13 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public Transform ThisEnemy;
 
     public float EnemyDirSmoothSpeed;
-    public float EnemyHealth;
 
+    public float EnemyHealth;
 
     private Vector3 targetDirection;
     private Vector3 newDirection;
     private Vector3 newDirectionSmoothed;
-    private bool enemyIsDead;
+    public bool enemyIsDead;
 
     #region Sqare Distances for better Performace
     public float SqrDistanceToPlayer { get; private set; }
@@ -67,6 +67,11 @@ public class EnemyController : MonoBehaviour
     {
         controller.Update();
         SqrDistanceToPlayer = CheckDistanceToPlayer();
+
+        if (EnemyHealth <= 0f)
+        {
+            EnemyDying();
+        }
     }
 
     private float CheckDistanceToPlayer()
@@ -82,5 +87,26 @@ public class EnemyController : MonoBehaviour
         newDirectionSmoothed = Vector3.Slerp(transform.forward, newDirection, EnemyDirSmoothSpeed * Time.deltaTime);
 
         transform.rotation = Quaternion.LookRotation(newDirectionSmoothed);
+    }
+
+    public void EnemyShoot()
+    {
+
+    }
+
+    private void EnemyDying()
+    {
+        enemyIsDead = true;
+    }
+
+    public void TakeDamage(float _dmgAmount)
+    {
+        EnemyHealth -= _dmgAmount;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.transform.TryGetComponent<ProjectileBehaviour>(out ProjectileBehaviour temp);
+        TakeDamage(temp.damage);
     }
 }

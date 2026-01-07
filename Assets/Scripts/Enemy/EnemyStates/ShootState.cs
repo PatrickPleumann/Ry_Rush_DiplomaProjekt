@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ShootState<T> : BaseState<T> where T : EnemyController
 {
-
-    
     private bool canShoot = true;
     private float min; // for shortness
     private float max; // for shortness
@@ -16,6 +14,10 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
 
     public override BaseState<T> CheckConditions()
     {
+        if (controller.enemyIsDead == true)
+        {
+            return new DyingState<T>(controller);
+        }
         if (controller.SqrDistanceToPlayer > max)
         {
             return new ChaseState<T>(controller);

@@ -20,6 +20,10 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
 
     public override BaseState<T> CheckConditions()
     {
+        if (controller.enemyIsDead == true)
+        {
+            return new DyingState<T>(controller);
+        }
         if (controller.SqrDistanceToPlayer <= sqrDistanceToPlayer)
         {
             sawPlayer = true;

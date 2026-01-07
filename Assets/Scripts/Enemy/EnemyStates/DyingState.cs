@@ -16,6 +16,7 @@ public class DyingState<T> : BaseState<T> where T : EnemyController
     public override void EnterState()
     {
         Debug.Log("Enter State: DyingState");
+        controller.Animator.SetTrigger("DieAnim");
     }
 
     public override void ExitState()

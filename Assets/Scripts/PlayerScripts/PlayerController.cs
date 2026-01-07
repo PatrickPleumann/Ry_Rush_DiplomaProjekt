@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerMovement_New movement;
+    [SerializeField] private PlayerShooting shooting;
 
     [SerializeField] public InputActionReference move;
     [SerializeField] public InputActionReference look;
@@ -21,6 +22,9 @@ public class PlayerController : MonoBehaviour
     {
         jump.action.started += movement.Jump;
         jump.action.started += movement.WallJump;
+
+        shoot.action.started += shooting.Player_ShootWeapon;
+
     }
 
     private void OnDisable()
