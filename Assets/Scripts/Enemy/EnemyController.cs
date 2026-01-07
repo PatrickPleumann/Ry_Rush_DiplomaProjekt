@@ -10,7 +10,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public EnemyObjectPool Pool; // no in use currently
     [SerializeField] public Animator Animator;
     [SerializeField] public Transform Player;
-    [SerializeField] public Transform SightRoot;
     [SerializeField] public NavMeshAgent Agent;
     [SerializeField] public EnemyFSM_Data Data;
     [SerializeField] public Transform ThisEnemy;
@@ -102,11 +101,5 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float _dmgAmount)
     {
         EnemyHealth -= _dmgAmount;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        other.transform.TryGetComponent<ProjectileBehaviour>(out ProjectileBehaviour temp);
-        TakeDamage(temp.damage);
     }
 }

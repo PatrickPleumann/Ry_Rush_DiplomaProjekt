@@ -11,6 +11,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private Ray crosshairCenterRay;
     [SerializeField] private LayerMask targetLayerMask;
+    //[SerializeField] private BeatTracking beattracking;
 
 
 
@@ -36,14 +37,11 @@ public class PlayerShooting : MonoBehaviour
         var temp = Physics.Raycast(ray, out hit, 100f, targetLayerMask);
         if (temp == true)
         {
+            hit.transform.parent.TryGetComponent(out EnemyController target);
+            target.TakeDamage(50);
             Debug.Log("HIT!");
         }
         //animator.ResetTrigger("OnShoot");
-    }
-    private void OnShoot()
-    {
-
-
     }
 }
 
