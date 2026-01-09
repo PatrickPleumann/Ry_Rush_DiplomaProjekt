@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private PlayerController controller;
-    [SerializeField] private float sensitivityX;
-    [SerializeField] private float sensitivityY;
+    [SerializeField] private Transform playerOrientation;
+
+    [Header("Camera Values")]
+    [SerializeField] public float sensitivityX;
+    [SerializeField] public float sensitivityY;
     [SerializeField] private float smoothingTime = 20f; //TODO: if player option, this value HAS to be clamped between aproximatly 10 - 30 depends on framerate
                                                         //TODO: below 10 appears to be too slow and above 30 can cause issues while having very low frames
     [SerializeField] private float cameraClampUp = 89f;
     [SerializeField] private float cameraClampDown = -85f;
 
-    [SerializeField] private Transform playerOrientation;
 
     private float xRotation;
     private float yRotation;
@@ -36,8 +39,8 @@ public class PlayerCamera : MonoBehaviour
     {
         mousePos = controller.look.action.ReadValue<Vector2>();
 
-        mousePos.x *= /*Time.deltaTime */ sensitivityX;
-        mousePos.y *= /*Time.deltaTime */ sensitivityY;
+        mousePos.x *= sensitivityX;
+        mousePos.y *= sensitivityY;
 
         //old
         yRotation += mousePos.x;
