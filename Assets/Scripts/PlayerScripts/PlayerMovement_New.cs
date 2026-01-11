@@ -50,6 +50,7 @@ public class PlayerMovement_New : MonoBehaviour
     [Header("Movement States")]
     public MovementState State;
     [SerializeField] private float stateTransitionTimerValue = 0.1f;
+
     public enum MovementState
     {
         GroundMoving,
@@ -86,8 +87,6 @@ public class PlayerMovement_New : MonoBehaviour
 
         ApplyGroundDrag(collisionCheck.IsGrounded);
     }
-
-
 
     private void MovePlayer()
     {
@@ -141,6 +140,12 @@ public class PlayerMovement_New : MonoBehaviour
     {
         if (collisionCheck.canJump && collisionCheck.IsGrounded)
         {
+            //if on beat.... maybe decrease if NOT on beat
+            if (controller.IsOnBeat == true)
+            {
+                controller.scoreboard.IncreaseComboCounter();
+                controller.LastActionOnBeat = true;
+            }
             collisionCheck.canJump = false;
             collisionCheck.exitingSlope = true;
             SwitchState(MovementState.Air);
@@ -254,6 +259,11 @@ public class PlayerMovement_New : MonoBehaviour
     {
         if (collisionCheck.exitingWall == false && Wallrunning && collisionCheck.canJump == true)
         {
+            if (controller.IsOnBeat == true)
+            {
+                controller.scoreboard.IncreaseComboCounter();
+                controller.LastActionOnBeat = true;
+            }
             collisionCheck.exitingWall = true;
             StartCoroutine(ExitWallTimer());
             SwitchState(MovementState.WallJumping);

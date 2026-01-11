@@ -8,13 +8,17 @@ public class Scoreboard_UI : MonoBehaviour
     [SerializeField] private TMP_Text comboCounter;
     [SerializeField] private TMP_Text score;
     [Space]
+
     [Header("Font Settings on Overshoot")]
     [SerializeField] private float fontSizeDefault;
     [SerializeField] private float fontSizeOvershoot;
     [Space]
+
+    [Header("Combo values")]
     [SerializeField] public float currentCombo = 1;
     [SerializeField] public float currentOvershoot = 0;
     [Space]
+
     [SerializeField] public float maxCombo = 5;
     [SerializeField] public float maxOvershoot = 0; // maximum missed beats till combo counter decreases on it´s own
     [Space]
@@ -33,11 +37,15 @@ public class Scoreboard_UI : MonoBehaviour
             comboCounter.fontSize = fontSizeOvershoot;
             comboCounter.fontStyle = FontStyles.Italic;
             comboCounter.fontStyle = FontStyles.Bold;
+            comboCounter.color = Color.red;
         }
         else
         {
-            comboCounter.fontSize = fontSizeDefault; 
+            comboCounter.fontSize = fontSizeDefault;
+            comboCounter.fontStyle = FontStyles.Normal;
+            comboCounter.color = Color.white;
         }
+        //maybe some pulsation visualization 
     }
 
     private void Start()
@@ -53,7 +61,7 @@ public class Scoreboard_UI : MonoBehaviour
         else if (currentOvershoot < maxOvershoot && currentCombo == maxCombo)
             currentOvershoot++;
 
-            comboCounter.text = "Combo Counter: " + currentCombo;
+       comboCounter.text = "Combo Counter: " + currentCombo;
     }
 
     public void DecreaseComboCounter()
@@ -63,12 +71,14 @@ public class Scoreboard_UI : MonoBehaviour
 
         else if (currentOvershoot <= 0 && currentCombo > 1)
             currentCombo--;
+
+        comboCounter.text = "Combo Counter: " + currentCombo;
     }
 
-    public void HoldCurrentCombo()
-    {
-        lastActionOnBeat = true;
-    }
+    //public void HoldCurrentCombo()
+    //{
+    //    lastActionOnBeat = true;
+    //}
 
     public void IncreaseScore(float _points)
     {

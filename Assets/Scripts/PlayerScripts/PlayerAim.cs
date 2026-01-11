@@ -9,6 +9,8 @@ public class PlayerAim : MonoBehaviour
     [SerializeField] private Camera playerCam;
     [SerializeField] private GameObject playerWeapon;
     [SerializeField] private PlayerCamera cam;
+    [SerializeField] private PlayerController controller;
+    
     [Space]
     [Header("Zoom In & Out Values")]
     [SerializeField] private float zoomedOutFOV;
@@ -24,7 +26,6 @@ public class PlayerAim : MonoBehaviour
     private float tempSensX = 0f;
     private float tempSensY = 0f;
 
-    //
     private float X_Sens_Multiplier;
     private float Y_Sens_Multiplier;
 
@@ -53,6 +54,8 @@ public class PlayerAim : MonoBehaviour
 
     private void ZoomIn()
     {
+        //if on beat.... maybe decrease if NOT on beat
+
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, zoomedInFOV, smoothedZoomTime * Time.deltaTime);
         playerWeapon.transform.position = Vector3.Lerp(playerWeapon.transform.position, weaponAim.position, smoothedZoomTime * Time.deltaTime);
         playerWeapon.transform.rotation = Quaternion.Lerp(playerWeapon.transform.rotation, weaponAim.rotation, smoothedZoomTime * Time.deltaTime);
@@ -66,6 +69,11 @@ public class PlayerAim : MonoBehaviour
     }
     public void Zoom_True(InputAction.CallbackContext ctx)
     {
+        if (controller.IsOnBeat == true)
+        {
+            controller.LastActionOnBeat = true;
+            controller.scoreboard.IncreaseComboCounter();
+        }
         if (isZoomedIn == false)
             isZoomedIn = true;
     }

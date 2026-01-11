@@ -14,8 +14,8 @@ public class UI_BeatVisualizer : MonoBehaviour
     [SerializeField] public Image leftBeatVisualizer_2;
 
     [Header("Pulse To Beat")]
-    [SerializeField] private float _pulseSize = 1.15f;
-    [SerializeField] private float _returnSpeed = 3f;
+    [SerializeField] private float pulseSize = 1.15f;
+    [SerializeField] private float returnSpeed = 3f;
     private Vector3 _startSize = new Vector3(1, 1, 1);
 
     private float rightValue;
@@ -41,7 +41,7 @@ public class UI_BeatVisualizer : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, _startSize, Time.deltaTime * _returnSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, _startSize, Time.deltaTime * returnSpeed);
     }
     private void LateUpdate()
     {
@@ -59,6 +59,6 @@ public class UI_BeatVisualizer : MonoBehaviour
 
     public void PulseToBeat()
     {
-        transform.localScale = _startSize * _pulseSize;
+        transform.localScale = _startSize * pulseSize;
     }
 }

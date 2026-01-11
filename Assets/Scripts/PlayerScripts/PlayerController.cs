@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerAim playerAim;
     [SerializeField] private PlayerDash playerDash;
     [SerializeField] private AudioHandler audioHandler;
+    [SerializeField] private BeatTracking beat;
+    [SerializeField] public Scoreboard_UI scoreboard;
 
     [Header("Input References")]
     [SerializeField] public InputActionReference Move;
@@ -26,11 +26,14 @@ public class PlayerController : MonoBehaviour
     public Vector3 moveInput;
     public Vector3 moveDirection;
     public bool AllowMovement;
+    public bool IsOnBeat;
+    public bool LastActionOnBeat;
 
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
         AllowMovement = true;
+        IsOnBeat = false;
     }
     private void OnEnable()
     {
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GetMoveDirection();
+        IsOnBeat = beat.Return_IsOnBeat();
     }
     private void OnDisable()
     {

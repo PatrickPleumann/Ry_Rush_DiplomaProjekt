@@ -14,7 +14,7 @@ public class PatrolState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
-        Debug.Log("Enter State: Patrol");
+        //Debug.Log("Enter State: Patrol");
         controller.Animator.SetTrigger("WalkAnim");
     }
 

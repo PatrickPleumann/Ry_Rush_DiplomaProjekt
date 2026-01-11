@@ -16,7 +16,7 @@ public class DyingState<T> : BaseState<T> where T : EnemyController
     public override void EnterState()
     {
         controller.Agent.isStopped = true;
-        Debug.Log("Enter State: DyingState");
+        //Debug.Log("Enter State: DyingState");
         controller.Animator.SetTrigger("DieAnim");
     }
 

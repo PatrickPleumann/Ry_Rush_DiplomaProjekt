@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class BeatTracking : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] public PlayerController controller;
     [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] public AudioSource source;
     [SerializeField] public AudioClip clip;
@@ -55,7 +56,6 @@ public class BeatTracking : MonoBehaviour
         onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
 
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
-        
     }
 
     private void Start()
@@ -72,7 +72,6 @@ public class BeatTracking : MonoBehaviour
     {
         isOnBeat = CheckForNewBeat();
     }
-
 
     IEnumerator StartSongDelayed(float _timeTillSongStarts)
     {
@@ -91,36 +90,30 @@ public class BeatTracking : MonoBehaviour
             onBeatInvoke.Invoke();
             beatCounter++;
 
-            if (lastActionOnBeat == true)
-                lastActionOnBeat = false;
+            if (controller.LastActionOnBeat == true)
+                controller.LastActionOnBeat = false;
 
-            else if (lastActionOnBeat == false)
+            else if (controller.LastActionOnBeat == false)
                 scoreboard.DecreaseComboCounter();
         }
 
         if ((currentSamples_UI / samplesPerBeat_UI) >= 1)
-        {
             currentSamples_UI = currentSamples;
-        }
+
 
         if ((currentSamples - samplesPerBeat) <= 0 && (currentSamples - samplesPerBeat) > (-onBeatOffset))
-        {
-            if (lastActionOnBeatCounter <= ComboOvershootValue)
-            {
-                lastActionOnBeatCounter++;
-            }
             return true;
-        }
+
 
         if (currentSamples >= 0 && (currentSamples <= onBeatOffset))
-        {
-            if (lastActionOnBeatCounter <= ComboOvershootValue)
-            {
-                lastActionOnBeatCounter++;
-            }
             return true;
-        }
+
 
         return false;
+    }
+
+    public bool Return_IsOnBeat()
+    {
+        return isOnBeat;
     }
 }

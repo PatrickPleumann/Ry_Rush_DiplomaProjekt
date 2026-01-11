@@ -3109,7 +3109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -5061,7 +5061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -9172,7 +9172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -13578,7 +13578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -16881,7 +16881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -25117,7 +25117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -28894,7 +28894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -33583,7 +33583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -34420,7 +34420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -46320,6 +46320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8592b75d94cc904fb606e18c725f083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatTracking
+  controller: {fileID: 358316735}
   scoreboard: {fileID: 1706564864}
   source: {fileID: 0}
   clip: {fileID: 8300000, guid: 69d4a0cfc12cfaf448b4db12ea1fb169, type: 3}
@@ -48581,7 +48582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -54566,9 +54567,17 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: beat
+      value: 
+      objectReference: {fileID: 577735996}
+    - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: playerAim
       value: 
       objectReference: {fileID: 1036945746}
+    - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: scoreboard
+      value: 
+      objectReference: {fileID: 1706564864}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: audioHandler
       value: 
@@ -54577,6 +54586,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_New
       objectReference: {fileID: 0}
+    - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 358316735}
     - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: scoreboard
       value: 
@@ -71766,7 +71779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -73648,7 +73661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -77832,7 +77845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -81302,7 +81315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -84738,7 +84751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -88857,8 +88870,8 @@ MonoBehaviour:
   RightBeatVisualizer_2: {fileID: 246365064}
   leftBeatVisualizer: {fileID: 409192416}
   leftBeatVisualizer_2: {fileID: 279396725}
-  _pulseSize: 1.3
-  _returnSpeed: 2
+  pulseSize: 1.15
+  returnSpeed: 3
 --- !u!1001 &931217810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93367,7 +93380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -95433,7 +95446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -100648,6 +100661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5130924307175079271, guid: 6ff5dd99bf9d72d40b869b0ff2033830, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 358316735}
     - target: {fileID: 6177423211597618214, guid: 6ff5dd99bf9d72d40b869b0ff2033830, type: 3}
       propertyPath: cameraPos
       value: 
@@ -109011,7 +109028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -110377,7 +110394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1181512158
 Transform:
   m_ObjectHideFlags: 0
@@ -115502,7 +115519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -118636,7 +118653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -120131,7 +120148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -124797,7 +124814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -137303,7 +137320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -140567,7 +140584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -146880,7 +146897,7 @@ GameObject:
   - component: {fileID: 1706564863}
   - component: {fileID: 1706564864}
   m_Layer: 5
-  m_Name: Ingame_UI
+  m_Name: Scoreboard_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151112,7 +151129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -182850,7 +182867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1844353403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185954,7 +185971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -191050,7 +191067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -194212,7 +194229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -196179,7 +196196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -200455,7 +200472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5717835785787592908, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853306887739082962, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer

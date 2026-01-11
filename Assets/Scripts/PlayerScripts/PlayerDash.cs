@@ -26,6 +26,13 @@ public class PlayerDash : MonoBehaviour
     {
         if (canDash == true)
         {
+            //if on beat.... maybe decrease if NOT on beat
+            if (controller.IsOnBeat == true)
+            {
+                controller.scoreboard.IncreaseComboCounter();
+                controller.LastActionOnBeat = true;
+            }
+
             controller.AllowMovement = false;
             canDash = false;
             rb_player.linearDamping = 0f;

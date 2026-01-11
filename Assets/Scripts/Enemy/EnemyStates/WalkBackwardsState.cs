@@ -28,7 +28,7 @@ public class WalkBackwardsState<T> : BaseState<T> where T : EnemyController
     {
         controller.Agent.speed = 1.5f;
         controller.Agent.updateRotation = false;
-        Debug.Log("Enter State: WalkBackwardsState");
+        //Debug.Log("Enter State: WalkBackwardsState");
         controller.Animator.SetTrigger("BackwardsAnim");
     }
 
@@ -40,7 +40,7 @@ public class WalkBackwardsState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
-        Debug.Log("Exit State: WalkBackwardsState");
+        //Debug.Log("Exit State: WalkBackwardsState");
         controller.Animator.ResetTrigger("BackwardsAnim");
     }
 }

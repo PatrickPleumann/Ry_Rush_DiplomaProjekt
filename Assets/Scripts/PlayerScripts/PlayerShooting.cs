@@ -3,15 +3,17 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerShooting : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private PlayerController controller;
     [SerializeField] private GameObject bullet;
     [SerializeField] private Scoreboard_UI scoreboard;
     [SerializeField] private BeatTracking beatTracking;
     [Space]
-    [Space]
+
     [SerializeField] private LayerMask targetLayerMask;
     [SerializeField] private float bulletDamage;
     [SerializeField] private float hitOnBeatMultiplier;
@@ -21,9 +23,18 @@ public class PlayerShooting : MonoBehaviour
     private Ray crosshairCenterRay;
     private Ray ray;
     private RaycastHit hit;
+    private bool onBeat;
 
     public void Player_ShootWeapon(InputAction.CallbackContext context)
     {
+        onBeat = false;
+        if (controller.IsOnBeat == true)
+        {
+            scoreboard.IncreaseComboCounter();
+            controller.LastActionOnBeat = true;
+            onBeat = true;
+        }
+
         //animator.SetTrigger("OnShoot");
         crosshairCenterRay = Camera.main.ViewportPointToRay(cameraCenterPoint);
 
@@ -35,12 +46,16 @@ public class PlayerShooting : MonoBehaviour
         if (temp == true)
         {
             hit.transform.parent.TryGetComponent(out EnemyController target);
-            if (beatTracking.isOnBeat == true)
+
+            if (onBeat == true)
             {
-                target.TakeDamage( (bulletDamage * scoreboard.currentCombo) * hitOnBeatMultiplier);
+                Debug.Log((bulletDamage * scoreboard.currentCombo) * hitOnBeatMultiplier);
+                target.TakeDamage((bulletDamage * scoreboard.currentCombo) * hitOnBeatMultiplier);
             }
+
             else
             {
+                Debug.Log(bulletDamage * scoreboard.currentCombo);
                 target.TakeDamage(bulletDamage * scoreboard.currentCombo);
             }
         }

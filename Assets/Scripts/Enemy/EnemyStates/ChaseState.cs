@@ -29,7 +29,7 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
-        Debug.Log("Enter State: Chase");
+        //Debug.Log("Enter State: Chase");
         controller.Data.canSeePlayer = true;
         controller.Agent.destination = controller.Player.position;
     }

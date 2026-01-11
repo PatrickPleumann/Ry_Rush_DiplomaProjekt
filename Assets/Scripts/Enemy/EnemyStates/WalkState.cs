@@ -19,8 +19,8 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
-        Debug.Log(controller.SqrDistanceToPlayer);
-        Debug.Log("Enter State: Walk");
+        //Debug.Log(controller.SqrDistanceToPlayer);
+        //Debug.Log("Enter State: Walk");
         controller.Animator.SetTrigger("Walk");
         controller.Agent.speed = controller.Data.enemyMaxSpeedWalking;
     }
