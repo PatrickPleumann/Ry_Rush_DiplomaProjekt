@@ -46320,6 +46320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8592b75d94cc904fb606e18c725f083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatTracking
+  scoreboard: {fileID: 1706564864}
   source: {fileID: 0}
   clip: {fileID: 8300000, guid: 69d4a0cfc12cfaf448b4db12ea1fb169, type: 3}
   timeTillSongStarts: 3
@@ -54575,6 +54576,22 @@ PrefabInstance:
     - target: {fileID: 3753140284131045341, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_Name
       value: Player_New
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: scoreboard
+      value: 
+      objectReference: {fileID: 1706564864}
+    - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: beatTracking
+      value: 
+      objectReference: {fileID: 577735996}
+    - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: bulletDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: hitOnBeatMultiplier
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -122844,7 +122861,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392527811
 MonoBehaviour:
@@ -146902,8 +146919,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d510347960ca0f44983424380bf853d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Scoreboard_UI
+  beatTracking: {fileID: 577735996}
   comboCounter: {fileID: 1392527811}
   score: {fileID: 1925901080}
+  fontSizeDefault: 36
+  fontSizeOvershoot: 50
+  currentCombo: 1
+  currentOvershoot: 0
+  maxCombo: 5
+  maxOvershoot: 4
+  lastActionOnBeat: 0
 --- !u!1 &1707645527
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,13 +1,12 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Rendering;
+
 
 public class BeatTracking : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] public AudioSource source;
     [SerializeField] public AudioClip clip;
 
@@ -39,10 +38,12 @@ public class BeatTracking : MonoBehaviour
 
     public int lastActionOnBeatCounter = 0;
     public bool lastActionOnBeat = false;
+
     [SerializeField] private int ComboOvershootValue = 3;
 
     private int lastFrameSamples = 0;
     private int beatMultiplier = 1;
+
 
 
     private void Awake()
@@ -82,15 +83,19 @@ public class BeatTracking : MonoBehaviour
     {
         currentSamples += source.timeSamples - lastFrameSamples;
         currentSamples_UI += source.timeSamples - lastFrameSamples;
-
         lastFrameSamples = source.timeSamples;
-        //update UI stuff for beat tracking visualization here
 
         if ((currentSamples / samplesPerBeat) >= 1)
         {
             currentSamples -= samplesPerBeat;
             onBeatInvoke.Invoke();
             beatCounter++;
+
+            if (lastActionOnBeat == true)
+                lastActionOnBeat = false;
+
+            else if (lastActionOnBeat == false)
+                scoreboard.DecreaseComboCounter();
         }
 
         if ((currentSamples_UI / samplesPerBeat_UI) >= 1)

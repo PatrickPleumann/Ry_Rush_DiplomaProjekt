@@ -42,20 +42,17 @@ public class PlayerCamera : MonoBehaviour
         mousePos.x *= sensitivityX;
         mousePos.y *= sensitivityY;
 
-        //old
         yRotation += mousePos.x;
         xRotation -= mousePos.y;
 
         xRotation = Mathf.Clamp(xRotation, cameraClampDown, cameraClampUp);
 
-        //old
         xSmoothRot = Mathf.Lerp(xSmoothRot, xRotation, smoothingTime * Time.deltaTime);
         ySmoothRot = Mathf.Lerp(ySmoothRot, yRotation, smoothingTime * Time.deltaTime);
     }
 
     private void UpdateRotation()
     {
-        //old
         transform.rotation = Quaternion.Euler(xSmoothRot, ySmoothRot, 0f);
         playerOrientation.rotation = Quaternion.Euler(0f, ySmoothRot, 0f);
     }

@@ -85,15 +85,12 @@ public class PlayerMovement_New : MonoBehaviour
             PlayerSpeedControl();
 
         ApplyGroundDrag(collisionCheck.IsGrounded);
-
     }
 
 
 
     private void MovePlayer()
     {
-        //moveDirection = orientation.forward * controller.moveInput.z + orientation.right * controller.moveInput.x;
-
         if (collisionCheck.exitingSlope == false && collisionCheck.OnSlope() == true)
         {
             rb_player.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);

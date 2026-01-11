@@ -38,6 +38,7 @@ public class PlayerCollisionCheck : MonoBehaviour
     private void FixedUpdate()
     {
         IsGrounded = Physics.OverlapBox(groundCheckRoot.position, groundCheckSize / 2, Quaternion.identity, groundCheckLayers).Length > 0;
+
         AboveGround = AboveGroundForWallRun();
 
         CheckForWall();

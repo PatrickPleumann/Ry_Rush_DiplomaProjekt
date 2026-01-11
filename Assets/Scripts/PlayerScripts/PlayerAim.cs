@@ -44,10 +44,10 @@ public class PlayerAim : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (isZoomedIn == true)
+        if (isZoomedIn == true && playerCam.fieldOfView > zoomedInFOV)
             ZoomIn();
 
-        else
+        else if (playerCam.fieldOfView < zoomedOutFOV)
             ZoomOut();
     }
 

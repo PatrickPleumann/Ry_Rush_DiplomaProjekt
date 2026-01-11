@@ -25,11 +25,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Transform Orientation;
     public Vector3 moveInput;
     public Vector3 moveDirection;
-    public bool AllowMovement = true;
+    public bool AllowMovement;
 
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        AllowMovement = true;
     }
     private void OnEnable()
     {
