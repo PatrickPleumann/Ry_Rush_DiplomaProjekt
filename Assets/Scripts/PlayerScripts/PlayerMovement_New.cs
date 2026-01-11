@@ -8,16 +8,16 @@ public class PlayerMovement_New : MonoBehaviour
     [Header("General")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private PlayerCollisionCheck collisionCheck;
-    [SerializeField] private Transform orientation;
+    //[SerializeField] private Transform orientation;
 
     private Rigidbody rb_player;
-    private Vector3 moveInput; // from readValue<Vector2>()
-    private Vector3 moveDirection;
+    //private Vector3 moveInput; // from readValue<Vector2>()
+    //private Vector3 moveDirection;
     private Vector3 speedControl;
     private Vector3 speedControlLimit;
     private Vector3 wallForward;
     private float currentMaxMoveSpeed;
-    private bool exitingSlope;
+    //into collision check
 
 
     [Header("Ground Movement")]
@@ -29,7 +29,6 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float jumpCooldown = 0.25f;
     [SerializeField] private float airMultiplier = 0.4f;
-    private bool canJump = true;
 
     [Header("Wallrunning & Walljumping")]
     [SerializeField] private float wallJumpUpForce;
@@ -39,12 +38,12 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float maxWallRunSpeed;
     [SerializeField] private float maxWallRunTime;
     [SerializeField] public bool Wallrunning;
+
     private float wallRunTimer;
     private bool allowWallJump;
     private Vector3 wallJumpForceApplied;
 
     [Header("Exiting Wall")]
-    private bool exitingWall;
     [SerializeField] private float exitWallTime;
 
 
@@ -69,8 +68,6 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void Update()
     {
-        GetMoveDirection();
-
         StateHandler();
 
         StateMachine();
@@ -78,27 +75,26 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Wallrunning)
+        if (Wallrunning && controller.AllowMovement == true)
             WallRunning();
-        else
+
+        else if (controller.AllowMovement == true)
             MovePlayer();
 
-        PlayerSpeedControl();
+        if (controller.AllowMovement == true)
+            PlayerSpeedControl();
+
         ApplyGroundDrag(collisionCheck.IsGrounded);
 
     }
 
-    private void GetMoveDirection()
-    {
-        moveInput.x = controller.move.action.ReadValue<Vector2>().x;
-        moveInput.z = controller.move.action.ReadValue<Vector2>().y;
-    }
+
 
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * moveInput.z + orientation.right * moveInput.x;
+        //moveDirection = orientation.forward * controller.moveInput.z + orientation.right * controller.moveInput.x;
 
-        if (exitingSlope == false && collisionCheck.OnSlope() == true)
+        if (collisionCheck.exitingSlope == false && collisionCheck.OnSlope() == true)
         {
             rb_player.AddForce(GetSlopeMoveDirection() * acceleration, ForceMode.Force);
             if (rb_player.linearVelocity.y > 0)
@@ -106,17 +102,17 @@ public class PlayerMovement_New : MonoBehaviour
         }
 
         else if (collisionCheck.IsGrounded == true)
-            rb_player.AddForce(moveDirection.normalized * acceleration, ForceMode.Force);
+            rb_player.AddForce(controller.moveDirection.normalized * acceleration, ForceMode.Force);
 
         else if (collisionCheck.IsGrounded == false)
-            rb_player.AddForce(moveDirection.normalized * acceleration * airMultiplier, ForceMode.Force);
+            rb_player.AddForce(controller.moveDirection.normalized * acceleration * airMultiplier, ForceMode.Force);
 
         rb_player.useGravity = !collisionCheck.OnSlope();
     }
 
     private void PlayerSpeedControl()
     {
-        if (exitingSlope == false && collisionCheck.OnSlope() == true)
+        if (collisionCheck.exitingSlope == false && collisionCheck.OnSlope() == true)
         {
             if (rb_player.linearVelocity.sqrMagnitude > (currentMaxMoveSpeed * currentMaxMoveSpeed))
                 rb_player.linearVelocity = rb_player.linearVelocity.normalized * currentMaxMoveSpeed;
@@ -146,10 +142,10 @@ public class PlayerMovement_New : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (canJump && collisionCheck.IsGrounded)
+        if (collisionCheck.canJump && collisionCheck.IsGrounded)
         {
-            canJump = false;
-            exitingSlope = true;
+            collisionCheck.canJump = false;
+            collisionCheck.exitingSlope = true;
             SwitchState(MovementState.Air);
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
@@ -161,8 +157,8 @@ public class PlayerMovement_New : MonoBehaviour
     private IEnumerator ResetJump(float _jumpCooldown)
     {
         yield return new WaitForSeconds(_jumpCooldown);
-        canJump = true;
-        exitingSlope = false;
+        collisionCheck.canJump = true;
+        collisionCheck.exitingSlope = false;
     }
 
     private IEnumerator StateTransitionTimer(float _transitionTimer)
@@ -198,12 +194,12 @@ public class PlayerMovement_New : MonoBehaviour
 
     private Vector3 GetSlopeMoveDirection()
     {
-        return Vector3.ProjectOnPlane(moveDirection, collisionCheck.SlopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(controller.moveDirection, collisionCheck.SlopeHit.normal).normalized;
     }
 
     private void StateMachine()
     {
-        if (collisionCheck.AllowWallRun() == true && moveInput.z > 0 && !exitingWall)
+        if (collisionCheck.AllowWallRun() == true && controller.moveInput.z > 0 && !collisionCheck.exitingWall)
         {
             if (!Wallrunning)
             {
@@ -211,7 +207,7 @@ public class PlayerMovement_New : MonoBehaviour
                 allowWallJump = true;
             }
         }
-        else if (exitingWall)
+        else if (collisionCheck.exitingWall)
         {
             if (Wallrunning)
                 StopWallRun();
@@ -240,15 +236,15 @@ public class PlayerMovement_New : MonoBehaviour
         //TODO: figure out how to get rid of new Vector3 step below
         Vector3 wallNormal = collisionCheck.OnRightWall ? collisionCheck.hitWallRight.normal : collisionCheck.hitWallLeft.normal;
 
-        Vector3 wallForward = Vector3.Cross(wallNormal, collisionCheck.wallCheckRoot.up);
+        Vector3 wallForward = Vector3.Cross(wallNormal, collisionCheck.WallCheckRoot.up);
 
-        if ((orientation.forward - wallForward).sqrMagnitude > (orientation.forward - -wallForward).sqrMagnitude)
+        if ((controller.Orientation.forward - wallForward).sqrMagnitude > (controller.Orientation.forward - -wallForward).sqrMagnitude)
             wallForward = -wallForward;
 
         if (Wallrunning)
             rb_player.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
-        if (!(collisionCheck.OnLeftWall && moveInput.x > 0) && !(collisionCheck.OnRightWall && moveInput.x < 0))
+        if (!(collisionCheck.OnLeftWall && controller.moveInput.x > 0) && !(collisionCheck.OnRightWall && controller.moveInput.x < 0))
             rb_player.AddForce(-wallNormal * pushToWallForce, ForceMode.Force);
     }
 
@@ -259,9 +255,9 @@ public class PlayerMovement_New : MonoBehaviour
 
     public void WallJump(InputAction.CallbackContext context)
     {
-        if (exitingWall == false && Wallrunning && canJump == true)
+        if (collisionCheck.exitingWall == false && Wallrunning && collisionCheck.canJump == true)
         {
-            exitingWall = true;
+            collisionCheck.exitingWall = true;
             StartCoroutine(ExitWallTimer());
             SwitchState(MovementState.WallJumping);
             Vector3 wallNormal = collisionCheck.OnRightWall ? collisionCheck.hitWallRight.normal : collisionCheck.hitWallLeft.normal;
@@ -277,7 +273,7 @@ public class PlayerMovement_New : MonoBehaviour
     private IEnumerator ExitWallTimer() // takes a float and a bool and set´s boo
     {
         yield return new WaitForSeconds(exitWallTime);
-        exitingWall = false;
+        collisionCheck.exitingWall = false;
         yield break;
     }
 }

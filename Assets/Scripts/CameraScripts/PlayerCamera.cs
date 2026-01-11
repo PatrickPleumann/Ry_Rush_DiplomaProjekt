@@ -37,7 +37,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void UpdateCamera()
     {
-        mousePos = controller.look.action.ReadValue<Vector2>();
+        mousePos = controller.Look.action.ReadValue<Vector2>();
 
         mousePos.x *= sensitivityX;
         mousePos.y *= sensitivityY;

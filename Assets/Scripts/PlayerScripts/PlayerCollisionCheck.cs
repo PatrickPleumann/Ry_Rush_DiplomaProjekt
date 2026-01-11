@@ -9,12 +9,16 @@ public class PlayerCollisionCheck : MonoBehaviour
     [SerializeField] private Vector3 groundCheckPos;
     [SerializeField] private Vector3 groundCheckSize;
 
+    public bool exitingSlope;
+    public bool canJump = true;
+    public bool exitingWall;
+
 
     [Header("Wallruning Detection")]
     [SerializeField] public bool AboveGround { get; private set; }
+    [SerializeField] public Transform WallCheckRoot;
     [SerializeField] private LayerMask wallCheckLayers;
     [SerializeField] private Transform orientation;
-    [SerializeField] public Transform wallCheckRoot;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private float minJumpHeight;
 
@@ -43,8 +47,8 @@ public class PlayerCollisionCheck : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawCube(groundCheckRoot.position, groundCheckSize);
-        Gizmos.DrawRay(wallCheckRoot.position, orientation.right * wallCheckDistance);
-        Gizmos.DrawRay(wallCheckRoot.position, -orientation.right * wallCheckDistance);
+        Gizmos.DrawRay(WallCheckRoot.position, orientation.right * wallCheckDistance);
+        Gizmos.DrawRay(WallCheckRoot.position, -orientation.right * wallCheckDistance);
         Gizmos.DrawRay(transform.position, Vector3.down * minJumpHeight);
     }
 
@@ -60,8 +64,8 @@ public class PlayerCollisionCheck : MonoBehaviour
 
     private void CheckForWall()
     {
-        OnRightWall = Physics.Raycast(wallCheckRoot.position, orientation.right, out hitWallRight, wallCheckDistance, wallCheckLayers);
-        OnLeftWall = Physics.Raycast(wallCheckRoot.position, -orientation.right, out hitWallLeft, wallCheckDistance, wallCheckLayers);
+        OnRightWall = Physics.Raycast(WallCheckRoot.position, orientation.right, out hitWallRight, wallCheckDistance, wallCheckLayers);
+        OnLeftWall = Physics.Raycast(WallCheckRoot.position, -orientation.right, out hitWallLeft, wallCheckDistance, wallCheckLayers);
     }
 
     private bool AboveGroundForWallRun()
