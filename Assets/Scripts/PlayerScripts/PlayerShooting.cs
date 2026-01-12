@@ -35,7 +35,7 @@ public class PlayerShooting : MonoBehaviour
             onBeat = true;
         }
 
-        //animator.SetTrigger("OnShoot");
+        //controller.weaponAnimationController.SetTrigger("OnShoot");
         crosshairCenterRay = Camera.main.ViewportPointToRay(cameraCenterPoint);
 
         var tempBullet = Instantiate(bullet, crosshairCenterRay.origin, Quaternion.Euler(transform.eulerAngles));

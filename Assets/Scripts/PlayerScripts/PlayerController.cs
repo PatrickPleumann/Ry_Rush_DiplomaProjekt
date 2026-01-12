@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioHandler audioHandler;
     [SerializeField] private BeatTracking beat;
     [SerializeField] public Scoreboard_UI scoreboard;
+    //[SerializeField] public Animator weaponAnimationController;
 
     [Header("Input References")]
     [SerializeField] public InputActionReference Move;
