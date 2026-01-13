@@ -12,7 +12,7 @@ public class AudioHandler : MonoBehaviour
 
     [Header("Shooting Audio")]
     [SerializeField] public AudioClip playerAim;
-    [SerializeField] public AudioClip[] playerShoot;
+    [SerializeField] public AudioClip playerShoot;
     [SerializeField] public AudioClip playerShootCharged;
 
     [Header("Movement Audio")]

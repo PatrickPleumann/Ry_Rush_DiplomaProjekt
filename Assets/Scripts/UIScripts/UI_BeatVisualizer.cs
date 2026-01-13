@@ -8,10 +8,14 @@ public class UI_BeatVisualizer : MonoBehaviour
     [SerializeField] private BeatTracking beatTracking;
     [Space]
     [SerializeField] public Image RightBeatVisualizer;
-    [SerializeField] public Image RightBeatVisualizer_2;
     [Space]
     [SerializeField] public Image leftBeatVisualizer;
-    [SerializeField] public Image leftBeatVisualizer_2;
+    [Space]
+    [SerializeField] public Image leftMin;
+    [SerializeField] public Image leftMax;
+
+    [SerializeField] public Image rightMin;
+    [SerializeField] public Image rightMax;
 
     [Header("Pulse To Beat")]
     [SerializeField] private float pulseSize = 1.15f;

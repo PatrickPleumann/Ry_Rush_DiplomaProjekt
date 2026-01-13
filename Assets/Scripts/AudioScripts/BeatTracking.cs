@@ -20,10 +20,10 @@ public class BeatTracking : MonoBehaviour
     [Header("Beat Tracking Values")]
 
     [SerializeField] public int asyncValue;
-    [SerializeField] private float beatOffsetMultiplier;
+    [SerializeField] public float beatOffsetMultiplier;
     [SerializeField] public int samplesPerBeat = 0;
     [SerializeField] public float bpm = 0f;
-
+    [SerializeField] public float lastActionOnBeatTimer;
 
 
     public int currentSamples = 0;
@@ -44,7 +44,6 @@ public class BeatTracking : MonoBehaviour
 
     private int lastFrameSamples = 0;
     private int beatMultiplier = 1;
-
 
 
     private void Awake()
@@ -97,7 +96,7 @@ public class BeatTracking : MonoBehaviour
                 scoreboard.DecreaseComboCounter();
         }
 
-        if ((currentSamples_UI / samplesPerBeat_UI) >= 1)
+        if ((currentSamples_UI / samplesPerBeat_UI) >= 1) // for testing
             currentSamples_UI = currentSamples;
 
 
@@ -105,7 +104,7 @@ public class BeatTracking : MonoBehaviour
             return true;
 
 
-        if (currentSamples >= 0 && (currentSamples <= onBeatOffset))
+        if (currentSamples > 0 && (currentSamples <= onBeatOffset))
             return true;
 
 

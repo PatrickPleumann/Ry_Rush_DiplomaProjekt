@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public bool IsOnBeat;
     public bool LastActionOnBeat;
 
+    private float lastActionOnBeatTime;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -52,6 +55,11 @@ public class PlayerController : MonoBehaviour
 
         Dash.action.started += playerDash.Dash;
 
+    }
+    private void Start()
+    {
+        lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier);
+        Debug.Log(lastActionOnBeatTime  + 0.1f);
     }
 
     private void Update()
@@ -76,7 +84,7 @@ public class PlayerController : MonoBehaviour
     }
     private void PlaySingleShootSound(InputAction.CallbackContext ctx)
     {
-        audioHandler.PlaySound_sourceShooting(audioHandler.playerShoot[Random.Range(0, audioHandler.playerShoot.Length)]);
+        audioHandler.PlaySound_sourceShooting(audioHandler.playerShoot);
     }
 
     private void GetMoveDirection()
@@ -86,6 +94,13 @@ public class PlayerController : MonoBehaviour
         moveInput.z = Move.action.ReadValue<Vector2>().y;
 
         moveDirection = Orientation.forward * moveInput.z + Orientation.right * moveInput.x;
+    }
+    private IEnumerator LastActionOnBeatTimer()
+    {
+        LastActionOnBeat = true;
+        yield return new WaitForSeconds(lastActionOnBeatTime);
+        LastActionOnBeat = false;
+        yield break;
     }
 }
 
