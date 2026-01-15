@@ -1,25 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponAnimBehaviour : MonoBehaviour
 {
-    private Animation anim;
 
+    [SerializeField] private Animator animator;
+    public void SetShotAnim(InputAction.CallbackContext ctx)
+    {
+        animator.SetTrigger("ShootAnim");
+    }
 
-    private void Awake()
+    public void SetReloadAnim(InputAction.CallbackContext ctx)
     {
-        anim = GetComponent<Animation>();
+        animator.SetTrigger("ReloadAnim");
     }
-    private void Start()
-    {
-        StartCoroutine(Anim());
-        
 
-    }
-    private IEnumerator Anim()
-    {
-        yield return new WaitForSeconds(1);
-        anim.Play();
-        yield break;
-    }
 }

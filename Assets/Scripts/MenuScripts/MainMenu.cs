@@ -36,11 +36,11 @@ public class MainMenu : MonoBehaviour
 
     private void OnOptionsButtonClicked()
     {
-        throw new NotImplementedException();
+        Debug.Log("Nope");
     }
     private void OnImportSongButtonClicked()
     {
-        throw new NotImplementedException();
+        Debug.Log("Nope");
     }
 
     private void OnQuitGameButtonClicked()

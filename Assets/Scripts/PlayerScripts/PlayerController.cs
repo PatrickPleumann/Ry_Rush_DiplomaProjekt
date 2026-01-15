@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioHandler audioHandler;
     [SerializeField] private BeatTracking beat;
     [SerializeField] public Scoreboard_UI scoreboard;
-    //[SerializeField] public Animator weaponAnimationController;
+    [SerializeField] private WeaponAnimBehaviour weaponAnims;
 
     [Header("Input References")]
     [SerializeField] public InputActionReference Move;
@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
         Shoot.action.started += shooting.Player_ShootWeapon;
         Shoot.action.started += PlaySingleShootSound;
+        Shoot.action.started += weaponAnims.SetShotAnim;
 
         Aim.action.started += playerAim.Zoom_True;
         Aim.action.started += playerAim.ReduceMouseSensitivity;

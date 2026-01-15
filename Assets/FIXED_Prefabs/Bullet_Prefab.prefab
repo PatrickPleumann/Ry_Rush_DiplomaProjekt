@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3823126500088257027}
   - component: {fileID: 79418175364195351}
   - component: {fileID: 2722457947703705388}
+  - component: {fileID: -8843569148602677708}
   m_Layer: 0
   m_Name: Bullet_Prefab
   m_TagString: Untagged
@@ -139,3 +140,17 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-8843569148602677708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132041622088824371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f70122f57821a94c8ffb3408c8ac430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileBehaviour
+  damage: 100
+  despawnTime: 1.5

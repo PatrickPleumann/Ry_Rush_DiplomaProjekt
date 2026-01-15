@@ -27,6 +27,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void Player_ShootWeapon(InputAction.CallbackContext context)
     {
+        beatTracking.ShowCurrentSamples();
         onBeat = false;
         if (controller.IsOnBeat == true)
         {

@@ -111,6 +111,12 @@ public class BeatTracking : MonoBehaviour
         return false;
     }
 
+    public void ShowCurrentSamples()
+    {
+        Debug.Log("Min Samples: " + (samplesPerBeat - onBeatOffset));
+        Debug.Log("Max Samples: " + onBeatOffset);
+        Debug.Log("Current Samples: " + currentSamples);
+    }
     public bool Return_IsOnBeat()
     {
         return isOnBeat;
