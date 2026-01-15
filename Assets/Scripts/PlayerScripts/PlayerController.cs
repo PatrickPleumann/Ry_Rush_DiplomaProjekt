@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -30,11 +31,13 @@ public class PlayerController : MonoBehaviour
     public bool AllowMovement;
     public bool IsOnBeat;
     public bool LastActionOnBeat;
+    
 
     private float lastActionOnBeatTime;
 
     private void Awake()
     {
+        
         Cursor.lockState = CursorLockMode.Locked;
         AllowMovement = true;
         IsOnBeat = false;
