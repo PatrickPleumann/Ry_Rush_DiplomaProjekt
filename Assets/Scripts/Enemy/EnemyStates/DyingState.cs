@@ -22,7 +22,8 @@ public class DyingState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
-        //nothing happens here
+
+        //nothing happens here enemy is dead... duuuuh
     }
 
     public override void UpdateState()

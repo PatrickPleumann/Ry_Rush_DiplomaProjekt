@@ -1,9 +1,6 @@
-using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerShooting : MonoBehaviour
 {

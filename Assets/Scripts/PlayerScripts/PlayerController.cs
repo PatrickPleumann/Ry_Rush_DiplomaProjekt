@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
         Aim.action.canceled += playerAim.ReIncreaseReducedMouseSensitivity;
 
         Dash.action.started += playerDash.Dash;
-
     }
     private void Start()
     {

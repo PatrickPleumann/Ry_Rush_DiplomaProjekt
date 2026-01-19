@@ -24,6 +24,10 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
         {
             return new ShootState<T>(controller);
         }
+        if (controller.SqrDistanceToPlayer < controller.SqrMaxDistanceToPlayer)
+        {
+            return new IdleState<T>(controller);
+        }
         return null;
     }
 

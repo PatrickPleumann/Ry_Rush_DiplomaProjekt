@@ -152,5 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f70122f57821a94c8ffb3408c8ac430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileBehaviour
-  damage: 100
+  damage: 5
   despawnTime: 1.5

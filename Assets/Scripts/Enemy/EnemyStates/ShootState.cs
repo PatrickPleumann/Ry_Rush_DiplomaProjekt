@@ -18,11 +18,12 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
         {
             return new DyingState<T>(controller);
         }
-        if (controller.SqrDistanceToPlayer > max)
+                                                        //beware
+        if (controller.SqrDistanceToPlayer > max && controller.canChase == true)
         {
             return new ChaseState<T>(controller);
         }
-        if (controller.SqrDistanceToPlayer > controller.SqrDistancePlayerInSight)
+        if (controller.SqrDistanceToPlayer > controller.SqrDistancePlayerInSight && controller.canChase == true)
         {
             return new IdleState<T>(controller);
         }

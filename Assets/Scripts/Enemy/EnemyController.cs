@@ -13,8 +13,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public NavMeshAgent Agent;
     [SerializeField] public EnemyFSM_Data Data;
     [SerializeField] public Transform ThisEnemy;
+    [SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;
 
     public float EnemyDirSmoothSpeed;
+
+    public bool canChase = true;
 
     public float EnemyHealth;
 
@@ -57,9 +60,11 @@ public class EnemyController : MonoBehaviour
     }
     private void Start()
     {
+        maxEnemiesChasing = GetComponentInParent<EnemyMaxChasingCounter>();
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this once before entering any state, all following stateSwitchBehaviours depend on that value
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); //point of entry
+
     }
 
     private void Update()
@@ -71,6 +76,16 @@ public class EnemyController : MonoBehaviour
         {
             EnemyDying();
         }
+        //if (SqrDistanceToPlayer < SqrMaxDistanceToPlayer && maxEnemiesChasing.CheckCurrentEnemiesChasing() == true)
+        //{
+        //    canChase = true;
+        //    maxEnemiesChasing.RegisterChaseState();
+        //}
+        //else
+        //{
+        //    canChase = false;
+        //    maxEnemiesChasing.UnregisterFromChasing();
+        //}
     }
 
     private float CheckDistanceToPlayer()
@@ -86,11 +101,6 @@ public class EnemyController : MonoBehaviour
         newDirectionSmoothed = Vector3.Slerp(transform.forward, newDirection, EnemyDirSmoothSpeed * Time.deltaTime);
 
         transform.rotation = Quaternion.LookRotation(newDirectionSmoothed);
-    }
-
-    public void EnemyShoot()
-    {
-
     }
 
     private void EnemyDying()

@@ -26,7 +26,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
         }
         if (controller.SqrDistanceToPlayer <= sqrDistanceToPlayer)
         {
-            sawPlayer = true;
+            
             if (swapStateTimer <= 0)
             {
                 return new ChaseState<T>(controller);

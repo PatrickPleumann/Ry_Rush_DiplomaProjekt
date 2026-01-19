@@ -3189,7 +3189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -5141,7 +5141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -9268,7 +9268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -13698,7 +13698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -17009,7 +17009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -25293,7 +25293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -29083,7 +29083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -33816,7 +33816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -34653,7 +34653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -46819,12 +46819,12 @@ MonoBehaviour:
   controller: {fileID: 358316735}
   scoreboard: {fileID: 1706564864}
   source: {fileID: 0}
-  clip: {fileID: 8300000, guid: 69d4a0cfc12cfaf448b4db12ea1fb169, type: 3}
+  clip: {fileID: 8300000, guid: 226eb63cf2f0e9847b5b5fe748aa499c, type: 3}
   timeTillSongStarts: 3
-  asyncValue: -4000
+  asyncValue: 12000
   beatOffsetMultiplier: 0.1
   samplesPerBeat: 0
-  bpm: 90
+  bpm: 103
   lastActionOnBeatTimer: 0
   currentSamples: 0
   currentTimeSamplesMin: 0
@@ -49159,7 +49159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -72492,7 +72492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -74382,7 +74382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -78594,7 +78594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -82084,7 +82084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -85540,7 +85540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -94283,7 +94283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -96393,7 +96393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -109959,7 +109959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -111295,6 +111295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1181512158}
+  - component: {fileID: 1181512159}
   m_Layer: 0
   m_Name: AllEnemys
   m_TagString: Untagged
@@ -111310,8 +111311,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181512157}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.355, y: 0.26, z: -25.588}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.0928297, y: 0.26, z: -0.43541908}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -111346,8 +111347,21 @@ Transform:
   - {fileID: 1349011780}
   - {fileID: 889072754}
   - {fileID: 411660396}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1844353404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1181512159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181512157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e144cc9cf64f34da3c50588717c8f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMaxChasingCounter
+  maxEnemiesChasing: 5
 --- !u!1001 &1181877017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -116514,7 +116528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -119808,7 +119822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -121311,7 +121325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -126205,7 +126219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -138903,7 +138917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -142227,7 +142241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -152778,7 +152792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -184533,7 +184547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1844353403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184578,7 +184592,8 @@ Transform:
   m_LocalPosition: {x: -14.26217, y: 0, z: -25.15258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1181512158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1847603125
@@ -187709,7 +187724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -192841,7 +192856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -196007,7 +196022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -198066,7 +198081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -202362,7 +202377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -206924,7 +206939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494240623970834838, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: EnemyDirSmoothSpeed
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7546702335410540569, guid: 7e66b10eee052e042abdb139d2036220, type: 3}
       propertyPath: m_Layer
@@ -207627,7 +207642,6 @@ SceneRoots:
   - {fileID: 1601040972}
   - {fileID: 1814422161}
   - {fileID: 577735995}
-  - {fileID: 1844353404}
-  - {fileID: 1181512158}
   - {fileID: 1719669135}
   - {fileID: 59502621}
+  - {fileID: 1844353404}
