@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +30,15 @@ public class MainMenu : MonoBehaviour
 
     private void OnStartGameButtonClicked()
     {
+        StartCoroutine(OnStartGame());
+        //var temp = SceneManager.GetActiveScene();
+        //SceneManager.UnloadSceneAsync(temp);
+        //SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
+    }
+
+    private IEnumerator OnStartGame()
+    {
+        yield return new WaitForSeconds(2);
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
         SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
