@@ -45,19 +45,16 @@ public class SettingsManager : MonoBehaviour
             SetAllSettings();
         }
         else
-        {
             Debug.Log("No Settings.json found at: " + Application.persistentDataPath);
-        }
+
+        
     }
 
     public void SafeDataIntoJson()
     {
-        //if (File.Exists(SettingsJsonPath) == false)
-        //{
-            var json = JsonUtility.ToJson(settingsData);
-            var path = Path.Combine(SettingsJsonPath);
-            File.WriteAllText(path, json);
-        //}
+        var json = JsonUtility.ToJson(settingsData);
+        var path = Path.Combine(SettingsJsonPath);
+        File.WriteAllText(path, json);
     }
 
 

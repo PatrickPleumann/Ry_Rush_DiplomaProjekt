@@ -11,4 +11,5 @@ public class SettingsData : ScriptableObject
     [Header("Gameplay")]
     public bool ShowFPS;
 
+    //check settingsmanager for how to handle the values
 }
