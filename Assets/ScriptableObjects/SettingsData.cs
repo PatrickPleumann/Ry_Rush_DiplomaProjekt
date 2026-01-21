@@ -11,5 +11,4 @@ public class SettingsData : ScriptableObject
     [Header("Gameplay")]
     public bool ShowFPS;
 
-    //[Header("Other Settings")]
 }
