@@ -1,5 +1,7 @@
 using SFB;
+using System;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +9,11 @@ public class ImportManager : MonoBehaviour
 {
     //Load Data from file dialog into persitent data folder
     private bool canChooseMultipleFiles;
+    private AudioSource source;
+    private AudioClip clip;
 
+    [SerializeField] private TMP_Text showAsyncSamplesText;
+    [SerializeField] private Slider sampleOffsetSlider;
     [SerializeField] private Button openFileDialog;
     [SerializeField] private string message;
 
@@ -21,8 +27,11 @@ public class ImportManager : MonoBehaviour
 
     private void OnEnable()
     {
+        sampleOffsetSlider.onValueChanged.AddListener(ShowAsyncSamples);
         openFileDialog.onClick.AddListener(BrowseFiles);
     }
+
+
 
     private void BrowseFiles()
     {
@@ -45,5 +54,17 @@ public class ImportManager : MonoBehaviour
 
         else
             Debug.Log("No file choosen");
+    }
+
+    private void ShowAsyncSamples(float _value)
+    {
+        showAsyncSamplesText.text = "" + sampleOffsetSlider.value;
+    }
+
+    //Get Test logic for sample offset stuff
+
+    private void PreviewCurrentSong()
+    {
+        //start a song with the current offset samples value.
     }
 }
