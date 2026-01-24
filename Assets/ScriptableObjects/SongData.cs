@@ -5,6 +5,7 @@ public class SongData : ScriptableObject
 {
     public AudioClip Song;
     public int AsyncSamplesValue;
-    public int BeatMultiplier;
+    public int BeatMultiplier = 1;
     public float BPM;
+    public int SamplesPerBeat;
 }

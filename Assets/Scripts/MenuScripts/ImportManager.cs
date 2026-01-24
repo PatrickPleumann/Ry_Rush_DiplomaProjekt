@@ -2,6 +2,8 @@ using SFB;
 using System.Collections;
 using System.IO;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,14 +12,15 @@ public class ImportManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private SongPreviewBeatTracking songPreview;
     [SerializeField] private ImportManager_UX view;
+    [SerializeField] private GameObject dropdown;
+
+    private AudioClip clip;
+    private float bpm;
+    private int asyncValue;
+    private int samplesPerBeat;
 
     //Load Data from file dialog into persitent data folder
     private bool canChooseMultipleFiles;
-    private AudioSource source;
-    [SerializeField] private AudioClip clip;
-    private string currentAudioFileName;
-
-    private string[] tempPath;
 
     [SerializeField] private SongData data;
 
@@ -33,30 +36,66 @@ public class ImportManager : MonoBehaviour
     {
         view.SampleOffset_Slider.onValueChanged.AddListener(ShowAsyncSamples);
         view.SampleOffset_Slider.onValueChanged.AddListener(songPreview.OverrideCurrentAsyncSamples);
-        view.BrowseFilesButton.onClick.AddListener(BrowseFiles);
-        view.ConfirmBPM.onClick.AddListener(ConfirmBPM);
-        view.songs_DropdownMenu.onValueChanged.AddListener(OnSongSelection);
+
+        view.BrowseFiles_Button.onClick.AddListener(BrowseFiles);
+        view.ConfirmSong_Button.onClick.AddListener(Assign);
+
+        view.ConfirmBPM_Button.onClick.AddListener(ConfirmBPM);
+        view.PlayPreview_Button.onClick.AddListener(StartPreview);
+
+        ClearDropDown();
+        GetDataFromPersistentFolder();
+    }
+
+    private void StartPreview()
+    {
+        songPreview.AssignSongDataValuesToPreview(data);
+    }
+    private void Assign()
+    {
+        var selectedSong = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
+        AssignAudioFile(selectedSong);
+        dropdown.SetActive(false);
+        ArrangeBPMInputField();
+    }
+
+    private void ClearDropDown()
+    {
+        view.songs_DropdownMenu.ClearOptions();
     }
     private void OnSongSelection(int _ = 0)
     {
-        
+
         //songDictionary = GetSongDataFromDictionary();
 
-        var selectedSong = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
+
         //if (songDictionary.TryGetValue(selectedSong, out SongData data) == true)
         //{
         //    view.tmp_InputFieldBPM.text = data.songBPM.ToString();
         //    view.tmp_InputFieldAsyncValue.text = data.songAsyncValue.ToString();
         //}
-        AssignAudioFile(selectedSong);
-        ArrangeBPMInputField();
+
+
+        //ArrangeBPMInputField();
+    }
+
+    public float GetSamplesPerBeat()
+    {
+        if (bpm != 0 && clip != null)
+        {
+            return (clip.frequency * ((60 / bpm) * 1));
+        }
+        else return 0;
     }
     private void ConfirmBPM()
     {
-        if (float.TryParse(view.BPMInput.text, out float output))
+        if (float.TryParse(view.BPMInput_InputField.text, out float output))
         {
-            data.BPM = output;
-            ArrangeAsyncSlider();
+            bpm = output;
+            data.BPM = bpm;
+            data.Song = clip;
+            data.BeatMultiplier = 1;
+            ArrangeAsyncSlider(GetSamplesPerBeat());
         }
 
         else
@@ -65,6 +104,9 @@ public class ImportManager : MonoBehaviour
 
     private void ConfirmAsyncValue()
     {
+        data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
+
+
         ArrangePreviewButton();
     }
 
@@ -75,11 +117,11 @@ public class ImportManager : MonoBehaviour
 
     private void BrowseFiles()
     {
+        dropdown.SetActive(true);
         //pauses mainthread, which is good
-        tempPath = StandaloneFileBrowser.OpenFilePanel(view.Message, "", "", canChooseMultipleFiles);  //stay with false to not 
-        if (tempPath.Length > 0)
-            LoadFileIntoPersistentDataFolder(tempPath[0]);
-        GetDataFromPersistentFolder();
+        var path = StandaloneFileBrowser.OpenFilePanel(view.Message, "", "", canChooseMultipleFiles);  //stay with false to not 
+        if (path.Length > 0)
+            LoadFileIntoPersistentDataFolder(path[0]);
     }
 
     private void LoadFileIntoPersistentDataFolder(string _path) // whole logic for loading files into the persistent data folder
@@ -89,11 +131,11 @@ public class ImportManager : MonoBehaviour
 
         else if (File.Exists(_path) == true)
         {
+            ClearDropDown();
             File.Copy(_path, destPath + Path.GetFileName(_path));
             Debug.Log("File successfully loaded into persistent data folder");
             view.YourSong_Name.text = Path.GetFileName(_path);
-            currentAudioFileName = view.YourSong_Name.text;
-            view.songs_DropdownMenu.ClearOptions();
+            GetDataFromPersistentFolder();
         }
 
         else
@@ -102,7 +144,6 @@ public class ImportManager : MonoBehaviour
 
     private void AssignAudioFile(string _fileName)
     {
-        //load song into beattracking_preview
         string path = destPath + _fileName;
         string uri = "file://" + path;
 
@@ -126,11 +167,12 @@ public class ImportManager : MonoBehaviour
         view.BPM_GO.gameObject.SetActive(true);
     }
 
-    private void ArrangeAsyncSlider()
+    private void ArrangeAsyncSlider(float _samplesPerBeat)
     {
         view.AsyncValue_GO.gameObject.SetActive(true);
-        view.SampleOffset_Slider.minValue = -(int)(songPreview.samplesPerBeat_Preview * 0.5f);
-        view.SampleOffset_Slider.maxValue = (int)(songPreview.samplesPerBeat_Preview * 0.5f);
+        view.PlayPreview_Button.gameObject.SetActive(true);
+        view.SampleOffset_Slider.minValue = -(_samplesPerBeat * 0.5f);
+        view.SampleOffset_Slider.maxValue = (_samplesPerBeat * 0.5f);
         view.SampleOffset_Slider.wholeNumbers = true;
     }
 
@@ -146,13 +188,13 @@ public class ImportManager : MonoBehaviour
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-            {
                 Debug.Log("Could not load audio file");
-            }
+
+
             else
             {
+                //data.Song = DownloadHandlerAudioClip.GetContent(www);
                 data.Song = DownloadHandlerAudioClip.GetContent(www);
-                //clip = DownloadHandlerAudioClip.GetContent(www);
             }
         }
     }
