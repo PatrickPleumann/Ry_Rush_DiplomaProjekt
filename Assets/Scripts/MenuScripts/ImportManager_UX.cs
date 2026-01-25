@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ImportManager_UX : MonoBehaviour
 {
     [Header("Choose & Show Song UX/UI")]
-    [SerializeField] public Button BrowseFiles_Button;
+    [SerializeField] public Button LoadYourSong_Button;
     [SerializeField] public TMP_Text YourSong_Name;
     [SerializeField] public string Message;
     [SerializeField] public Button ConfirmSong_Button;

@@ -18,6 +18,7 @@ public class ImportManager : MonoBehaviour
     private float bpm;
     private int asyncValue;
     private int samplesPerBeat;
+    private int beatMultiplier;
 
     //Load Data from file dialog into persitent data folder
     private bool canChooseMultipleFiles;
@@ -37,7 +38,7 @@ public class ImportManager : MonoBehaviour
         view.SampleOffset_Slider.onValueChanged.AddListener(ShowAsyncSamples);
         view.SampleOffset_Slider.onValueChanged.AddListener(songPreview.OverrideCurrentAsyncSamples);
 
-        view.BrowseFiles_Button.onClick.AddListener(BrowseFiles);
+        view.LoadYourSong_Button.onClick.AddListener(BrowseFiles);
         view.ConfirmSong_Button.onClick.AddListener(Assign);
 
         view.ConfirmBPM_Button.onClick.AddListener(ConfirmBPM);
@@ -49,7 +50,18 @@ public class ImportManager : MonoBehaviour
 
     private void StartPreview()
     {
+        FillSongData();
         songPreview.AssignSongDataValuesToPreview(data);
+    }
+
+    private void FillSongData()
+    {
+        data.BPM = bpm;
+        data.SamplesPerBeat = samplesPerBeat;
+        data.Song = clip;
+        data.AsyncSamplesValue = 0;
+        data.BeatMultiplier = 1;
+
     }
     private void Assign()
     {
@@ -79,11 +91,11 @@ public class ImportManager : MonoBehaviour
         //ArrangeBPMInputField();
     }
 
-    public float GetSamplesPerBeat()
+    public int GetSamplesPerBeat()
     {
         if (bpm != 0 && clip != null)
         {
-            return (clip.frequency * ((60 / bpm) * 1));
+            return (int)(clip.frequency * ((60 / bpm) * 1));
         }
         else return 0;
     }
@@ -92,10 +104,9 @@ public class ImportManager : MonoBehaviour
         if (float.TryParse(view.BPMInput_InputField.text, out float output))
         {
             bpm = output;
-            data.BPM = bpm;
-            data.Song = clip;
-            data.BeatMultiplier = 1;
-            ArrangeAsyncSlider(GetSamplesPerBeat());
+            beatMultiplier = 1;
+            samplesPerBeat = GetSamplesPerBeat();
+            ArrangeAsyncSlider(samplesPerBeat);
         }
 
         else
@@ -193,8 +204,7 @@ public class ImportManager : MonoBehaviour
 
             else
             {
-                //data.Song = DownloadHandlerAudioClip.GetContent(www);
-                data.Song = DownloadHandlerAudioClip.GetContent(www);
+                clip = DownloadHandlerAudioClip.GetContent(www);
             }
         }
     }

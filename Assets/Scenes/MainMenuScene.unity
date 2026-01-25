@@ -652,7 +652,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.199
+  m_Volume: 0.709
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -751,8 +751,7 @@ MonoBehaviour:
   bpm_Preview: 0
   source_song: {fileID: 0}
   source_metronome: {fileID: 0}
-  clip: {fileID: 0}
-  metronome: {fileID: 8300000, guid: 77bbd8a93f99e6f48a91d810c6cf5f56, type: 3}
+  metronome: {fileID: 8300000, guid: a4e04e29867f24244b3d27bf5c8b8333, type: 3}
   currentSamples_Preview: 0
   asyncValues_Preview: 0
   samplesPerBeat_Preview: 0
@@ -769,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1cb7aee84b4234e80e740ac4658b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImportManager_UX
-  BrowseFiles_Button: {fileID: 606310510}
+  LoadYourSong_Button: {fileID: 606310510}
   YourSong_Name: {fileID: 1993000775}
   Message: Choose your Song!
   ConfirmSong_Button: {fileID: 398014689}
@@ -795,7 +794,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.06
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3086,7 +3085,7 @@ GameObject:
   - component: {fileID: 606310511}
   - component: {fileID: 606310510}
   m_Layer: 5
-  m_Name: BrowseFiles_Button
+  m_Name: LoadYourSong_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

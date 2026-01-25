@@ -13,20 +13,15 @@ public class SongPreviewBeatTracking : MonoBehaviour
     private AudioClip clip;
     [SerializeField] private AudioClip metronome;
 
-    [SerializeField] private int currentSamples_Preview;
-    [SerializeField] private int asyncValues_Preview;
-    [SerializeField] public int samplesPerBeat_Preview;
+    [SerializeField] private int currentSamples_Preview = 0;
+    [SerializeField] private int asyncValues_Preview = 0;
+    [SerializeField] public int samplesPerBeat_Preview = 0;
     [SerializeField] private int beatMultiplier_Preview = 1;
 
     private bool songPreviewPlaying = false;
 
     private int lastFrameSamples_Preview;
-    public UnityAction onBeat;
 
-    private void OnEnable()
-    {
-        onBeat += PlayMetronome;
-    }
     private void Update()
     {
         if (songPreviewPlaying == true)
@@ -35,8 +30,6 @@ public class SongPreviewBeatTracking : MonoBehaviour
         }
     }
 
-
-
     public void OverrideCurrentAsyncSamples(float _value)
     {
         asyncValues_Preview = (int)_value;
@@ -44,30 +37,26 @@ public class SongPreviewBeatTracking : MonoBehaviour
     //somewhere here  a button which assigns to beatMultiplier the value 2 (for half beat stuff)
     public void AssignSongDataValuesToPreview(SongData _data)
     {
-        var temp = GetComponents<AudioSource>(); // still unsafe but it works
+        var temp = GetComponents<AudioSource>(); // unsafe but it works
         source_song = temp[0];
         source_metronome = temp[1];
-        clip = _data.Song;
-        source_song.clip = clip;
+        source_metronome.clip = metronome;
+
+        source_song.clip = _data.Song;
         bpm_Preview = _data.BPM;
+        asyncValues_Preview = _data.AsyncSamplesValue;
         beatMultiplier_Preview = _data.BeatMultiplier;
-
-
-        samplesPerBeat_Preview = (int)(clip.frequency * (60f / bpm_Preview) * beatMultiplier_Preview);
+        samplesPerBeat_Preview = _data.SamplesPerBeat;
 
         StartCoroutine(StartSong());
     }
 
     private IEnumerator StartSong()
     {
+        songPreviewPlaying = true;
+        source_song.volume = 0.2f;
         yield return new WaitForSeconds(2);
         source_song.Play();
-    }
-
-    public void PlayTestSong() // only allow after confirmed values
-    {
-        source_song.Play();
-        songPreviewPlaying = true;
     }
 
     public void StopTestSong()
@@ -80,15 +69,16 @@ public class SongPreviewBeatTracking : MonoBehaviour
     {
         currentSamples_Preview += source_song.timeSamples - lastFrameSamples_Preview;
         lastFrameSamples_Preview = source_song.timeSamples;
-        if (((currentSamples_Preview + asyncValues_Preview)  / (samplesPerBeat_Preview)) >= 1)
+        if (((currentSamples_Preview + asyncValues_Preview)  / samplesPerBeat_Preview) >= 1)
         {
-            currentSamples_Preview -= (samplesPerBeat_Preview - asyncValues_Preview); 
-            onBeat.Invoke();
+            currentSamples_Preview -= samplesPerBeat_Preview; 
+            PlayMetronome();
         }
     }
 
     private void PlayMetronome()
     {
+
         source_metronome.Play();
     }
 }
