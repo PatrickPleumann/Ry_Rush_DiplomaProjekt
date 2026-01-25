@@ -46820,6 +46820,7 @@ MonoBehaviour:
   scoreboard: {fileID: 1706564864}
   source: {fileID: 0}
   clip: {fileID: 8300000, guid: 226eb63cf2f0e9847b5b5fe748aa499c, type: 3}
+  songData: {fileID: 11400000, guid: 1b085284cecaa4749923e2449ec44b28, type: 2}
   timeTillSongStarts: 3
   asyncValue: 12000
   beatOffsetMultiplier: 0.1

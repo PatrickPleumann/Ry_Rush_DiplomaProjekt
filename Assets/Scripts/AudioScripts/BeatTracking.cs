@@ -10,6 +10,7 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] public AudioSource source;
     [SerializeField] public AudioClip clip;
+    [SerializeField] private SongData songData;
 
     [Header("Gameplay Values")]
     [SerializeField] private float timeTillSongStarts = 3f;
@@ -24,6 +25,7 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public int samplesPerBeat = 0;
     [SerializeField] public float bpm = 0f;
     [SerializeField] public float lastActionOnBeatTimer;
+
 
 
     public int currentSamples = 0;
@@ -49,9 +51,10 @@ public class BeatTracking : MonoBehaviour
     private void Awake()
     {
         source = GetComponent<AudioSource>();
-        source.clip = clip;
-
-        samplesPerBeat = (int)(source.clip.frequency * (60f / bpm) * beatMultiplier);
+        source.clip = songData.Song;
+        bpm = songData.BPM;
+        beatMultiplier = songData.BeatMultiplier;
+        samplesPerBeat = songData.SamplesPerBeat;
         onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
 
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
@@ -60,7 +63,7 @@ public class BeatTracking : MonoBehaviour
     private void Start()
     {
         //calculate with beat multiplier here 
-        currentSamples += asyncValue;
+        currentSamples += songData.AsyncSamplesValue;
         currentSamples_UI = currentSamples;
 
         currentSamples_UI += onBeatOffset;

@@ -12,7 +12,6 @@ public class MainMenu : MonoBehaviour
     public Button QuitGameButton;
 
 
-
     private void OnEnable()
     {
         StartGameButton.onClick.AddListener(OnStartGameButtonClicked);
@@ -38,9 +37,10 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator OnStartGame()
     {
-        yield return new WaitForSeconds(2);
+
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
     }
 

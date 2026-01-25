@@ -2,8 +2,6 @@ using SFB;
 using System.Collections;
 using System.IO;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,6 +11,8 @@ public class ImportManager : MonoBehaviour
     [SerializeField] private SongPreviewBeatTracking songPreview;
     [SerializeField] private ImportManager_UX view;
     [SerializeField] private GameObject dropdown;
+    [SerializeField] private SongDataDictionary songDataDictionary;
+  
 
     private AudioClip clip;
     private float bpm;
@@ -29,6 +29,7 @@ public class ImportManager : MonoBehaviour
 
     private void Awake()
     {
+
         canChooseMultipleFiles = false;
         destPath = Application.persistentDataPath + "/"; // + "/" is necessary to "hit" the correct folder
     }
@@ -44,9 +45,19 @@ public class ImportManager : MonoBehaviour
         view.ConfirmBPM_Button.onClick.AddListener(ConfirmBPM);
         view.PlayPreview_Button.onClick.AddListener(StartPreview);
 
+        //view.SaveSongValues_Button.onClick.AddListener(SafeSongValuesIntoDictionary);
+
         ClearDropDown();
         GetDataFromPersistentFolder();
     }
+
+   
+    private void SafeSongValuesIntoDictionary() //dictionary to json does not work in unity
+    {
+        songDataDictionary.CreateNewEntry(view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text, data);
+        songDataDictionary.SafeDictionaryAsJson();
+    }
+
 
     private void StartPreview()
     {
@@ -54,14 +65,14 @@ public class ImportManager : MonoBehaviour
         songPreview.AssignSongDataValuesToPreview(data);
     }
 
-    private void FillSongData()
+   
+    private void FillSongData() //method has to be called earlier
     {
         data.BPM = bpm;
         data.SamplesPerBeat = samplesPerBeat;
         data.Song = clip;
         data.AsyncSamplesValue = 0;
         data.BeatMultiplier = 1;
-
     }
     private void Assign()
     {
@@ -113,19 +124,6 @@ public class ImportManager : MonoBehaviour
             Debug.Log("Invalid input for BPM input field");
     }
 
-    private void ConfirmAsyncValue()
-    {
-        data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
-
-
-        ArrangePreviewButton();
-    }
-
-    private void ArrangePreviewButton()
-    {
-
-    }
-
     private void BrowseFiles()
     {
         dropdown.SetActive(true);
@@ -153,13 +151,6 @@ public class ImportManager : MonoBehaviour
             Debug.Log("No file choosen");
     }
 
-    private void AssignAudioFile(string _fileName)
-    {
-        string path = destPath + _fileName;
-        string uri = "file://" + path;
-
-        StartCoroutine(LoadCustomSong(uri));
-    }
 
     private void GetDataFromPersistentFolder() //gets all files from persistent data path and adds a dropdown option for each.
     {
@@ -192,6 +183,14 @@ public class ImportManager : MonoBehaviour
         view.ShowAsyncSamples_Text.text = "" + view.SampleOffset_Slider.value;
     }
 
+    private void AssignAudioFile(string _fileName)
+    {
+        string path = destPath + _fileName;
+        string uri = "file://" + path;
+
+        StartCoroutine(LoadCustomSong(uri));
+    }
+
     private IEnumerator LoadCustomSong(string uri)
     {
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(uri, AudioType.WAV))
@@ -200,7 +199,6 @@ public class ImportManager : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("Could not load audio file");
-
 
             else
             {

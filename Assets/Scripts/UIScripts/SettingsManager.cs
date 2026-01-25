@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    private const string settingsFileName = "/Settings.json";
+    private const string settingsFileName = "Settings.json";
     private string SettingsJsonPath;
 
     [SerializeField] private SettingsData settingsData;
@@ -16,7 +16,7 @@ public class SettingsManager : MonoBehaviour
 
     private void Awake()
     {
-        SettingsJsonPath = Application.persistentDataPath + settingsFileName;
+        SettingsJsonPath = Application.persistentDataPath + "/" + settingsFileName;
     }
     private void OnEnable()
     {
@@ -46,8 +46,6 @@ public class SettingsManager : MonoBehaviour
         }
         else
             Debug.Log("No Settings.json found at: " + Application.persistentDataPath);
-
-        
     }
 
     public void SafeDataIntoJson()
