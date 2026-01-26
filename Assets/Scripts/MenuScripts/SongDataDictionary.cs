@@ -38,13 +38,12 @@ public class SongDataDictionary : MonoBehaviour
             Debug.Log("New song entry successful");
         }
     }
+
     private void GetSongDataDictionaryFromJson()
     {
         var temp = File.ReadAllText(songDictionaryPath);
-
         JsonConvert.DeserializeObject<Dictionary<string, SongData>>(temp);
     }
-
 
     public void SafeDictionaryAsJson()
     {
