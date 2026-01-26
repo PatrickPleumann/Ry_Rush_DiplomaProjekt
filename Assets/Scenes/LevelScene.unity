@@ -46830,7 +46830,7 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 71618a1213333ec49bab92e7bbe7e79a, type: 3}
   songData: {fileID: 11400000, guid: 1b085284cecaa4749923e2449ec44b28, type: 2}
   timeTillSongStarts: 1
-  asyncValue: -10000
+  asyncValue: -12000
   beatOffsetMultiplier: 0.1
   samplesPerBeat: 0
   bpm: 103
@@ -74872,6 +74872,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 543450652672471754}
     m_Modifications:
     - target: {fileID: 1321696166916940990, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321696166916940990, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: layerMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
@@ -74889,7 +74893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512752295866169011, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2512752295866169011, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -74897,7 +74901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512752295866169011, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.42
+      value: 1.169
       objectReference: {fileID: 0}
     - target: {fileID: 2512752295866169011, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: m_LocalRotation.w
