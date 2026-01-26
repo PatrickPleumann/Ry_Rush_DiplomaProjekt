@@ -6,14 +6,17 @@ public class PlayerShooting : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerController controller;
-    [SerializeField] private GameObject bullet;
     [SerializeField] private Scoreboard_UI scoreboard;
     [SerializeField] private BeatTracking beatTracking;
+
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform weaponMuzzleOrigin;
     [Space]
 
     [SerializeField] private LayerMask targetLayerMask;
     [SerializeField] private float bulletDamage;
     [SerializeField] private float hitOnBeatMultiplier;
+    
 
     public UnityAction OnWeaponShoot;
     private Vector3 cameraCenterPoint = new Vector3(0.5f, 0.5f, 1.0f);
@@ -36,7 +39,7 @@ public class PlayerShooting : MonoBehaviour
         //controller.weaponAnimationController.SetTrigger("OnShoot");
         crosshairCenterRay = Camera.main.ViewportPointToRay(cameraCenterPoint);
 
-        var tempBullet = Instantiate(bullet, crosshairCenterRay.origin, Quaternion.Euler(transform.eulerAngles));
+        var tempBullet = Instantiate(bullet, weaponMuzzleOrigin);
         var tempBulletRB = tempBullet.GetComponent<Rigidbody>();
         tempBulletRB.AddForce(crosshairCenterRay.direction * 20, ForceMode.Impulse);
 

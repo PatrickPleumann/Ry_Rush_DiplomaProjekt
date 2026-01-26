@@ -77,6 +77,7 @@ public class BeatTracking : MonoBehaviour
 
     IEnumerator StartSongDelayed(float _timeTillSongStarts)
     {
+        source.clip = clip;
         yield return new WaitForSecondsRealtime(_timeTillSongStarts);
         source.Play();
     }

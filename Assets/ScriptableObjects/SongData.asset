@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99531ae9be7cc6749b3379a43c102e80, type: 3}
   m_Name: SongData
   m_EditorClassIdentifier: Assembly-CSharp::SongData
-  AsyncSamplesValue: 0
-  BeatMultiplier: 0
-  Song: {fileID: 0}
-  BPM: 0
+  songName: 
+  AsyncSamplesValue: -10000
+  BeatMultiplier: 1
+  BPM: 103
+  SamplesPerBeat: 25689
