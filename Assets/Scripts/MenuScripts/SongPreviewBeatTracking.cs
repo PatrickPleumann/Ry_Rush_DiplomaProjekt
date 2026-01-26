@@ -10,7 +10,7 @@ public class SongPreviewBeatTracking : MonoBehaviour
     [SerializeField] public AudioSource source_song;
     [SerializeField] private AudioSource source_metronome;
 
-    private AudioClip clip;
+    public AudioClip clip;
     [SerializeField] private AudioClip metronome;
 
     [SerializeField] private int currentSamples_Preview = 0;
@@ -29,7 +29,13 @@ public class SongPreviewBeatTracking : MonoBehaviour
             BeatTracking_Preview();
         }
     }
-
+    private void Start()
+    {
+        var temp = GetComponents<AudioSource>(); // unsafe but it works
+        source_song = temp[0];
+        source_metronome = temp[1];
+        source_metronome.clip = metronome;
+    }
     public void OverrideCurrentAsyncSamples(float _value)
     {
         asyncValues_Preview = (int)_value;
@@ -37,12 +43,8 @@ public class SongPreviewBeatTracking : MonoBehaviour
     //somewhere here  a button which assigns to beatMultiplier the value 2 (for half beat stuff)
     public void AssignSongDataValuesToPreview(SongData _data)
     {
-        var temp = GetComponents<AudioSource>(); // unsafe but it works
-        source_song = temp[0];
-        source_metronome = temp[1];
-        source_metronome.clip = metronome;
+        source_song.clip = clip;
 
-        source_song.clip = _data.Song;
         bpm_Preview = _data.BPM;
         asyncValues_Preview = _data.AsyncSamplesValue;
         beatMultiplier_Preview = _data.BeatMultiplier;
@@ -51,11 +53,24 @@ public class SongPreviewBeatTracking : MonoBehaviour
         StartCoroutine(StartSong());
     }
 
+    public void EraseData()
+    {
+        songPreviewPlaying = false;
+        source_song.clip = null;
+
+        currentSamples_Preview = 0;
+        lastFrameSamples_Preview = 0;
+        bpm_Preview = 0;
+        asyncValues_Preview = 0;
+        beatMultiplier_Preview = 1;
+        samplesPerBeat_Preview = 0;
+    }
+
     private IEnumerator StartSong()
     {
         songPreviewPlaying = true;
         source_song.volume = 0.2f;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         source_song.Play();
     }
 

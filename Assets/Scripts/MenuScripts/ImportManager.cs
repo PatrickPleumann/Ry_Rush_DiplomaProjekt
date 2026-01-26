@@ -2,6 +2,7 @@ using SFB;
 using System.Collections;
 using System.IO;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -19,6 +20,7 @@ public class ImportManager : MonoBehaviour
     private int asyncValue;
     private int samplesPerBeat;
     private int beatMultiplier;
+    private string songName;
 
     //Load Data from file dialog into persitent data folder
     private bool canChooseMultipleFiles;
@@ -29,7 +31,7 @@ public class ImportManager : MonoBehaviour
 
     private void Awake()
     {
-
+        
         canChooseMultipleFiles = false;
         destPath = Application.persistentDataPath + "/"; // + "/" is necessary to "hit" the correct folder
     }
@@ -39,26 +41,49 @@ public class ImportManager : MonoBehaviour
         view.SampleOffset_Slider.onValueChanged.AddListener(ShowAsyncSamples);
         view.SampleOffset_Slider.onValueChanged.AddListener(songPreview.OverrideCurrentAsyncSamples);
 
-        view.LoadYourSong_Button.onClick.AddListener(BrowseFiles);
-        view.ConfirmSong_Button.onClick.AddListener(Assign);
+        view.LoadYourSong_Button.onClick.AddListener(BrowseFilesForSong);
+        view.ConfirmSong_Button.onClick.AddListener(ConfirmCurrentSong);
 
         view.ConfirmBPM_Button.onClick.AddListener(ConfirmBPM);
         view.PlayPreview_Button.onClick.AddListener(StartPreview);
 
-        //view.SaveSongValues_Button.onClick.AddListener(SafeSongValuesIntoDictionary);
+        view.SaveSongValues_Button.onClick.AddListener(SafeSongValuesIntoDictionary);
+        view.songs_DropdownMenu.onValueChanged.AddListener(DisplaySongChoice);
+
+        view.ResetValues_Button.onClick.AddListener(ResetAllValues);
 
         ClearDropDown();
         GetDataFromPersistentFolder();
+
+        view.YourSong_Name.text = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
     }
 
-   
+    private void OnDisable()
+    {
+        view.SampleOffset_Slider.onValueChanged.RemoveListener(ShowAsyncSamples);
+        view.SampleOffset_Slider.onValueChanged.RemoveListener(songPreview.OverrideCurrentAsyncSamples);
+
+        view.LoadYourSong_Button.onClick.RemoveListener(BrowseFilesForSong);
+        view.ConfirmSong_Button.onClick.RemoveListener(ConfirmCurrentSong);
+
+        view.ConfirmBPM_Button.onClick.RemoveListener(ConfirmBPM);
+        view.PlayPreview_Button.onClick.RemoveListener(StartPreview);
+
+        view.SaveSongValues_Button.onClick.RemoveListener(SafeSongValuesIntoDictionary);
+        view.songs_DropdownMenu.onValueChanged.RemoveListener(DisplaySongChoice);
+
+        view.ResetValues_Button.onClick.RemoveListener(ResetAllValues);
+    }
+
+
     private void SafeSongValuesIntoDictionary() //dictionary to json does not work in unity
     {
+        FillSongData();
         songDataDictionary.CreateNewEntry(view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text, data);
         songDataDictionary.SafeDictionaryAsJson();
     }
 
-
+    
     private void StartPreview()
     {
         FillSongData();
@@ -68,20 +93,25 @@ public class ImportManager : MonoBehaviour
    
     private void FillSongData() //method has to be called earlier
     {
+        data.songName = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
         data.BPM = bpm;
         data.SamplesPerBeat = samplesPerBeat;
-        data.Song = clip;
         data.AsyncSamplesValue = 0;
         data.BeatMultiplier = 1;
     }
-    private void Assign()
+    private void ConfirmCurrentSong()
     {
         var selectedSong = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
         AssignAudioFile(selectedSong);
-        dropdown.SetActive(false);
+        dropdown.SetActive(false); // into reset values
+        view.ConfirmSong_Button.interactable = false;
+        view.LoadYourSong_Button.interactable = false; // into reset values
         ArrangeBPMInputField();
     }
-
+    private void DisplaySongChoice(int _ = 0)
+    {
+        view.YourSong_Name.text = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
+    }
     private void ClearDropDown()
     {
         view.songs_DropdownMenu.ClearOptions();
@@ -102,11 +132,32 @@ public class ImportManager : MonoBehaviour
         //ArrangeBPMInputField();
     }
 
+    private void ResetAllValues()
+    {
+        data.EraseData();
+        songPreview.EraseData();
+        songPreview.source_song.Stop();
+        dropdown.SetActive(true);
+        view.LoadYourSong_Button.interactable = true;
+        view.ConfirmSong_Button.interactable = true;
+
+        view.BPM_GO.SetActive(false);
+        view.BPMInput_InputField.interactable = true;
+        view.BPMInput_InputField.text = "Enter BPM here...";
+        view.ConfirmBPM_Button.interactable = true;
+
+        view.AsyncValue_GO.gameObject.SetActive(false);
+        view.SampleOffset_Slider.minValue = 0;
+        view.SampleOffset_Slider.maxValue = 1;
+        view.SampleOffset_Slider.value = 0;
+        view.SampleOffset_Slider.wholeNumbers = true;
+    }
+
     public int GetSamplesPerBeat()
     {
-        if (bpm != 0 && clip != null)
+        if (bpm != 0 && songPreview.clip != null)
         {
-            return (int)(clip.frequency * ((60 / bpm) * 1));
+            return (int)(songPreview.clip.frequency * ((60 / bpm) * 1));
         }
         else return 0;
     }
@@ -114,17 +165,20 @@ public class ImportManager : MonoBehaviour
     {
         if (float.TryParse(view.BPMInput_InputField.text, out float output))
         {
+            FillSongData();
             bpm = output;
             beatMultiplier = 1;
             samplesPerBeat = GetSamplesPerBeat();
             ArrangeAsyncSlider(samplesPerBeat);
+            view.BPMInput_InputField.interactable = false; // into reset
+            view.ConfirmBPM_Button.interactable = false;   // into reset
         }
 
         else
             Debug.Log("Invalid input for BPM input field");
     }
 
-    private void BrowseFiles()
+    private void BrowseFilesForSong()
     {
         dropdown.SetActive(true);
         //pauses mainthread, which is good
@@ -172,7 +226,6 @@ public class ImportManager : MonoBehaviour
     private void ArrangeAsyncSlider(float _samplesPerBeat)
     {
         view.AsyncValue_GO.gameObject.SetActive(true);
-        view.PlayPreview_Button.gameObject.SetActive(true);
         view.SampleOffset_Slider.minValue = -(_samplesPerBeat * 0.5f);
         view.SampleOffset_Slider.maxValue = (_samplesPerBeat * 0.5f);
         view.SampleOffset_Slider.wholeNumbers = true;
@@ -202,7 +255,7 @@ public class ImportManager : MonoBehaviour
 
             else
             {
-                clip = DownloadHandlerAudioClip.GetContent(www);
+                songPreview.clip = DownloadHandlerAudioClip.GetContent(www);
             }
         }
     }

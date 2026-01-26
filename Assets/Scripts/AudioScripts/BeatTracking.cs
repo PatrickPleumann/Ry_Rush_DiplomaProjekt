@@ -51,7 +51,7 @@ public class BeatTracking : MonoBehaviour
     private void Awake()
     {
         source = GetComponent<AudioSource>();
-        source.clip = songData.Song;
+        //here needs to be a load in song logic before playing
         bpm = songData.BPM;
         beatMultiplier = songData.BeatMultiplier;
         samplesPerBeat = songData.SamplesPerBeat;

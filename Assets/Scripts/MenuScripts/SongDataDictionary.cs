@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using NUnit.Framework.Constraints;
 
 public class SongDataDictionary : MonoBehaviour
 {
@@ -9,9 +11,9 @@ public class SongDataDictionary : MonoBehaviour
     public Dictionary<string, SongData> songDictionary;
 
     private string songDictionaryPath;
-
     private void Awake()
     {
+        
         songDictionaryPath = Application.persistentDataPath + "/" + songDictionaryFileName;
         songDictionary = new();
     }
@@ -39,14 +41,14 @@ public class SongDataDictionary : MonoBehaviour
     private void GetSongDataDictionaryFromJson()
     {
         var temp = File.ReadAllText(songDictionaryPath);
-        JsonUtility.FromJsonOverwrite(temp, songDictionary);
+
+        JsonConvert.DeserializeObject<Dictionary<string, SongData>>(temp);
     }
 
-    
+
     public void SafeDictionaryAsJson()
     {
-        
-        var json = JsonUtility.ToJson(songDictionary);
+        var json = JsonConvert.SerializeObject(songDictionary);
         File.WriteAllText(songDictionaryPath, json);
     }
 }

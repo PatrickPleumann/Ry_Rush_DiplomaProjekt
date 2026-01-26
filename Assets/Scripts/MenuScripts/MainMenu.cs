@@ -15,46 +15,22 @@ public class MainMenu : MonoBehaviour
     private void OnEnable()
     {
         StartGameButton.onClick.AddListener(OnStartGameButtonClicked);
-        ImportSongButton.onClick.AddListener(OnImportSongButtonClicked);
-        OptionsButton.onClick.AddListener(OnOptionsButtonClicked);
         QuitGameButton.onClick.AddListener(OnQuitGameButtonClicked);
     }
     private void OnDisable()
     {
         StartGameButton.onClick.RemoveListener(OnStartGameButtonClicked);
-        ImportSongButton.onClick.RemoveListener(OnImportSongButtonClicked);
-        OptionsButton.onClick.RemoveListener(OnOptionsButtonClicked);
         QuitGameButton.onClick.RemoveListener(OnQuitGameButtonClicked);
     }
 
     private void OnStartGameButtonClicked()
     {
-        StartCoroutine(OnStartGame());
-        //var temp = SceneManager.GetActiveScene();
-        //SceneManager.UnloadSceneAsync(temp);
-        //SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
-    }
-
-    private IEnumerator OnStartGame()
-    {
-
-        var temp = SceneManager.GetActiveScene();
-        SceneManager.UnloadSceneAsync(temp);
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
-    }
-
-    private void OnOptionsButtonClicked()
-    {
-        Debug.Log("Nope");
-    }
-    private void OnImportSongButtonClicked()
-    {
-        Debug.Log("Nope");
+        //Load song data dictionary and other stuff to prepare for game start here
     }
 
     private void OnQuitGameButtonClicked()
     {
+        //maybe fade out and quit afterwards
         Application.Quit();
     }
 }
