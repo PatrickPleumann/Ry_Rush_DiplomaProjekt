@@ -15,6 +15,7 @@
 /Assets/SciFi_Industrial_LevelKit_2.0/
 /Assets/TestSongs/
 /Assets/Sci-Fi UI/
+/Assets/GabrielAguiarProductions/
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1

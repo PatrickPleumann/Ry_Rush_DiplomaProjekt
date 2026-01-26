@@ -13,7 +13,7 @@ public class ImportManager : MonoBehaviour
     [SerializeField] private ImportManager_UX view;
     [SerializeField] private GameObject dropdown;
     [SerializeField] private SongDataDictionary songDataDictionary;
-  
+
 
     private AudioClip clip;
     private float bpm;
@@ -31,7 +31,7 @@ public class ImportManager : MonoBehaviour
 
     private void Awake()
     {
-        
+
         canChooseMultipleFiles = false;
         destPath = Application.persistentDataPath + "/"; // + "/" is necessary to "hit" the correct folder
     }
@@ -51,11 +51,16 @@ public class ImportManager : MonoBehaviour
         view.songs_DropdownMenu.onValueChanged.AddListener(DisplaySongChoice);
 
         view.ResetValues_Button.onClick.AddListener(ResetAllValues);
+        view.Back_Button.onClick.AddListener(ResetAllValues);
 
         ClearDropDown();
         GetDataFromPersistentFolder();
 
-        view.YourSong_Name.text = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
+        if (view.songs_DropdownMenu.options.Count > 0 && view.songs_DropdownMenu.value >= 0)
+        {
+            view.YourSong_Name.text = view.songs_DropdownMenu.options[0].text;
+            view.songs_DropdownMenu.captionText.text = view.songs_DropdownMenu.options[0].text;
+        }
     }
 
     private void OnDisable()
@@ -73,6 +78,8 @@ public class ImportManager : MonoBehaviour
         view.songs_DropdownMenu.onValueChanged.RemoveListener(DisplaySongChoice);
 
         view.ResetValues_Button.onClick.RemoveListener(ResetAllValues);
+        view.Back_Button.onClick.RemoveListener(ResetAllValues);
+
     }
 
 
@@ -83,14 +90,14 @@ public class ImportManager : MonoBehaviour
         songDataDictionary.SafeDictionaryAsJson();
     }
 
-    
+
     private void StartPreview()
     {
         FillSongData();
         songPreview.AssignSongDataValuesToPreview(data);
     }
 
-   
+
     private void FillSongData() //method has to be called earlier
     {
         data.songName = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
