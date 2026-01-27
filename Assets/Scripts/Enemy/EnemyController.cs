@@ -76,16 +76,6 @@ public class EnemyController : MonoBehaviour
         {
             EnemyDying();
         }
-        //if (SqrDistanceToPlayer < SqrMaxDistanceToPlayer && maxEnemiesChasing.CheckCurrentEnemiesChasing() == true)
-        //{
-        //    canChase = true;
-        //    maxEnemiesChasing.RegisterChaseState();
-        //}
-        //else
-        //{
-        //    canChase = false;
-        //    maxEnemiesChasing.UnregisterFromChasing();
-        //}
     }
 
     private float CheckDistanceToPlayer()

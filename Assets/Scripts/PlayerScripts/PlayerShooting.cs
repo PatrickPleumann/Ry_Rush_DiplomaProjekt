@@ -50,7 +50,8 @@ public class PlayerShooting : MonoBehaviour
 
         var tempBullet = Instantiate(bullet, weaponMuzzleOrigin);
         var tempBulletRB = tempBullet.GetComponent<Rigidbody>();
-        tempBulletRB.AddForce(crosshairCenterRay.direction * 20, ForceMode.Impulse);
+
+        tempBulletRB.AddForce(tempBullet.transform.forward * 100, ForceMode.Impulse);
 
         var temp = Physics.Raycast(crosshairCenterRay, out hit, 100f, targetLayerMask);
         if (temp == true)

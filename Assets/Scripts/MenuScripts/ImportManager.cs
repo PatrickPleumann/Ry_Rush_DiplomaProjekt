@@ -93,6 +93,7 @@ public class ImportManager : MonoBehaviour
 
     private void StartPreview()
     {
+        view.PlayPreview_Button.interactable = false;
         FillSongData();
         songPreview.AssignSongDataValuesToPreview(data);
     }
@@ -154,6 +155,7 @@ public class ImportManager : MonoBehaviour
         view.ConfirmBPM_Button.interactable = true;
 
         view.AsyncValue_GO.gameObject.SetActive(false);
+        view.PlayPreview_Button.interactable = true;
         view.SampleOffset_Slider.minValue = 0;
         view.SampleOffset_Slider.maxValue = 1;
         view.SampleOffset_Slider.value = 0;
