@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AudioHandler : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private PlayerController controller;
     [SerializeField] private AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
 
@@ -21,6 +23,16 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip playerWallrun;
     [SerializeField] public AudioClip playerDash;
 
+
+    private void OnEnable()
+    {
+        controller.onShootInvoked_started.AddListener(PlaySound_sourceShooting);
+    }
+
+    private void OnDisable()
+    {
+        controller.onShootInvoked_started.RemoveListener(PlaySound_sourceShooting);
+    }
     private void Start()
     {
         var sources = GetComponents<AudioSource>();
@@ -33,9 +45,9 @@ public class AudioHandler : MonoBehaviour
     }
 
     //only for shooting gun related sounds because sounds interrupt each other
-    public void PlaySound_sourceShooting(AudioClip _clip)
+    public void PlaySound_sourceShooting(InputAction.CallbackContext ctx) 
     {
-        sourceShooting.clip = _clip;
+        sourceShooting.clip = playerShoot;
         sourceShooting.Play();
     }
 

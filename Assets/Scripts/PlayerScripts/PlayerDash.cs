@@ -18,6 +18,16 @@ public class PlayerDash : MonoBehaviour
     private Vector3 dashForceVector = Vector3.zero;
 
 
+    private void OnEnable()
+    {
+        controller.onDashInvoked_started.AddListener(Dash);
+    }
+
+    private void OnDisable()
+    {
+        controller.onDashInvoked_started.RemoveListener(Dash);
+    }
+
     private void Start()
     {
         rb_player = GetComponent<Rigidbody>();

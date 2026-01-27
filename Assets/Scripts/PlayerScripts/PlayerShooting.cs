@@ -21,9 +21,18 @@ public class PlayerShooting : MonoBehaviour
     public UnityAction OnWeaponShoot;
     private Vector3 cameraCenterPoint = new Vector3(0.5f, 0.5f, 1.0f);
     private Ray crosshairCenterRay;
-    private Ray ray;
     private RaycastHit hit;
     private bool onBeat;
+
+    private void OnEnable()
+    {
+        controller.onShootInvoked_started.AddListener(Player_ShootWeapon);
+    }
+
+    private void OnDisable()
+    {
+        controller.onShootInvoked_started.RemoveListener(Player_ShootWeapon);
+    }
 
     public void Player_ShootWeapon(InputAction.CallbackContext context)
     {

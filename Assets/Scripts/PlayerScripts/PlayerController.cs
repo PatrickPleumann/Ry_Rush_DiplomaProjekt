@@ -7,10 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerMovement_New movement;
-    [SerializeField] private PlayerShooting shooting;
-    [SerializeField] private PlayerAim playerAim;
     [SerializeField] private PlayerDash playerDash;
-    [SerializeField] private AudioHandler audioHandler;
     [SerializeField] private BeatTracking beat;
     [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] private WeaponAnimBehaviour weaponAnims;
@@ -26,44 +23,52 @@ public class PlayerController : MonoBehaviour
 
     [Header("Centralized Values")]
     [SerializeField] public Transform Orientation;
+    [SerializeField] private float shootingCooldownTimer;
     public Vector3 moveInput;
     public Vector3 moveDirection;
     public bool AllowMovement;
     public bool IsOnBeat;
     public bool LastActionOnBeat;
-    
+
+    public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
+
+    public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
+    public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
+
+    public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
+
+    public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
 
     private float lastActionOnBeatTime;
+    private bool canShoot = true;
+
+
 
     private void Awake()
     {
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         AllowMovement = true;
         IsOnBeat = false;
     }
     private void OnEnable()
     {
-        Jump.action.started += movement.Jump;
-        Jump.action.started += movement.WallJump;
 
-        Shoot.action.started += shooting.Player_ShootWeapon;
-        Shoot.action.started += PlaySingleShootSound;
-        Shoot.action.started += weaponAnims.SetShotAnim;
+        Jump.action.started += onJumpInvoked_started.Invoke;
 
-        Aim.action.started += playerAim.Zoom_True;
-        Aim.action.started += playerAim.ReduceMouseSensitivity;
+        Shoot.action.started += ProcessShootInput;
 
-        Aim.action.canceled += playerAim.Zoom_False;
-        Aim.action.canceled += playerAim.ReIncreaseReducedMouseSensitivity;
+        Aim.action.started += onAimInvoked_started.Invoke;
+        Aim.action.canceled += onAimInvoked_canceled.Invoke;
 
-        Dash.action.started += playerDash.Dash;
+        Dash.action.started += onDashInvoked_started.Invoke;
     }
     private void Start()
     {
         lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier);
-        Debug.Log(lastActionOnBeatTime  + 0.1f);
+        Debug.Log(lastActionOnBeatTime + 0.1f);
     }
+
 
     private void Update()
     {
@@ -72,24 +77,25 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDisable()
     {
-        Jump.action.started -= movement.Jump;
-        Jump.action.started -= movement.WallJump;
+        Jump.action.started -= onJumpInvoked_started.Invoke;
 
-        Shoot.action.started -= shooting.Player_ShootWeapon;
+        Shoot.action.started -= onShootInvoked_started.Invoke;
 
-        Aim.action.started -= playerAim.Zoom_True;
-        Aim.action.started -= playerAim.ReduceMouseSensitivity;
+        Aim.action.started -= onAimInvoked_started.Invoke;
+        Aim.action.canceled -= onAimInvoked_canceled.Invoke;
 
-        Aim.action.canceled -= playerAim.Zoom_False;
-        Aim.action.canceled -= playerAim.ReIncreaseReducedMouseSensitivity;
+        Dash.action.started -= onDashInvoked_started.Invoke;
 
-        Dash.action.started -= playerDash.Dash;
     }
-    private void PlaySingleShootSound(InputAction.CallbackContext ctx)
+
+    private void ProcessShootInput(InputAction.CallbackContext ctx)
     {
-        audioHandler.PlaySound_sourceShooting(audioHandler.playerShoot);
+        if (canShoot == true)
+        {
+            StartCoroutine(ShootTimer());
+            onShootInvoked_started.Invoke(ctx);
+        }
     }
-
     private void GetMoveDirection()
     {
         moveInput.x = Move.action.ReadValue<Vector2>().x;
@@ -104,6 +110,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(lastActionOnBeatTime);
         LastActionOnBeat = false;
         yield break;
+    }
+
+    private IEnumerator ShootTimer()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(shootingCooldownTimer);
+        canShoot = true;
     }
 }
 

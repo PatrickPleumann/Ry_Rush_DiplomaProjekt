@@ -8,16 +8,12 @@ public class PlayerMovement_New : MonoBehaviour
     [Header("General")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private PlayerCollisionCheck collisionCheck;
-    //[SerializeField] private Transform orientation;
 
     private Rigidbody rb_player;
-    //private Vector3 moveInput; // from readValue<Vector2>()
-    //private Vector3 moveDirection;
+
     private Vector3 speedControl;
     private Vector3 speedControlLimit;
-    private Vector3 wallForward;
     private float currentMaxMoveSpeed;
-    //into collision check
 
 
     [Header("Ground Movement")]
@@ -65,6 +61,18 @@ public class PlayerMovement_New : MonoBehaviour
         rb_player = GetComponent<Rigidbody>();
         rb_player.freezeRotation = true;
         speedControl = new Vector3(0f, 0f, 0f); // y value won´t get touched anymore
+    }
+
+    private void OnEnable()
+    {
+        controller.onJumpInvoked_started.AddListener(Jump);
+        controller.onJumpInvoked_started.AddListener(WallJump);
+    }
+
+    private void OnDisable()
+    {
+        controller.onJumpInvoked_started.RemoveListener(Jump);
+        controller.onJumpInvoked_started.RemoveListener(WallJump);
     }
 
     private void Update()

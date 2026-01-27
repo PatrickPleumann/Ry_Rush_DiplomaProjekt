@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerAim : MonoBehaviour
 {
@@ -41,6 +42,24 @@ public class PlayerAim : MonoBehaviour
 
         X_Sens_Multiplier = 1 / sensitivity_X_DividedBy;
         Y_Sens_Multiplier = 1 / sensitivity_Y_DividedBy;
+    }
+
+    private void OnEnable()
+    {
+        controller.onAimInvoked_started.AddListener(Zoom_True);
+        controller.onAimInvoked_started.AddListener(ReduceMouseSensitivity);
+
+        controller.onAimInvoked_canceled.AddListener(Zoom_False);
+        controller.onAimInvoked_canceled.AddListener(ReIncreaseReducedMouseSensitivity);
+    }
+
+    private void OnDisable()
+    {
+        controller.onAimInvoked_started.RemoveListener(Zoom_True);
+        controller.onAimInvoked_started.RemoveListener(ReduceMouseSensitivity);
+
+        controller.onAimInvoked_canceled.RemoveListener(Zoom_False);
+        controller.onAimInvoked_canceled.RemoveListener(ReIncreaseReducedMouseSensitivity);
     }
 
     private void LateUpdate()
