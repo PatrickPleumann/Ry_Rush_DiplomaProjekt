@@ -83,7 +83,7 @@ public class ImportManager : MonoBehaviour
     }
 
 
-    private void SafeSongValuesIntoDictionary() //dictionary to json does not work in unity
+    private void SafeSongValuesIntoDictionary() 
     {
         FillSongData();
         songDataDictionary.CreateNewEntry(view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text, data);
@@ -123,21 +123,6 @@ public class ImportManager : MonoBehaviour
     private void ClearDropDown()
     {
         view.songs_DropdownMenu.ClearOptions();
-    }
-    private void OnSongSelection(int _ = 0)
-    {
-
-        //songDictionary = GetSongDataFromDictionary();
-
-
-        //if (songDictionary.TryGetValue(selectedSong, out SongData data) == true)
-        //{
-        //    view.tmp_InputFieldBPM.text = data.songBPM.ToString();
-        //    view.tmp_InputFieldAsyncValue.text = data.songAsyncValue.ToString();
-        //}
-
-
-        //ArrangeBPMInputField();
     }
 
     private void ResetAllValues()
