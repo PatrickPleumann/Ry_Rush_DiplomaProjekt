@@ -74909,7 +74909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512752295866169011, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.169
+      value: 1.278
       objectReference: {fileID: 0}
     - target: {fileID: 2512752295866169011, guid: 1ce6bd72b7c80a547a9317b12fb8360d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -184670,7 +184670,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844353402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
