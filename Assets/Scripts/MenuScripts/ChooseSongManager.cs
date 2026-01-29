@@ -1,10 +1,8 @@
 using Newtonsoft.Json;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -30,13 +28,17 @@ public class ChooseSongManager : MonoBehaviour
     {
         songDictionaryPath = Application.persistentDataPath + "/" + songDictionaryFileName;
         songDictionary = new();
+
+
     }
     private void OnEnable()
     {
-        startGame_Button.onClick.AddListener(OnStartGameButton_Clicked);
         confirmSong_Button.onClick.AddListener(ConfirmSongChoice);
         chooseYourSong_Dropdown.onValueChanged.AddListener(TryFindSongByFileNameInSongDataDictionary);
         resetSong_Button.onClick.AddListener(ResetSong);
+
+        GetDataFromPersistentFolder();
+        TryGetValuesFromSongDataDictionary();
     }
 
     private void ResetSong()
@@ -71,8 +73,10 @@ public class ChooseSongManager : MonoBehaviour
 
     private void Start()
     {
-        GetDataFromPersistentFolder();
-        TryGetValuesFromSongDataDictionary();
+        if (chooseYourSong_Dropdown.options.Count > 0)
+        {
+            chooseYourSong_Dropdown.captionText.text = chooseYourSong_Dropdown.options[0].text;
+        }
     }
 
     private void TryGetValuesFromSongDataDictionary(int _ = 0)
@@ -84,7 +88,6 @@ public class ChooseSongManager : MonoBehaviour
 
     private void OnDisable()
     {
-        startGame_Button.onClick.RemoveListener(OnStartGameButton_Clicked);
         confirmSong_Button.onClick.RemoveListener(ConfirmSongChoice);
         chooseYourSong_Dropdown.onValueChanged.RemoveListener(TryGetValuesFromSongDataDictionary);
         resetSong_Button.onClick.RemoveListener(ResetSong);

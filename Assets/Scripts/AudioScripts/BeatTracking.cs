@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 
 public class BeatTracking : MonoBehaviour
@@ -9,7 +10,6 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public PlayerController controller;
     [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] public AudioSource source;
-    [SerializeField] public AudioClip clip;
     [SerializeField] private SongData songData;
 
     [Header("Gameplay Values")]
@@ -46,12 +46,15 @@ public class BeatTracking : MonoBehaviour
 
     private int lastFrameSamples = 0;
     private int beatMultiplier = 1;
+    private string destPath;
 
 
     private void Awake()
     {
+        destPath = Application.persistentDataPath + "/";
         source = GetComponent<AudioSource>();
-        //here needs to be a load in song logic before playing
+
+        AssignAudioFile(songData.songName);
         bpm = songData.BPM;
         beatMultiplier = songData.BeatMultiplier;
         samplesPerBeat = songData.SamplesPerBeat;
@@ -60,8 +63,10 @@ public class BeatTracking : MonoBehaviour
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
     }
 
+
     private void Start()
     {
+        asyncValue = songData.AsyncSamplesValue;
         //calculate with beat multiplier here 
         currentSamples += songData.AsyncSamplesValue;
         currentSamples_UI = currentSamples;
@@ -77,7 +82,6 @@ public class BeatTracking : MonoBehaviour
 
     IEnumerator StartSongDelayed(float _timeTillSongStarts)
     {
-        source.clip = clip;
         yield return new WaitForSecondsRealtime(_timeTillSongStarts);
         source.Play();
     }
@@ -115,14 +119,31 @@ public class BeatTracking : MonoBehaviour
         return false;
     }
 
-    public void ShowCurrentSamples()
-    {
-        Debug.Log("Min Samples: " + (samplesPerBeat - onBeatOffset));
-        Debug.Log("Max Samples: " + onBeatOffset);
-        Debug.Log("Current Samples: " + currentSamples);
-    }
     public bool Return_IsOnBeat()
     {
         return isOnBeat;
+    }
+
+    private void AssignAudioFile(string _fileName)
+    {
+        string path = destPath + _fileName;
+        string uri = "file://" + path;
+
+        StartCoroutine(LoadCustomSong(uri));
+    }
+    private IEnumerator LoadCustomSong(string uri)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(uri, AudioType.WAV))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+                Debug.Log("Could not load audio file");
+
+            else
+            {
+                source.clip = DownloadHandlerAudioClip.GetContent(www);
+            }
+        }
     }
 }

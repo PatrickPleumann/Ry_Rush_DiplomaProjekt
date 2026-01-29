@@ -104,7 +104,7 @@ public class ImportManager : MonoBehaviour
         data.songName = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
         data.BPM = bpm;
         data.SamplesPerBeat = samplesPerBeat;
-        data.AsyncSamplesValue = 0;
+        data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
         data.BeatMultiplier = 1;
     }
     private void ConfirmCurrentSong()

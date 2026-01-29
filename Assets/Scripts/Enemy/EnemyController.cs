@@ -71,11 +71,6 @@ public class EnemyController : MonoBehaviour
     {
         controller.Update();
         SqrDistanceToPlayer = CheckDistanceToPlayer();
-
-        if (EnemyHealth <= 0f)
-        {
-            EnemyDying();
-        }
     }
 
     private float CheckDistanceToPlayer()
@@ -101,5 +96,9 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float _dmgAmount)
     {
         EnemyHealth -= _dmgAmount;
+        if (EnemyHealth <= 0)
+        {
+            EnemyDying();
+        }
     }
 }

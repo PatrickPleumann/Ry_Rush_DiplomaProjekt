@@ -9,17 +9,7 @@ public class AlignWeaponToCrosshair : MonoBehaviour
     private RaycastHit hit;
     [SerializeField] private GameObject weapon;
 
-
-    private void OnEnable()
-    {
-        controller.onShootInvoked_started.AddListener(AlignMuzzleToCrosshairMiddlePoint);
-    }
-
-    private void OnDisable()
-    {
-        controller.onShootInvoked_started.RemoveListener(AlignMuzzleToCrosshairMiddlePoint);
-    }
-    public void AlignMuzzleToCrosshairMiddlePoint(InputAction.CallbackContext ctx)
+    public void AlignMuzzleToCrosshairMiddlePoint()
     {
         centerPoint = Camera.main.ViewportPointToRay(cameraCenterPoint);
         var temp = Physics.Raycast(centerPoint, out hit, 200f);

@@ -8,6 +8,8 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private PlayerController controller;
     [SerializeField] private Scoreboard_UI scoreboard;
     [SerializeField] private BeatTracking beatTracking;
+    [SerializeField] private float projectileForce;
+    [SerializeField] private AlignWeaponToCrosshair alignWeaponToCrosshair;
 
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform weaponMuzzleOrigin;
@@ -36,7 +38,8 @@ public class PlayerShooting : MonoBehaviour
 
     public void Player_ShootWeapon(InputAction.CallbackContext context)
     {
-        beatTracking.ShowCurrentSamples();
+        alignWeaponToCrosshair.AlignMuzzleToCrosshairMiddlePoint();
+
         onBeat = false;
         if (controller.IsOnBeat == true)
         {
@@ -45,32 +48,18 @@ public class PlayerShooting : MonoBehaviour
             onBeat = true;
         }
 
-        //controller.weaponAnimationController.SetTrigger("OnShoot");
         crosshairCenterRay = Camera.main.ViewportPointToRay(cameraCenterPoint);
 
-        var tempBullet = Instantiate(bullet, weaponMuzzleOrigin);
-        var tempBulletRB = tempBullet.GetComponent<Rigidbody>();
+        var bullet_Prefab = Instantiate(bullet);
+        bullet_Prefab.transform.position = weaponMuzzleOrigin.position;
+        bullet_Prefab.transform.rotation = weaponMuzzleOrigin.rotation;
 
-        tempBulletRB.AddForce(tempBullet.transform.forward * 100, ForceMode.Impulse);
+        var bullet_RB = bullet_Prefab.GetComponent<Rigidbody>();
 
-        var temp = Physics.Raycast(crosshairCenterRay, out hit, 100f, targetLayerMask);
-        if (temp == true)
-        {
-            hit.transform.parent.TryGetComponent(out EnemyController target);
+        var projectileBehaviour = bullet_Prefab.GetComponent<ProjectileBehaviour>();
+        projectileBehaviour.SetValues(onBeat, (int)scoreboard.currentCombo);
 
-            if (onBeat == true)
-            {
-                Debug.Log((bulletDamage * scoreboard.currentCombo) * hitOnBeatMultiplier);
-                target.TakeDamage((bulletDamage * scoreboard.currentCombo) * hitOnBeatMultiplier);
-            }
-
-            else
-            {
-                Debug.Log(bulletDamage * scoreboard.currentCombo);
-                target.TakeDamage(bulletDamage * scoreboard.currentCombo);
-            }
-        }
-        //animator.ResetTrigger("OnShoot");
+        bullet_RB.AddForce(weaponMuzzleOrigin.forward * projectileForce, ForceMode.Impulse);
     }
 }
 
