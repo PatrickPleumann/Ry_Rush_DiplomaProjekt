@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public EnemyFSM_Data Data;
     [SerializeField] public Transform ThisEnemy;
     [SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;
+    [SerializeField] public PlayerInfo playerInfo;
 
     public float EnemyDirSmoothSpeed;
 
@@ -31,7 +32,7 @@ public class EnemyController : MonoBehaviour
     public float SqrMinDistanceToPlayer { get; private set; }
     public float SqrMaxDistanceToPlayer { get; private set; }
     public float SqrWalkToPlayerInRange { get; private set; }
-    public float SqrRunToPlayerInRange { get; private set; }
+    public float SqrStopChaseDistance { get; private set; }
     public float SqrMinShootingDistance { get; private set; }
     public float SqrMaxShootingDistance { get; private set; }
 
@@ -44,6 +45,7 @@ public class EnemyController : MonoBehaviour
     {
         EnemyDirSmoothSpeed = Data.enemyDirSmoothSpeed;
         EnemyHealth = Data.enemyHealth;
+
         SqrMinShootingDistance = Data.minShootingDistance * Data.minShootingDistance;
         SqrMaxShootingDistance = Data.maxShootingDistance * Data.maxShootingDistance;
 
@@ -51,12 +53,20 @@ public class EnemyController : MonoBehaviour
         SqrMaxDistanceToPlayer = Data.maxDistanceToPlayer * Data.maxDistanceToPlayer;
 
         SqrWalkToPlayerInRange = Data.walkToPlayerInRange * Data.walkToPlayerInRange;
-        SqrRunToPlayerInRange = Data.runToPlayerInRange * Data.runToPlayerInRange;
 
         SqrDesiredShootingRange = Data.desiredShootingDistance * Data.desiredShootingDistance;
         SqrDistancePlayerInSight = Data.playerInSightDistance * Data.playerInSightDistance;
 
+        SqrStopChaseDistance = Data.stopChaseDistance * Data.stopChaseDistance;
+
         enemyIsDead = false;
+
+        Player = playerInfo.PlayerPosition; // very good solution
+        if (Player == null)
+        {
+            var temp = FindFirstObjectByType<PlayerController>();
+            Player = temp.transform;
+        }
     }
     private void Start()
     {
@@ -64,7 +74,6 @@ public class EnemyController : MonoBehaviour
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this once before entering any state, all following stateSwitchBehaviours depend on that value
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); //point of entry
-
     }
 
     private void Update()
@@ -99,6 +108,7 @@ public class EnemyController : MonoBehaviour
         if (EnemyHealth <= 0)
         {
             EnemyDying();
+            //put back into object pool in scene
         }
     }
 }

@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: EnemyFSM_Data
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFSM_Data
   enemyHealth: 100
-  enemyDirSmoothSpeed: 1.5
-  minShootingDistance: 5
+  enemyDirSmoothSpeed: 3
+  minShootingDistance: 3
   maxShootingDistance: 10
   betweenShotsTimer: 3
-  minDistanceToPlayer: 5
-  maxDistanceToPlayer: 30
+  minDistanceToPlayer: 3
+  maxDistanceToPlayer: 15
   enemyMaxSpeedWalking: 2
   enemyMaxSpeedRunning: 4
   walkToPlayerInRange: 15
-  runToPlayerInRange: 30
+  stopChaseDistance: 30
   playerFledRange: 40
   desiredShootingDistance: 8
   idleAnimTimer: 5
   idleTimer: 35
-  swapStateTimer: 0
+  swapStateTimer: 0.5
   playerInSightDistance: 31
   canSeePlayer: 1

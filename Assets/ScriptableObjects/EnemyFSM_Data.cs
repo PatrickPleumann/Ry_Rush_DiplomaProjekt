@@ -23,7 +23,7 @@ public class EnemyFSM_Data : ScriptableObject
 
     [Header("Enemy Range Behaviour Values")]
     [SerializeField] public float walkToPlayerInRange;
-    [SerializeField] public float runToPlayerInRange;
+    [SerializeField] public float stopChaseDistance;
     [SerializeField] public float playerFledRange;
     [SerializeField] public float desiredShootingDistance;
 

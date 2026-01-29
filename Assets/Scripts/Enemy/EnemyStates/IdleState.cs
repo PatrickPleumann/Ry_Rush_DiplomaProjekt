@@ -6,16 +6,13 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
 {
     private bool sawPlayer = false;
 
-    private float swapStateTimer;
     private float animTimer;
-    private float sqrDistanceToPlayer;
+    private float chaseDistance;
 
     public IdleState(T _controller) : base(_controller) // animator state is called "breathes"
     {
-        swapStateTimer = controller.Data.swapStateTimer;
         animTimer = controller.Data.idleAnimTimer;
-
-        sqrDistanceToPlayer = controller.Data.maxDistanceToPlayer * controller.Data.maxDistanceToPlayer;
+        chaseDistance = controller.Data.maxDistanceToPlayer * controller.Data.maxDistanceToPlayer;
     }
 
     public override BaseState<T> CheckConditions()
@@ -24,13 +21,9 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
         {
             return new DyingState<T>(controller);
         }
-        if (controller.SqrDistanceToPlayer <= sqrDistanceToPlayer)
+        if (controller.SqrDistanceToPlayer <= chaseDistance)
         {
-            
-            if (swapStateTimer <= 0)
-            {
-                return new ChaseState<T>(controller);
-            }
+            return new ChaseState<T>(controller);
         }
         return null;
     }
@@ -38,31 +31,25 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
     public override void EnterState()
     {
         controller.Agent.updateRotation = false;
-        //Debug.Log("Enter State: Idle");
-        //set all agent properties here
         controller.Animator.SetTrigger("IdleAnim");
         controller.Agent.ResetPath();
-
     }
 
     public override void UpdateState()
     {
-        if (sawPlayer)
-            swapStateTimer -= Time.deltaTime;
+        //if (sawPlayer)
+        //    swapStateTimer -= Time.deltaTime;
 
         animTimer -= Time.deltaTime;
         if (animTimer <= 0f)
         {
             controller.Animator.SetTrigger("IdleAnim2");
-            animTimer = 15f;
+            animTimer = Random.Range(5,30);
         }
-
-        //swap idle animations       
     }
 
     public override void ExitState()
     {
-        //reset all agent properties here
         controller.Animator.ResetTrigger("IdleAnim");
         controller.Animator.ResetTrigger("IdleAnim2");
     }

@@ -3,14 +3,9 @@ using UnityEngine.AI;
 
 public class ChaseState<T> : BaseState<T> where T : EnemyController
 {
-    //local for shortness
-    private float walk;
-    private float run;
     private float chaseStateTimer;
-    public ChaseState(T _controller) : base(_controller) 
+    public ChaseState(T _controller) : base(_controller)
     {
-        walk = controller.SqrWalkToPlayerInRange;
-        run = controller.SqrRunToPlayerInRange;
         chaseStateTimer = 1f;
     }
 
@@ -24,7 +19,7 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
         {
             return new ShootState<T>(controller);
         }
-        if (controller.SqrDistanceToPlayer < controller.SqrMaxDistanceToPlayer)
+        if (controller.SqrStopChaseDistance < controller.SqrDistanceToPlayer)
         {
             return new IdleState<T>(controller);
         }
@@ -33,34 +28,24 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
-        //Debug.Log("Enter State: Chase");
         controller.Data.canSeePlayer = true;
-        controller.Agent.destination = controller.Player.position;
     }
 
     public override void ExitState()
     {
-        controller.Animator.ResetTrigger("RunAnim");
         controller.Animator.ResetTrigger("WalkAnim");
     }
 
     public override void UpdateState()
     {
         controller.UpdateEnemyRotation();
-
         chaseStateTimer -= Time.deltaTime;
 
-        if (controller.SqrDistanceToPlayer >= walk && controller.SqrDistanceToPlayer <= run && chaseStateTimer <= 0f)
-        {
-            controller.Animator.SetTrigger("RunAnim");
-            controller.Agent.speed = controller.Data.enemyMaxSpeedRunning;
-        }
-        else if(controller.SqrDistanceToPlayer < (walk - 1) && chaseStateTimer <= 0f)
+        if (chaseStateTimer <= 0)
         {
             controller.Animator.SetTrigger("WalkAnim");
             controller.Agent.speed = controller.Data.enemyMaxSpeedWalking;
+            controller.Agent.destination = controller.Player.position;
         }
-
-        controller.Agent.destination = controller.Player.position;
     }
 }
