@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -62,10 +63,10 @@ public class EnemyController : MonoBehaviour
         enemyIsDead = false;
 
         Player = playerInfo.PlayerPosition; // very good solution
+
         if (Player == null)
         {
-            var temp = FindFirstObjectByType<PlayerController>();
-            Player = temp.transform;
+            Player = FindFirstObjectByType<PlayerController>().transform;
         }
     }
     private void Start()

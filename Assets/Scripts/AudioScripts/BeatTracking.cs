@@ -58,19 +58,18 @@ public class BeatTracking : MonoBehaviour
         bpm = songData.BPM;
         beatMultiplier = songData.BeatMultiplier;
         samplesPerBeat = songData.SamplesPerBeat;
-        onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
+        asyncValue = songData.AsyncSamplesValue;
 
+        onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
     }
 
 
     private void Start()
     {
-        asyncValue = songData.AsyncSamplesValue;
         //calculate with beat multiplier here 
-        currentSamples += songData.AsyncSamplesValue;
+        currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
-
         currentSamples_UI += onBeatOffset;
 
         StartCoroutine(StartSongDelayed(timeTillSongStarts));
