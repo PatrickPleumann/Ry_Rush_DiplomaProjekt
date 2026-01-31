@@ -26,8 +26,6 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public float bpm = 0f;
     [SerializeField] public float lastActionOnBeatTimer;
 
-
-
     public int currentSamples = 0;
     public int currentTimeSamplesMin = 0;
     public int currentTimeSamplesMax = 0;
@@ -67,7 +65,6 @@ public class BeatTracking : MonoBehaviour
 
     private void Start()
     {
-        //calculate with beat multiplier here 
         currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
         currentSamples_UI += onBeatOffset;
@@ -81,8 +78,14 @@ public class BeatTracking : MonoBehaviour
 
     IEnumerator StartSongDelayed(float _timeTillSongStarts)
     {
+        
         yield return new WaitForSecondsRealtime(_timeTillSongStarts);
         source.Play();
+    }
+
+    private void ValidateSongValues()
+    {
+
     }
     public bool CheckForNewBeat()
     {

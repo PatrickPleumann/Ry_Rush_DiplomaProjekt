@@ -5450,6 +5450,7 @@ MonoBehaviour:
   saveSongButton: {fileID: 8300000, guid: f0b0b8863d74ba947a2b224639d1cda2, type: 3}
   resetValuesSound: {fileID: 8300000, guid: 8c640f72c4a7edf4d80cf8531b6d80f9, type: 3}
   assignBooleanValueSound: {fileID: 8300000, guid: 88e507cafe258ed4f8b2830128c444f8, type: 3}
+  menuFadeIn_Sound: {fileID: 8300000, guid: d2318f5f2515b8b49bec895a2769eb7f, type: 3}
 --- !u!4 &845303456
 Transform:
   m_ObjectHideFlags: 0
@@ -6774,6 +6775,7 @@ GameObject:
   - component: {fileID: 1047711230}
   - component: {fileID: 1047711229}
   - component: {fileID: 1047711228}
+  - component: {fileID: 1047711231}
   m_Layer: 5
   m_Name: ResetSong_Button
   m_TagString: Untagged
@@ -6844,7 +6846,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1047711229}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 845303455}
+        m_TargetAssemblyTypeName: UI_SoundsHandler, Assembly-CSharp
+        m_MethodName: ResetValuesButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1047711229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6883,6 +6897,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047711226}
   m_CullTransparentMesh: 1
+--- !u!114 &1047711231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047711226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28987ca3449ac94ab86818380148d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFXBehaviour
+  sounds: {fileID: 845303455}
 --- !u!1 &1103324886
 GameObject:
   m_ObjectHideFlags: 0
@@ -7171,6 +7198,7 @@ GameObject:
   - component: {fileID: 1195539372}
   - component: {fileID: 1195539371}
   - component: {fileID: 1195539370}
+  - component: {fileID: 1195539373}
   m_Layer: 5
   m_Name: ChooseYourSong_Dropdown
   m_TagString: Untagged
@@ -7239,7 +7267,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1195539371}
   m_Template: {fileID: 482209362}
   m_CaptionText: {fileID: 1771496879}
@@ -7253,7 +7281,19 @@ MonoBehaviour:
     m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 845303455}
+        m_TargetAssemblyTypeName: UI_SoundsHandler, Assembly-CSharp
+        m_MethodName: OnPointerEnter_Sound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.1
 --- !u!114 &1195539371
 MonoBehaviour:
@@ -7293,6 +7333,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195539368}
   m_CullTransparentMesh: 1
+--- !u!114 &1195539373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195539368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28987ca3449ac94ab86818380148d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFXBehaviour
+  sounds: {fileID: 845303455}
 --- !u!1 &1218848478
 GameObject:
   m_ObjectHideFlags: 0
@@ -8719,6 +8772,7 @@ GameObject:
   - component: {fileID: 1531762083}
   - component: {fileID: 1531762082}
   - component: {fileID: 1531762081}
+  - component: {fileID: 1531762084}
   m_Layer: 5
   m_Name: ConfirmSong_Button
   m_TagString: Untagged
@@ -8785,11 +8839,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1531762082}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 845303455}
+        m_TargetAssemblyTypeName: UI_SoundsHandler, Assembly-CSharp
+        m_MethodName: ConfirmSong_Sound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1531762082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8828,6 +8894,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531762079}
   m_CullTransparentMesh: 1
+--- !u!114 &1531762084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531762079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28987ca3449ac94ab86818380148d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFXBehaviour
+  sounds: {fileID: 845303455}
 --- !u!1 &1563730340
 GameObject:
   m_ObjectHideFlags: 0

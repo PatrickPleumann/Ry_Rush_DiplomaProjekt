@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +21,8 @@ public class ChooseSongManager : MonoBehaviour
     [SerializeField] private TMP_Dropdown chooseYourSong_Dropdown;  //still needs some prettyness
     [SerializeField] private float timeTillGameStarts = 0.5f;
     [SerializeField] private SongData songData;
-    
+    private SongData tempSongData;
+
 
     private Dictionary<string, SongData> songDictionary;
 
@@ -28,8 +30,6 @@ public class ChooseSongManager : MonoBehaviour
     {
         songDictionaryPath = Application.persistentDataPath + "/" + songDictionaryFileName;
         songDictionary = new();
-
-
     }
     private void OnEnable()
     {
@@ -39,36 +39,56 @@ public class ChooseSongManager : MonoBehaviour
 
         GetDataFromPersistentFolder();
         TryGetValuesFromSongDataDictionary();
+        TryFindSongByFileNameInSongDataDictionary();
+
+        if (songDictionary.Count > 0)
+            chooseYourSong_Dropdown.interactable = true;
     }
 
     private void ResetSong()
     {
-        //confirmSong_button.interactable = false; 
+        chooseYourSong_Dropdown.interactable = true;
+        confirmSong_Button.interactable = true;
+        startGame_Button.interactable = false;
+        ResetSongData();
+    }
+
+    private void ResetSongData()
+    {
+        songData.songName = "";
+        songData.BPM = 0;
+        songData.AsyncSamplesValue = 0;
+        songData.BeatMultiplier = 1;
+        songData.SamplesPerBeat = 0;
     }
 
     private void TryFindSongByFileNameInSongDataDictionary(int _ = 0)
     {
-        if (songDictionary.ContainsKey(chooseYourSong_Dropdown.options[chooseYourSong_Dropdown.value].text) == true)
-            if (songDictionary.TryGetValue(chooseYourSong_Dropdown.options[chooseYourSong_Dropdown.value].text, out var temp))
+        if (songDictionary.Count > 0 && songDictionary.ContainsKey(chooseYourSong_Dropdown.options[chooseYourSong_Dropdown.value].text) == true)
+            if (songDictionary.TryGetValue(chooseYourSong_Dropdown.options[chooseYourSong_Dropdown.value].text, out var temp) == true)
             {
-                //cannot overwrite songData with temp (sadly), have to overwrite every single value on it´s own
-                songData.songName = temp.songName;
-                songData.BPM = temp.BPM;
-                songData.AsyncSamplesValue = temp.AsyncSamplesValue;
-                songData.BeatMultiplier = temp.BeatMultiplier;
-                songData.SamplesPerBeat = temp.SamplesPerBeat;
-
-                //confirmSong_button.interactable = true 
+                tempSongData = temp;
+                chooseYourSong_Dropdown.captionText.text = chooseYourSong_Dropdown.options[chooseYourSong_Dropdown.value].text;
+                confirmSong_Button.interactable = true;
             }
 
             else
                 Debug.Log("Song specific values not found. Please add your desired song in the >> Import << Menu");
-        
+
     }
 
     private void ConfirmSongChoice()
     {
-        Debug.Log("Song was confirmed, nice!");
+        //cannot overwrite songData with tempSongData (sadly), have to overwrite every single value on it´s own
+        songData.songName = tempSongData.songName;
+        songData.BPM = tempSongData.BPM;
+        songData.AsyncSamplesValue = tempSongData.AsyncSamplesValue;
+        songData.BeatMultiplier = tempSongData.BeatMultiplier;
+        songData.SamplesPerBeat = tempSongData.SamplesPerBeat;
+
+        confirmSong_Button.interactable = false;
+        chooseYourSong_Dropdown.interactable = false;
+        startGame_Button.interactable = true;
     }
 
     private void Start()
@@ -81,11 +101,12 @@ public class ChooseSongManager : MonoBehaviour
 
     private void TryGetValuesFromSongDataDictionary(int _ = 0)
     {
-        var temp = File.ReadAllText(songDictionaryPath);
-        songDictionary = JsonConvert.DeserializeObject<Dictionary<string, SongData>>(temp);
+        if (File.Exists(songDictionaryPath))
+        {
+            var temp = File.ReadAllText(songDictionaryPath);
+            songDictionary = JsonConvert.DeserializeObject<Dictionary<string, SongData>>(temp);
+        }
     }
-
-
     private void OnDisable()
     {
         confirmSong_Button.onClick.RemoveListener(ConfirmSongChoice);

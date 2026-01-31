@@ -14,29 +14,24 @@ public class ImportManager : MonoBehaviour
     [SerializeField] private GameObject dropdown;
     [SerializeField] private SongDataDictionary songDataDictionary;
 
-
-    private AudioClip clip;
+    [Header("Calculation relevant")]
     private float bpm;
-    private int asyncValue;
     private int samplesPerBeat;
-    private int beatMultiplier;
-    private string songName;
 
-    //Load Data from file dialog into persitent data folder
+    [Header("File browsing values")]
+    ExtensionFilter[] extensions = { new ExtensionFilter("Songfiles", "wav") }; // only .wav files so far.
     private bool canChooseMultipleFiles;
-
     [SerializeField] private SongData data;
 
     private string destPath = null;
 
     private void Awake()
     {
-
+        
         canChooseMultipleFiles = false;
         destPath = Application.persistentDataPath + "/"; // + "/" is necessary to "hit" the correct folder
     }
-
-    private void OnEnable()
+    private void AddAllListener()
     {
         view.SampleOffset_Slider.onValueChanged.AddListener(ShowAsyncSamples);
         view.SampleOffset_Slider.onValueChanged.AddListener(songPreview.OverrideCurrentAsyncSamples);
@@ -52,18 +47,9 @@ public class ImportManager : MonoBehaviour
 
         view.ResetValues_Button.onClick.AddListener(ResetAllValues);
         view.Back_Button.onClick.AddListener(ResetAllValues);
-
-        ClearDropDown();
-        GetDataFromPersistentFolder();
-
-        if (view.songs_DropdownMenu.options.Count > 0 && view.songs_DropdownMenu.value >= 0)
-        {
-            view.YourSong_Name.text = view.songs_DropdownMenu.options[0].text;
-            view.songs_DropdownMenu.captionText.text = view.songs_DropdownMenu.options[0].text;
-        }
     }
 
-    private void OnDisable()
+    private void RemoveAllListeners()
     {
         view.SampleOffset_Slider.onValueChanged.RemoveListener(ShowAsyncSamples);
         view.SampleOffset_Slider.onValueChanged.RemoveListener(songPreview.OverrideCurrentAsyncSamples);
@@ -80,6 +66,24 @@ public class ImportManager : MonoBehaviour
         view.ResetValues_Button.onClick.RemoveListener(ResetAllValues);
         view.Back_Button.onClick.RemoveListener(ResetAllValues);
 
+    }
+    private void OnEnable()
+    {
+        AddAllListener();
+
+        ClearDropDown();
+        GetDataFromPersistentFolder();
+
+        if (view.songs_DropdownMenu.options.Count > 0 && view.songs_DropdownMenu.value >= 0)
+        {
+            view.YourSong_Name.text = view.songs_DropdownMenu.options[0].text;
+            view.songs_DropdownMenu.captionText.text = view.songs_DropdownMenu.options[0].text;
+        }
+    }
+
+    private void OnDisable()
+    {
+        RemoveAllListeners();
     }
 
 
@@ -103,7 +107,7 @@ public class ImportManager : MonoBehaviour
     {
         data.songName = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
         data.BPM = bpm;
-        data.SamplesPerBeat = samplesPerBeat;
+        data.SamplesPerBeat = GetSamplesPerBeat();
         data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
         data.BeatMultiplier = 1;
     }
@@ -161,7 +165,6 @@ public class ImportManager : MonoBehaviour
         {
             FillSongData();
             bpm = output;
-            beatMultiplier = 1;
             samplesPerBeat = GetSamplesPerBeat();
             ArrangeAsyncSlider(samplesPerBeat);
             view.BPMInput_InputField.interactable = false; // into reset
@@ -176,7 +179,7 @@ public class ImportManager : MonoBehaviour
     {
         dropdown.SetActive(true);
         //pauses mainthread, which is good
-        var path = StandaloneFileBrowser.OpenFilePanel(view.Message, "", "", canChooseMultipleFiles);  //stay with false to not 
+        var path = StandaloneFileBrowser.OpenFilePanel(view.Message, "", extensions, canChooseMultipleFiles);
         if (path.Length > 0)
             LoadFileIntoPersistentDataFolder(path[0]);
     }
@@ -192,11 +195,12 @@ public class ImportManager : MonoBehaviour
             File.Copy(_path, destPath + Path.GetFileName(_path));
             Debug.Log("File successfully loaded into persistent data folder");
             view.YourSong_Name.text = Path.GetFileName(_path);
+            view.songs_DropdownMenu.captionText.text = view.YourSong_Name.text;
             GetDataFromPersistentFolder();
         }
 
         else
-            Debug.Log("No file choosen");
+            Debug.Log("No file chosen");
     }
 
 
@@ -227,6 +231,7 @@ public class ImportManager : MonoBehaviour
 
     private void ShowAsyncSamples(float _value)
     {
+        //maybe cool would be to implement a stepsize multiplier, which allows the user to use different stepsizes while changing async values
         view.ShowAsyncSamples_Text.text = "" + view.SampleOffset_Slider.value;
     }
 

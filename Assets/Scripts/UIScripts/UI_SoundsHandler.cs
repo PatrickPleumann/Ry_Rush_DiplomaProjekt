@@ -12,6 +12,7 @@ public class UI_SoundsHandler : MonoBehaviour
     [SerializeField] private AudioClip saveSongButton;
     [SerializeField] private AudioClip resetValuesSound;
     [SerializeField] private AudioClip assignBooleanValueSound;
+    [SerializeField] private AudioClip menuFadeIn_Sound;
     private void Awake()
     {
         ui_Sounds = GetComponent<AudioSource>();
@@ -58,6 +59,12 @@ public class UI_SoundsHandler : MonoBehaviour
     public void AssignBooleanBalue()
     {
         ui_Sounds.clip = assignBooleanValueSound;
+        ui_Sounds.Play();
+    }
+
+    public void ConfirmSong_Sound()
+    {
+        ui_Sounds.clip = menuFadeIn_Sound;
         ui_Sounds.Play();
     }
 }
