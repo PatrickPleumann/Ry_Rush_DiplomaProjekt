@@ -62,7 +62,7 @@ public class SlowMotionHandler : MonoBehaviour
         {
             Time.timeScale = Mathf.Lerp(maxTimeScale, minTimeScale, duration);
         }
-        yield return null;
+        yield return new WaitForEndOfFrame();
     }
     private IEnumerator ReIncreaseTimeScale()
     {
@@ -70,6 +70,6 @@ public class SlowMotionHandler : MonoBehaviour
         {
             Time.timeScale = Mathf.Lerp(minTimeScale, maxTimeScale, duration);
         }
-        yield return null;
+        yield return new WaitForEndOfFrame();
     }
 }

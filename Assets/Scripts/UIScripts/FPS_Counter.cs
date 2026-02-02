@@ -9,13 +9,26 @@ public class FPS_Counter : MonoBehaviour
     private float current;
     private float fpsUpdateTime;
 
+    public bool showFPS;
+
+    private void Awake()
+    {
+        showFPS = true;
+    }
+    private void Start()
+    {
+        if (GameManager.Instance.settingsData != null)
+            showFPS = GameManager.Instance.settingsData.ShowFPS;
+    }
     void Update()
     {
-        fpsUpdateTime -= Time.deltaTime;
-        if (fpsUpdateTime <= 0f)
+        if (showFPS == true)
         {
-            ShowFPS();
-            fpsUpdateTime = fpsUpdateTimeDelay;
+            fpsUpdateTime -= Time.deltaTime;
+            if (fpsUpdateTime <= 0f)
+            {
+                ShowFPS();
+            }
         }
     }
 
@@ -23,5 +36,6 @@ public class FPS_Counter : MonoBehaviour
     {
         current = (int)(1f / Time.unscaledDeltaTime);
         fpsCounter.text = "FPS: " + current;
+        fpsUpdateTime = fpsUpdateTimeDelay;
     }
 }

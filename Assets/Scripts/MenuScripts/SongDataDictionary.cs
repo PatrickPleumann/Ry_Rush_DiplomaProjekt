@@ -25,10 +25,14 @@ public class SongDataDictionary : MonoBehaviour
         }
     }
 
-    public void CreateNewEntry(string _key, SongData _value)
+    public void SaveEntry(string _key, SongData _value)
     {
         if (songDictionary.ContainsKey(_key) == true)
-            Debug.Log("Song entry with this name already exists");
+        {
+            songDictionary.Remove(_key);
+            songDictionary.Add(_key, _value);
+            Debug.Log("Song values from song: " + _key + " overwritten.");
+        }
 
         else
         {

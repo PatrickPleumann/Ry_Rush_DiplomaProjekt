@@ -2,7 +2,6 @@ using SFB;
 using System.Collections;
 using System.IO;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -90,7 +89,7 @@ public class ImportManager : MonoBehaviour
     private void SafeSongValuesIntoDictionary() 
     {
         FillSongData();
-        songDataDictionary.CreateNewEntry(view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text, data);
+        songDataDictionary.SaveEntry(view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text, data);
         songDataDictionary.SafeDictionaryAsJson();
     }
 

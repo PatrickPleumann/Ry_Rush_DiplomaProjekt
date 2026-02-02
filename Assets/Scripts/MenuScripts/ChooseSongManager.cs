@@ -36,6 +36,7 @@ public class ChooseSongManager : MonoBehaviour
         confirmSong_Button.onClick.AddListener(ConfirmSongChoice);
         chooseYourSong_Dropdown.onValueChanged.AddListener(TryFindSongByFileNameInSongDataDictionary);
         resetSong_Button.onClick.AddListener(ResetSong);
+        return_Button.onClick.AddListener(ClearDropdownMenu);
 
         GetDataFromPersistentFolder();
         TryGetValuesFromSongDataDictionary();
@@ -43,6 +44,11 @@ public class ChooseSongManager : MonoBehaviour
 
         if (songDictionary.Count > 0)
             chooseYourSong_Dropdown.interactable = true;
+    }
+
+    private void ClearDropdownMenu()
+    {
+        chooseYourSong_Dropdown.ClearOptions();
     }
 
     private void ResetSong()
