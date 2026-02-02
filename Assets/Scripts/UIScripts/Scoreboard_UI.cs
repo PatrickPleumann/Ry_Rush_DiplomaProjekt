@@ -5,14 +5,20 @@ public class Scoreboard_UI : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private BeatTracking beatTracking;
-    [SerializeField] private TMP_Text comboCounter;
+
+    [SerializeField] private GameObject comboCounterNormal;
+    [SerializeField] private GameObject comboCounterOvershoot;
+    [Space]
+
+    [SerializeField] private TMP_Text comboCounter_Normal;
+    [SerializeField] private TMP_Text comboCounter_Overshoot;
+    [SerializeField] private Material overshoot_Material;
+
+    private string comboCounter_Text;
+
     [SerializeField] private TMP_Text score;
     [Space]
 
-    [Header("Font Settings on Overshoot")]
-    [SerializeField] private float fontSizeDefault;
-    [SerializeField] private float fontSizeOvershoot;
-    [Space]
 
     [Header("Combo values")]
     [SerializeField] public float currentCombo = 1;
@@ -28,30 +34,33 @@ public class Scoreboard_UI : MonoBehaviour
     private void OnEnable()
     {
         beatTracking.onBeatInvoke += ComboCounterShapeShift;
+        ComboCounterShapeShift();
+        
     }
 
     private void ComboCounterShapeShift()
     {
-        if (currentCombo == maxCombo && currentOvershoot > 0)
+        if (comboCounterOvershoot.activeSelf == false && currentCombo == maxCombo && currentOvershoot > 0)
         {
-            comboCounter.fontSize = fontSizeOvershoot;
-            comboCounter.fontStyle = FontStyles.Italic;
-            comboCounter.fontStyle = FontStyles.Bold;
-            comboCounter.color = Color.red;
+            comboCounterNormal.SetActive(false);
+            //overshoot_Material.SetFloat(ShaderUtilities.ID_FaceDilate, 0.2f * currentOvershoot); // does not work
+            comboCounter_Overshoot.text = comboCounter_Text;
+            comboCounterOvershoot.SetActive(true);
+
         }
-        else
+        else if (currentCombo < maxCombo)
         {
-            comboCounter.fontSize = fontSizeDefault;
-            comboCounter.fontStyle = FontStyles.Normal;
-            comboCounter.color = Color.white;
+            comboCounterNormal.SetActive(true);
+            comboCounter_Normal.text = comboCounter_Text;
+            comboCounterOvershoot.SetActive(false);
         }
-        //maybe some pulsation visualization 
     }
 
     private void Start()
     {
-        comboCounter.text = "Combo Counter: " + currentCombo;
+        comboCounter_Text = "Combo Counter: " + currentCombo;
         score.text = "Score: " + currentScore;
+        comboCounter_Normal.text = comboCounter_Text;
     }
     public void IncreaseComboCounter()
     {
@@ -61,7 +70,7 @@ public class Scoreboard_UI : MonoBehaviour
         else if (currentOvershoot < maxOvershoot && currentCombo == maxCombo)
             currentOvershoot++;
 
-       comboCounter.text = "Combo Counter: " + currentCombo;
+        comboCounter_Text = "Combo Counter: " + currentCombo;
     }
 
     public void DecreaseComboCounter()
@@ -72,13 +81,8 @@ public class Scoreboard_UI : MonoBehaviour
         else if (currentOvershoot <= 0 && currentCombo > 1)
             currentCombo--;
 
-        comboCounter.text = "Combo Counter: " + currentCombo;
+        comboCounter_Text = "Combo Counter: " + currentCombo;
     }
-
-    //public void HoldCurrentCombo()
-    //{
-    //    lastActionOnBeat = true;
-    //}
 
     public void IncreaseScore(float _points)
     {

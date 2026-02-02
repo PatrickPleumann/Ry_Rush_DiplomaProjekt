@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] private WeaponAnimBehaviour weaponAnims;
 
+
     [Header("Input References")]
     [SerializeField] public InputActionReference Move;
     [SerializeField] public InputActionReference Look;
@@ -20,15 +21,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public InputActionReference Shoot;
     [SerializeField] public InputActionReference Sprint;
     [SerializeField] public InputActionReference Aim;
+    [SerializeField] public InputActionReference SlowMotion;
 
     [Header("Centralized Values")]
     [SerializeField] public Transform Orientation;
     [SerializeField] private float shootingCooldownTimer;
+    [SerializeField] public bool SlowMotion_OnAim;
+
     public Vector3 moveInput;
     public Vector3 moveDirection;
     public bool AllowMovement;
     public bool IsOnBeat;
     public bool LastActionOnBeat;
+
+
 
     public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
 
@@ -38,6 +44,9 @@ public class PlayerController : MonoBehaviour
     public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
 
     public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
+
+    public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
+    public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
 
     private float lastActionOnBeatTime;
     private bool canShoot = true;
@@ -62,6 +71,9 @@ public class PlayerController : MonoBehaviour
         Aim.action.canceled += onAimInvoked_canceled.Invoke;
 
         Dash.action.started += onDashInvoked_started.Invoke;
+
+        SlowMotion.action.started += onSlowMotion_started.Invoke;
+        SlowMotion.action.canceled += onSlowMotion_canceled.Invoke;
     }
     private void Start()
     {
@@ -86,6 +98,8 @@ public class PlayerController : MonoBehaviour
 
         Dash.action.started -= onDashInvoked_started.Invoke;
 
+        SlowMotion.action.started -= onSlowMotion_started.Invoke;
+        SlowMotion.action.canceled -= onSlowMotion_canceled.Invoke;
     }
 
     private void ProcessShootInput(InputAction.CallbackContext ctx)

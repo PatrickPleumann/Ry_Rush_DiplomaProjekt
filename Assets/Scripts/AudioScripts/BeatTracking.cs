@@ -49,6 +49,7 @@ public class BeatTracking : MonoBehaviour
 
     private void Awake()
     {
+        //Time.timeScale = 0.5f;
         destPath = Application.persistentDataPath + "/";
         source = GetComponent<AudioSource>();
 
