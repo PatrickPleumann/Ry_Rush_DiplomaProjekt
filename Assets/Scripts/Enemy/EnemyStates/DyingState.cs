@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class DyingState<T> : BaseState<T> where T : EnemyController
 {
-    private float despawnTimer;
     public DyingState(T _controller) : base(_controller)
     {
-        despawnTimer = 4f;
+
     }
 
     public override BaseState<T> CheckConditions()
@@ -15,24 +14,15 @@ public class DyingState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
-        controller.Agent.isStopped = true;
-        //Debug.Log("Enter State: DyingState");
-        controller.Animator.SetTrigger("DieAnim");
+
     }
 
     public override void ExitState()
     {
 
-        //nothing happens here enemy is dead... duuuuh
     }
 
     public override void UpdateState()
     {
-        despawnTimer -= Time.deltaTime;
-        if (despawnTimer <= 0f)
-        {
-            controller.gameObject.SetActive(false);
-            //revert all properties to default & send back zu the object pool
-        }
     }
 }

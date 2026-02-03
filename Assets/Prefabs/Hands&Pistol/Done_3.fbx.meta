@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b635d230fe031a3438223b3e15a1c926
+guid: 49ada639eec44084686898d817ca7652
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -12,7 +12,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface2
+      name: blinn4
     second: {fileID: 2100000, guid: e2e55d49128cecf48bdfaa172499a8c2, type: 2}
   materials:
     materialImportMode: 2
@@ -110,7 +110,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

@@ -1,28 +1,32 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, ISetDefaultValues
 {
     public Enemy_FSM<EnemyController> controller;
 
     [Header("References")]
-    [SerializeField] public EnemyObjectPool Pool; // no in use currently
+    [SerializeField] private ObjectPoolBehaviour Pool; // no in use currently
     [SerializeField] public Animator Animator;
     [SerializeField] public Transform Player;
     [SerializeField] public NavMeshAgent Agent;
     [SerializeField] public EnemyFSM_Data Data;
     [SerializeField] public Transform ThisEnemy;
-    [SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;
     [SerializeField] public PlayerInfo playerInfo;
 
-    public float EnemyDirSmoothSpeed;
+    [SerializeField] private CharacterJoint[] ragdollJoints;
+    //[SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;  // need to rethink whole logic behind this behaviour
 
+    public float EnemyDirSmoothSpeed;
+    [SerializeField] private float despawnTimer = 1;
     public bool canChase = true;
 
     public float EnemyHealth;
 
+    private Rigidbody enemy_RB;
     private Vector3 targetDirection;
     private Vector3 newDirection;
     private Vector3 newDirectionSmoothed;
@@ -44,6 +48,18 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
+        CacheSquaredValues();
+
+        Player = playerInfo.PlayerPosition; // decent solution
+
+        if (Player == null) // in case the decent solution dont works
+            Player = FindFirstObjectByType<PlayerController>().transform;
+
+        enemyIsDead = false;
+    }
+
+    private void CacheSquaredValues()
+    {
         EnemyDirSmoothSpeed = Data.enemyDirSmoothSpeed;
         EnemyHealth = Data.enemyHealth;
 
@@ -59,19 +75,15 @@ public class EnemyController : MonoBehaviour
         SqrDistancePlayerInSight = Data.playerInSightDistance * Data.playerInSightDistance;
 
         SqrStopChaseDistance = Data.stopChaseDistance * Data.stopChaseDistance;
-
-        enemyIsDead = false;
-
-        Player = playerInfo.PlayerPosition; // very good solution
-
-        if (Player == null)
-        {
-            Player = FindFirstObjectByType<PlayerController>().transform;
-        }
     }
+
     private void Start()
     {
-        maxEnemiesChasing = GetComponentInParent<EnemyMaxChasingCounter>();
+        enemy_RB = GetComponent<Rigidbody>();
+        if (enemy_RB != null)
+        {
+            enemy_RB.useGravity = false;
+        }
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this once before entering any state, all following stateSwitchBehaviours depend on that value
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); //point of entry
@@ -101,15 +113,39 @@ public class EnemyController : MonoBehaviour
     private void EnemyDying()
     {
         enemyIsDead = true;
+        SetDefaultValues();
+        ActivateRagdoll();
+        //SetActive Ragdoll, SetInactiveAgent & apply force to last hit.point
+        StartCoroutine(DeathTimer());
     }
+
 
     public void TakeDamage(float _dmgAmount)
     {
-        EnemyHealth -= _dmgAmount;
+        if (enemyIsDead == false)
+            EnemyHealth -= _dmgAmount;
+
         if (EnemyHealth <= 0)
-        {
             EnemyDying();
-            //put back into object pool in scene
-        }
+    }
+
+    private void ActivateRagdoll()
+    {
+        Animator.enabled = false;
+    }
+
+    private IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(despawnTimer);
+        Pool.EnqueueObject(gameObject);
+        yield return new WaitForEndOfFrame();
+    }
+
+    public void SetDefaultValues()
+    {
+        //reset hurtboxes
+        //reset animator
+        //reset all joint angles
+        //reset object specific values back to default
     }
 }
