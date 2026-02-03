@@ -48,6 +48,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void OnEnable()
     {
+        Pool = GetComponentInParent<ObjectPoolBehaviour>();
         CacheSquaredValues();
 
         Player = playerInfo.PlayerPosition; // decent solution

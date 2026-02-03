@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5082828897047368399}
-  - component: {fileID: 8216626419544850757}
   - component: {fileID: 3453048442624303298}
   - component: {fileID: 9113040059091861388}
   - component: {fileID: 7494240623970834838}
@@ -37,33 +36,6 @@ Transform:
   - {fileID: 1544317848204345969}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &8216626419544850757
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717835785787592908}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!95 &3453048442624303298
 Animator:
   serializedVersion: 7
@@ -120,7 +92,7 @@ MonoBehaviour:
   playerInfo: {fileID: 11400000, guid: c9748b2ac70789849b194bcbad3cf35f, type: 2}
   ragdollJoints: []
   EnemyDirSmoothSpeed: 1.5
-  despawnTimer: 1
+  despawnTimer: 2
   canChase: 1
   EnemyHealth: 100
   enemyIsDead: 0
