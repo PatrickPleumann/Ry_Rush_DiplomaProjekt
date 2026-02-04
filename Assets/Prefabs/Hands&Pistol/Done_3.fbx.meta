@@ -13,7 +13,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: blinn4
-    second: {fileID: 2100000, guid: e2e55d49128cecf48bdfaa172499a8c2, type: 2}
+    second: {fileID: 1108147716743453759, guid: b881d921c495dbc47a447c0df3ba7079, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -5,9 +5,10 @@ using UnityEngine.InputSystem;
 public class SlowMotionHandler : MonoBehaviour
 {
     [SerializeField] private PlayerController controller;
+    [SerializeField] private AudioHandler audio;
     [SerializeField] private float duration = 1;
+    [SerializeField] private float slowMotionSoundPitchRate = 3f;
 
-    private float currentTimeScale;
     [SerializeField] private float minTimeScale;
     [SerializeField] private float maxTimeScale;
 
@@ -25,6 +26,8 @@ public class SlowMotionHandler : MonoBehaviour
             controller.onAimInvoked_started.AddListener(StartSlowMotion);
             controller.onAimInvoked_canceled.AddListener(StopSlowMotion);
         }
+
+        
     }
 
     private void OnDisable()
@@ -61,6 +64,7 @@ public class SlowMotionHandler : MonoBehaviour
         while (Time.timeScale > minTimeScale)
         {
             Time.timeScale = Mathf.Lerp(maxTimeScale, minTimeScale, duration);
+            audio.sourceShooting.pitch = Mathf.Lerp(maxTimeScale, minTimeScale, duration) * slowMotionSoundPitchRate;
         }
         yield return new WaitForEndOfFrame();
     }
@@ -69,6 +73,7 @@ public class SlowMotionHandler : MonoBehaviour
         while (Time.timeScale < maxTimeScale)
         {
             Time.timeScale = Mathf.Lerp(minTimeScale, maxTimeScale, duration);
+            audio.sourceShooting.pitch = Mathf.Lerp(minTimeScale,maxTimeScale, duration);
         }
         yield return new WaitForEndOfFrame();
     }

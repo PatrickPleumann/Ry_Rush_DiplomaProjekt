@@ -26,7 +26,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     public float EnemyHealth;
 
-    private Rigidbody enemy_RB;
     private Vector3 targetDirection;
     private Vector3 newDirection;
     private Vector3 newDirectionSmoothed;
@@ -48,7 +47,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void OnEnable()
     {
-        Pool = GetComponentInParent<ObjectPoolBehaviour>();
+        
         CacheSquaredValues();
 
         Player = playerInfo.PlayerPosition; // decent solution
@@ -80,11 +79,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void Start()
     {
-        enemy_RB = GetComponent<Rigidbody>();
-        if (enemy_RB != null)
-        {
-            enemy_RB.useGravity = false;
-        }
+        Pool = GetComponentInParent<ObjectPoolBehaviour>();
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this once before entering any state, all following stateSwitchBehaviours depend on that value
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); //point of entry

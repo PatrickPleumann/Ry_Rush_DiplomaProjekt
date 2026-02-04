@@ -6,14 +6,9 @@ public class HurtboxBehaviour : MonoBehaviour
     [SerializeField] private float dmgMultiplier;
     [SerializeField] private EnemyController controller;
 
-
-    private void OnCollisionEnter(Collision _other)
+    public void ApplyDamageToEnemy(float _dmgAmount)
     {
-        
-        if (_other.transform.TryGetComponent(out ProjectileBehaviour bullet) == true)
-        {
-            controller.TakeDamage(bullet.CalculateCurrentDmg() * dmgMultiplier);
-            Debug.Log(bullet.CalculateCurrentDmg() * dmgMultiplier);
-        }
+        controller.TakeDamage(_dmgAmount * dmgMultiplier);
+        Debug.Log(_dmgAmount * dmgMultiplier);
     }
 }

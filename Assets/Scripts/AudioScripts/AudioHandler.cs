@@ -5,7 +5,7 @@ public class AudioHandler : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerController controller;
-    [SerializeField] private AudioSource sourceShooting;
+    [SerializeField] public AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
 
     [Header("Audio Sources Settings")]
