@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BeatTracking beat;
     [SerializeField] public Scoreboard_UI scoreboard;
 
+    [Space]
+
     [Header("Input References")]
     [SerializeField] public InputActionReference Move;
     [SerializeField] public InputActionReference Look;
@@ -21,44 +23,50 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference SlowMotion;
     [SerializeField] private InputActionReference Reload;
 
+    [Space]
+
     [Header("Unity Events")]
-    public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
 
-    public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
-    public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
 
-    public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
 
-    public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
 
-    public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
-    public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
 
-    public UnityEvent<InputAction.CallbackContext> onReload_started;
-    public UnityEvent onReload_Finished;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onReload_started;
+    [HideInInspector] public UnityEvent onReload_Finished;
+
+    [Space]
 
     [Header("Centralized Values")]
     [SerializeField] public Transform Orientation;
     [SerializeField] private float shootingCooldownTimer;
     [SerializeField] public bool SlowMotion_OnAim;
 
-    public Vector3 moveInput;
-    public Vector3 moveDirection;
+    [HideInInspector] public Vector3 moveInput;
+    [HideInInspector] public Vector3 moveDirection;
+
     public bool AllowMovement;
-    public bool IsOnBeat;
-    public bool LastActionOnBeat;
+    [HideInInspector] public bool IsOnBeat;
+    [HideInInspector] public bool LastActionOnBeat;
+    [HideInInspector] public bool isReloading = false;
+    [HideInInspector] public bool canShoot = true;
 
-
-    private float lastActionOnBeatTime;
-
-    public bool canShoot = true;
-    public bool isReloading = false;
-
-    public int CurrentAmmo;
-    public int RemainingAmmo;
+    [Space]
 
     [SerializeField] public int maxCurrentAmmo;
     [SerializeField] public int maxRemainingAmmo;
+
+    [Space]
+
+    public int CurrentAmmo;
+    public int RemainingAmmo;
+    private float lastActionOnBeatTime;
 
     private void Awake()
     {
@@ -70,7 +78,6 @@ public class PlayerController : MonoBehaviour
     }
     private void OnEnable()
     {
-
         Jump.action.started += onJumpInvoked_started.Invoke;
 
         Shoot.action.started += ProcessShootInput;
@@ -83,21 +90,9 @@ public class PlayerController : MonoBehaviour
         SlowMotion.action.started += onSlowMotion_started.Invoke;
         SlowMotion.action.canceled += onSlowMotion_canceled.Invoke;
 
-        Reload.action.started += onReload_started.Invoke;
+        Reload.action.started += ProcessReloadInput;
 
         onReload_started.AddListener(ProcessReloadInput);
-    }
-    private void Start()
-    {
-        lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier);
-        Debug.Log(lastActionOnBeatTime + 0.1f);
-    }
-
-
-    private void Update()
-    {
-        GetMoveDirection();
-        IsOnBeat = beat.Return_IsOnBeat();
     }
     private void OnDisable()
     {
@@ -113,9 +108,23 @@ public class PlayerController : MonoBehaviour
         SlowMotion.action.started -= onSlowMotion_started.Invoke;
         SlowMotion.action.canceled -= onSlowMotion_canceled.Invoke;
 
-        Reload.action.started -= onReload_started.Invoke;
+        Reload.action.started -= ProcessReloadInput;
 
         onReload_started.RemoveListener(ProcessReloadInput);
+    }
+
+
+    private void Start()
+    {
+        lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier);
+        Debug.Log(lastActionOnBeatTime + 0.1f);
+    }
+
+
+    private void Update()
+    {
+        GetMoveDirection();
+        IsOnBeat = beat.Return_IsOnBeat();
     }
 
     private void ProcessShootInput(InputAction.CallbackContext ctx)
@@ -129,24 +138,27 @@ public class PlayerController : MonoBehaviour
 
         else if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
             ProcessReloadInput(ctx);
-
     }
 
     private void ProcessReloadInput(InputAction.CallbackContext ctx)
     {
-        if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+        if (isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
         {
             isReloading = true;
             onReload_started.Invoke(ctx);
         }
     }
+
     private void GetMoveDirection()
     {
-        moveInput.x = Move.action.ReadValue<Vector2>().x;
-        moveInput.y = 0f;
-        moveInput.z = Move.action.ReadValue<Vector2>().y;
+        if (AllowMovement == true)
+        {
+            moveInput.x = Move.action.ReadValue<Vector2>().x;
+            moveInput.y = 0f;
+            moveInput.z = Move.action.ReadValue<Vector2>().y;
 
-        moveDirection = Orientation.forward * moveInput.z + Orientation.right * moveInput.x;
+            moveDirection = Orientation.forward * moveInput.z + Orientation.right * moveInput.x;
+        }
     }
     private IEnumerator LastActionOnBeatTimer()
     {
