@@ -10,18 +10,32 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerDash playerDash;
     [SerializeField] private BeatTracking beat;
     [SerializeField] public Scoreboard_UI scoreboard;
-    [SerializeField] private WeaponAnimBehaviour weaponAnims;
-
 
     [Header("Input References")]
     [SerializeField] public InputActionReference Move;
     [SerializeField] public InputActionReference Look;
-    [SerializeField] public InputActionReference Jump;
-    [SerializeField] public InputActionReference Dash;
-    [SerializeField] public InputActionReference Shoot;
-    [SerializeField] public InputActionReference Sprint;
-    [SerializeField] public InputActionReference Aim;
-    [SerializeField] public InputActionReference SlowMotion;
+    [SerializeField] private InputActionReference Jump;
+    [SerializeField] private InputActionReference Dash;
+    [SerializeField] private InputActionReference Shoot;
+    [SerializeField] private InputActionReference Aim;
+    [SerializeField] private InputActionReference SlowMotion;
+    [SerializeField] private InputActionReference Reload;
+
+    [Header("Unity Events")]
+    public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
+
+    public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
+    public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
+
+    public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
+
+    public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
+
+    public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
+    public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
+
+    public UnityEvent<InputAction.CallbackContext> onReload_started;
+    public UnityEvent onReload_Finished;
 
     [Header("Centralized Values")]
     [SerializeField] public Transform Orientation;
@@ -35,27 +49,21 @@ public class PlayerController : MonoBehaviour
     public bool LastActionOnBeat;
 
 
-
-    public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
-
-    public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
-    public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
-
-    public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
-
-    public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
-
-    public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
-    public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
-
     private float lastActionOnBeatTime;
-    private bool canShoot = true;
 
+    public bool canShoot = true;
+    public bool isReloading = false;
 
+    public int CurrentAmmo;
+    public int RemainingAmmo;
+
+    [SerializeField] public int maxCurrentAmmo;
+    [SerializeField] public int maxRemainingAmmo;
 
     private void Awake()
     {
-
+        RemainingAmmo = maxRemainingAmmo;
+        CurrentAmmo = maxCurrentAmmo;
         Cursor.lockState = CursorLockMode.Locked;
         AllowMovement = true;
         IsOnBeat = false;
@@ -74,6 +82,10 @@ public class PlayerController : MonoBehaviour
 
         SlowMotion.action.started += onSlowMotion_started.Invoke;
         SlowMotion.action.canceled += onSlowMotion_canceled.Invoke;
+
+        Reload.action.started += onReload_started.Invoke;
+
+        onReload_started.AddListener(ProcessReloadInput);
     }
     private void Start()
     {
@@ -100,14 +112,32 @@ public class PlayerController : MonoBehaviour
 
         SlowMotion.action.started -= onSlowMotion_started.Invoke;
         SlowMotion.action.canceled -= onSlowMotion_canceled.Invoke;
+
+        Reload.action.started -= onReload_started.Invoke;
+
+        onReload_started.RemoveListener(ProcessReloadInput);
     }
 
     private void ProcessShootInput(InputAction.CallbackContext ctx)
     {
-        if (canShoot == true)
+        if (canShoot == true && CurrentAmmo > 0)
         {
+            CurrentAmmo--;
             StartCoroutine(ShootTimer());
             onShootInvoked_started.Invoke(ctx);
+        }
+
+        else if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+            ProcessReloadInput(ctx);
+
+    }
+
+    private void ProcessReloadInput(InputAction.CallbackContext ctx)
+    {
+        if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+        {
+            isReloading = true;
+            onReload_started.Invoke(ctx);
         }
     }
     private void GetMoveDirection()

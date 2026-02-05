@@ -32,8 +32,8 @@ public class UI_CameraShake : MonoBehaviour
 
     private void ShakeCamera(InputAction.CallbackContext ctx)
     {
-        transform.localPosition = transform.localPosition + Random.insideUnitSphere * shakeIntensity;
-        currentPosition = transform.localPosition;
+        transform.position = initialPosition + Random.insideUnitSphere * shakeIntensity;
+        //currentPosition = transform.position;
     }
 
     private void ResetCamera()
