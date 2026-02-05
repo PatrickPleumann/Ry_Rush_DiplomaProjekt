@@ -6,5 +6,5 @@ public class MoveCamera : MonoBehaviour
     void Update()
     {
         gameObject.transform.position = cameraPos.position;
-    }
+    } 
 }

@@ -196,47 +196,47 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7795456001599112986}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.3000001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.30000004
+      value: 0.30000007
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 0.30000013
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.19749752
+      value: -43.472214
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.28997755
+      value: 1.2100253
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.49398893
+      value: -44.514523
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9977548
+      value: 0.7421329
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.04529869
+      value: -0.016368495
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.043784644
+      value: 0.6683342
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.022722038
+      value: 0.04796181
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -268,7 +268,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 49ada639eec44084686898d817ca7652, type: 3}
       insertIndex: -1
       addedObject: {fileID: 362754788}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 49ada639eec44084686898d817ca7652, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2305490}
   m_SourcePrefab: {fileID: 100100000, guid: 49ada639eec44084686898d817ca7652, type: 3}
 --- !u!4 &2305487 stripped
 Transform:
@@ -280,6 +283,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 49ada639eec44084686898d817ca7652, type: 3}
   m_PrefabInstance: {fileID: 2305486}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2305490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2305488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d59d700fc54feac43a1ecdeda1bf8e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveWeaponLerped
+  orientation: {fileID: 4092277527290518202}
+  playerCamera: {fileID: 4092277527290518202}
+  lerpIntensityRot: 100
+  lerpIntensityPos: 100
+  isAiming: 1
 --- !u!1001 &2639665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194641,7 +194661,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2305487}
   - {fileID: 4483603681185821216}
   - {fileID: 4092277527290518202}
   m_Father: {fileID: 469271428}
@@ -194810,3 +194829,4 @@ SceneRoots:
   - {fileID: 774744464}
   - {fileID: 387178179}
   - {fileID: 640186674}
+  - {fileID: 2305486}
