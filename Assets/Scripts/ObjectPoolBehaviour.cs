@@ -26,7 +26,6 @@ public class ObjectPoolBehaviour : MonoBehaviour
 
     public GameObject DeQueueObject()
     {
-        //Get Item from Queue
         return objectPool.Dequeue();
     }
 
@@ -35,7 +34,7 @@ public class ObjectPoolBehaviour : MonoBehaviour
         for (int i = 0; i < amountOfObjects; i++)
         {
             var temp = Instantiate(objectToPool);
-            //temp.SetActive(false);
+            temp.SetActive(false);
             temp.transform.SetParent(gameObject.transform);
             temp.transform.position = gameObject.transform.position;
             objectPool.Enqueue(temp);
