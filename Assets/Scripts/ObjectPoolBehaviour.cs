@@ -8,7 +8,7 @@ public class ObjectPoolBehaviour : MonoBehaviour
     [SerializeField] private int amountOfObjects;
     private void Awake()
     {
-        if (objectToPool != null && objectPool != null)
+        if (objectToPool != null)
         {
             InitObjectPool();
         }

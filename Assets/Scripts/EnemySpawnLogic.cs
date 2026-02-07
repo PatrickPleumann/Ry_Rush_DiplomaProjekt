@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawnLogic : MonoBehaviour
 {
@@ -8,11 +9,28 @@ public class EnemySpawnLogic : MonoBehaviour
     [SerializeField] private Queue<GameObject> allSpawnpoints;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private int EnemiesCountOnStart;
+
+    public static UnityEvent enemyCountReduced;
+    private int currentEnemyCount;
+     
     private void OnEnable()
     {
+        currentEnemyCount = 0;
         allSpawnpoints = new();
         InitSpawnpointPool();
-        StartCoroutine(SpawnEnemys(EnemiesCountOnStart));
+        //StartCoroutine(SpawnEnemys(EnemiesCountOnStart));
+        if (currentEnemyCount < EnemiesCountOnStart)
+        {
+            SpawnEnemy();
+        }
+    }
+
+    private void Update()
+    {
+        if (currentEnemyCount < EnemiesCountOnStart)
+        {
+            SpawnEnemy();
+        }
     }
 
     private void InitSpawnpointPool()
@@ -27,25 +45,16 @@ public class EnemySpawnLogic : MonoBehaviour
         if (enemyObjectPool.objectPool.Count > 0)
         {
 
-            var temp = enemyObjectPool.DeQueueObject();
             var spawnPoint = allSpawnpoints.Dequeue();
             if (CheckIfSpawnPointIsBehindPlayer(spawnPoint) == true)
             {
+                var temp = enemyObjectPool.DeQueueObject();
                 temp.transform.position = spawnPoint.transform.position;
                 temp.SetActive(true);
+                currentEnemyCount++;
             }
             allSpawnpoints.Enqueue(spawnPoint);
         }
-    }
-
-    private IEnumerator SpawnEnemys(int _amount)
-    {
-        for (int i = 0; i < _amount; i++)
-        {
-            SpawnEnemy();
-            yield return new WaitForSeconds(2);
-        }
-        yield return null;
     }
 
     private bool CheckIfSpawnPointIsBehindPlayer(GameObject _spawnPoint)
