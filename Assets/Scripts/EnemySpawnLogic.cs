@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +7,12 @@ public class EnemySpawnLogic : MonoBehaviour
     [SerializeField] private ObjectPoolBehaviour enemyObjectPool;
     [SerializeField] private Queue<GameObject> allSpawnpoints;
     [SerializeField] private Transform playerTransform;
-    private void Awake()
+    [SerializeField] private int EnemiesCountOnStart;
+    private void OnEnable()
     {
         allSpawnpoints = new();
         InitSpawnpointPool();
-        SpawnEnemys();
+        StartCoroutine(SpawnEnemys(EnemiesCountOnStart));
     }
 
     private void InitSpawnpointPool()
@@ -36,18 +38,18 @@ public class EnemySpawnLogic : MonoBehaviour
         }
     }
 
-    private void SpawnEnemys()
+    private IEnumerator SpawnEnemys(int _amount)
     {
-        SpawnEnemy();
-        SpawnEnemy();
-        SpawnEnemy();
-        SpawnEnemy();
+        for (int i = 0; i < _amount; i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(2);
+        }
+        yield return null;
     }
 
     private bool CheckIfSpawnPointIsBehindPlayer(GameObject _spawnPoint)
     {
-        Debug.Log("Vec:" + (_spawnPoint.transform.position - playerTransform.position).normalized);
-        Debug.Log("Dot:" + Vector3.Dot((_spawnPoint.transform.position - playerTransform.position).normalized, playerTransform.forward));
         if (Vector3.Dot((_spawnPoint.transform.position - playerTransform.position).normalized, playerTransform.forward) < 0)
         {
             return true;

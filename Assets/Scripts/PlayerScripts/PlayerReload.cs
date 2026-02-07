@@ -4,12 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerReload : MonoBehaviour
 {
     [SerializeField] private PlayerController controller;
-    private Animator animator;
-
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
+    [SerializeField] private Animator animator;
 
     private void OnEnable()
     {

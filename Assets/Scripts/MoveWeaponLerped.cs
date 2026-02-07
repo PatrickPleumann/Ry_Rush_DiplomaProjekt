@@ -11,10 +11,10 @@ public class MoveWeaponLerped : MonoBehaviour
     public bool isAiming;
     private void LateUpdate()
     {
-        if (isAiming == false)
+        if (isAiming == false) // need to get this from a onValueChanged Event from a SO
         {
-            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, orientation.rotation, 0.5f + Time.deltaTime * lerpIntensityPos);
-            gameObject.transform.position = Vector3.Slerp(gameObject.transform.position, playerCamera.position, 0.5f + Time.deltaTime * lerpIntensityPos);
+            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, playerCamera.rotation, Time.deltaTime * lerpIntensityRot);
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, orientation.position, Time.deltaTime * lerpIntensityPos);
         }
     }
 }

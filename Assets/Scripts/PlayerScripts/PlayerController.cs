@@ -37,9 +37,9 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
-
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onReload_started;
     [HideInInspector] public UnityEvent onReload_Finished;
+
 
     [Space]
 
@@ -117,7 +117,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier);
-        Debug.Log(lastActionOnBeatTime + 0.1f);
     }
 
 
