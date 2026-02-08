@@ -8,6 +8,7 @@ public class HurtboxBehaviour : MonoBehaviour
 
     public void ApplyDamageToEnemy(float _dmgAmount)
     {
+
         controller.TakeDamage(_dmgAmount * dmgMultiplier);
         Debug.Log(_dmgAmount * dmgMultiplier);
     }

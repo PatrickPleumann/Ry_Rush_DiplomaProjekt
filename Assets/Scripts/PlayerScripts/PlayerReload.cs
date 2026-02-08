@@ -16,7 +16,7 @@ public class PlayerReload : MonoBehaviour
         controller.onReload_started.RemoveListener(StartReloadAnimation);
     }
 
-    private void StartReloadAnimation(InputAction.CallbackContext ctx)
+    private void StartReloadAnimation()
     {
         animator.SetTrigger("ReloadAnim");
     }

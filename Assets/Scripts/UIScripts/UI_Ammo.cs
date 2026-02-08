@@ -26,7 +26,7 @@ public class UI_Ammo : MonoBehaviour
         remainingAmmo.text = controller.RemainingAmmo.ToString();
     }
 
-    private void ShowCurrentAmmo_UI(InputAction.CallbackContext ctx)
+    private void ShowCurrentAmmo_UI()
     {
         currentAmmo.text = controller.CurrentAmmo.ToString();
     }

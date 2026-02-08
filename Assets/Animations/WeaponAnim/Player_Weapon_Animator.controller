@@ -61,6 +61,9 @@ AnimatorState:
   - {fileID: 4568435570499041574}
   - {fileID: -3874304325029821125}
   - {fileID: 1756080477016756225}
+  - {fileID: -2986479467054173921}
+  - {fileID: 5460809444015071084}
+  - {fileID: 6374191017256951213}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -142,6 +145,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnReloadEnd
   triggerTime: 0.93
+--- !u!114 &-2986479467054173921
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f118d1adadc444084d196c82ce04a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
+  eventName: MagOut
+  triggerTime: 0.1
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -282,6 +299,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnReloadStart
   triggerTime: 0
+--- !u!114 &5460809444015071084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f118d1adadc444084d196c82ce04a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
+  eventName: MagIn
+  triggerTime: 0.7
 --- !u!1101 &5630448095745275253
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -307,6 +338,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6374191017256951213
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f118d1adadc444084d196c82ce04a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
+  eventName: RecieverClick
+  triggerTime: 0.8
 --- !u!1107 &9107519260111759199
 AnimatorStateMachine:
   serializedVersion: 6

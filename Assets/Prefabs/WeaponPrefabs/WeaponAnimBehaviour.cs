@@ -20,12 +20,12 @@ public class WeaponAnimBehaviour : MonoBehaviour
     {
         controller.onShootInvoked_started.RemoveListener(SetShotAnim);
     }
-    public void SetShotAnim(InputAction.CallbackContext ctx)
+    public void SetShotAnim()
     {
         animator.SetTrigger("ShootAnim");
     }
 
-    public void SetReloadAnim(InputAction.CallbackContext ctx)
+    public void SetReloadAnim()
     {
         animator.SetTrigger("ReloadAnim");
     }

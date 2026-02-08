@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     [Space]
 
     [Header("Unity Events")]
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onShootInvoked_started;
+    [HideInInspector] public UnityEvent onShootInvoked_started;
 
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
     [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onReload_started;
+    [HideInInspector] public UnityEvent onReload_started;
     [HideInInspector] public UnityEvent onReload_Finished;
 
 
@@ -92,13 +92,13 @@ public class PlayerController : MonoBehaviour
 
         Reload.action.started += ProcessReloadInput;
 
-        onReload_started.AddListener(ProcessReloadInput);
+        //onReload_started.AddListener(ProcessReloadInput);
     }
     private void OnDisable()
     {
         Jump.action.started -= onJumpInvoked_started.Invoke;
 
-        Shoot.action.started -= onShootInvoked_started.Invoke;
+        Shoot.action.started -= ProcessShootInput;
 
         Aim.action.started -= onAimInvoked_started.Invoke;
         Aim.action.canceled -= onAimInvoked_canceled.Invoke;
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         Reload.action.started -= ProcessReloadInput;
 
-        onReload_started.RemoveListener(ProcessReloadInput);
+        //onReload_started.RemoveListener(ProcessReloadInput);
     }
 
 
@@ -130,13 +130,19 @@ public class PlayerController : MonoBehaviour
     {
         if (canShoot == true && CurrentAmmo > 0)
         {
+            AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.playerShoot);
             CurrentAmmo--;
             StartCoroutine(ShootTimer());
-            onShootInvoked_started.Invoke(ctx);
+            onShootInvoked_started.Invoke();
         }
 
         else if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+        {
+            AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
             ProcessReloadInput(ctx);
+        }
+        else
+            AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
     }
 
     private void ProcessReloadInput(InputAction.CallbackContext ctx)
@@ -144,7 +150,7 @@ public class PlayerController : MonoBehaviour
         if (isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
         {
             isReloading = true;
-            onReload_started.Invoke(ctx);
+            onReload_started.Invoke();
         }
     }
 

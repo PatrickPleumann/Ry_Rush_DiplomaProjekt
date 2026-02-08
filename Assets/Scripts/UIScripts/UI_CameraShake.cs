@@ -7,7 +7,6 @@ public class UI_CameraShake : MonoBehaviour
     [SerializeField] private float lerpTime;
     [SerializeField] private float shakeIntensity;
 
-    private Vector3 currentPosition;
     private Vector3 initialPosition;
 
     private void Awake()
@@ -29,14 +28,14 @@ public class UI_CameraShake : MonoBehaviour
         controller.onShootInvoked_started.RemoveListener(ShakeCamera);
     }
 
-    private void ShakeCamera(InputAction.CallbackContext ctx)
+    private void ShakeCamera()
     {
-        transform.position = initialPosition + Random.insideUnitSphere * shakeIntensity;
-        //currentPosition = transform.position;
+        var temp = Random.insideUnitSphere;
+        transform.localPosition = transform.localPosition + new Vector3(0,temp.y,0f) * shakeIntensity;
     }
 
     private void ResetCamera()
     {
-        transform.localPosition = Vector3.Lerp(currentPosition, initialPosition, lerpTime);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, initialPosition, Time.deltaTime * lerpTime);
     }
 }

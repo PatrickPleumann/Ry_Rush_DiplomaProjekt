@@ -7,15 +7,22 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] private PlayerController controller;
     [SerializeField] public AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
+    [SerializeField] private AudioSource sourceActionAmbience;
 
-    [Header("Audio Sources Settings")]
+    [Header("Audio Sources Volumes")]
     [SerializeField] private float sourceShooting_Volume;
     [SerializeField] private float sourcePlayerMovement_Volume;
+    [SerializeField] private float sourceActionAmbience_Volume;
 
     [Header("Shooting Audio")]
     [SerializeField] public AudioClip playerAim;
     [SerializeField] public AudioClip playerShoot;
     [SerializeField] public AudioClip playerShootCharged;
+    [SerializeField] public AudioClip gunMagOut;
+    [SerializeField] public AudioClip gunMagIn;
+    [SerializeField] public AudioClip gunRecieverClick;
+    [SerializeField] public AudioClip noAmmoClick;
+
 
     [Header("Movement Audio")]
     [SerializeField] public AudioClip playerJump;
@@ -23,31 +30,39 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip playerWallrun;
     [SerializeField] public AudioClip playerDash;
 
+    [Header("Hitmarker Audio")]
+    [SerializeField] public AudioClip hitmarker_1;
+    [SerializeField] public AudioClip hitmarker_2;
+    [SerializeField] public AudioClip hitmarker_3;
+    [SerializeField] public AudioClip hitmarker_4;
 
-    private void OnEnable()
+    public static AudioHandler Instance;
+
+    private void Awake()
     {
-        controller.onShootInvoked_started.AddListener(PlaySound_sourceShooting);
+        if (Instance != null)
+            Destroy(Instance);
+
+        Instance = this;
     }
 
-    private void OnDisable()
-    {
-        controller.onShootInvoked_started.RemoveListener(PlaySound_sourceShooting);
-    }
     private void Start()
     {
-        var sources = GetComponents<AudioSource>();
+        //var sources = GetComponents<AudioSource>();
 
-        sourceShooting = sources[0];
-        sourcePlayerMovement = sources[1];
+        //sourceShooting = sources[0];
+        //sourcePlayerMovement = sources[1];
+        //sourceActionAmbience = sources[2];
 
         sourceShooting.volume = sourceShooting_Volume;
         sourcePlayerMovement.volume = sourcePlayerMovement_Volume;
+        sourceActionAmbience.volume = sourceActionAmbience_Volume;
     }
 
     //only for shooting gun related sounds because sounds interrupt each other
-    public void PlaySound_sourceShooting(InputAction.CallbackContext ctx) 
+    public void PlaySound_sourceShooting(AudioClip _clip) 
     {
-        sourceShooting.clip = playerShoot;
+        sourceShooting.clip = _clip;
         sourceShooting.Play();
     }
 
@@ -56,5 +71,26 @@ public class AudioHandler : MonoBehaviour
     {
         sourcePlayerMovement.clip = _clip;
         sourcePlayerMovement.Play();
+    }
+
+    public void PlaySound_sourceActionAmbience(AudioClip _clip)
+    {
+        sourceActionAmbience.clip = _clip;
+        sourceActionAmbience.Play();
+    }
+
+    public void PlaySound_Test3()
+    {
+        sourceActionAmbience.Play();
+    }
+
+    public void PlaySound_Test2()
+    {
+        sourcePlayerMovement.Play();
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
     }
 }

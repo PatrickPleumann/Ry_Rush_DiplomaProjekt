@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] public Transform ThisEnemy;
     [SerializeField] public PlayerInfo playerInfo;
 
-    [SerializeField] private CharacterJoint[] ragdollJoints;
+    [SerializeField] private Rigidbody[] allRagdollRigidbodies;
     //[SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;  // need to rethink whole logic behind this behaviour
 
     public float EnemyDirSmoothSpeed;
@@ -47,7 +47,8 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void OnEnable()
     {
-        
+        allRagdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+
         CacheSquaredValues();
 
         Player = playerInfo.PlayerPosition; // decent solution
@@ -79,6 +80,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void Start()
     {
+        SetInactiveRagdollRigibodies();
         Pool = GetComponentInParent<ObjectPoolBehaviour>();
         SqrDistanceToPlayer = CheckDistanceToPlayer(); // check this once before entering any state, all following stateSwitchBehaviours depend on that value
         controller = new Enemy_FSM<EnemyController>(this);
@@ -128,12 +130,37 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     private void ActivateRagdoll()
     {
         Animator.enabled = false;
+        SetActiveRagdollRigidbodies();
+    }
+
+    private void SetActiveRagdollRigidbodies() // this is necessary or all rigidbodies, which are suppressed by the animator will unload an
+    {                                          // enormous amount of energy, which causes very weird ragdoll behaviour
+        if (allRagdollRigidbodies != null)
+        {
+            foreach (var item in allRagdollRigidbodies)
+                item.isKinematic = false;
+        }
+    }
+
+    private void SetInactiveRagdollRigibodies() // this is necessary or all rigidbodies, which are suppressed by the animator, will unload an
+    {                                           // enormous amount of energy, which causes very weird ragdoll behaviour
+        if (allRagdollRigidbodies != null)  
+        {                                   
+            foreach (var item in allRagdollRigidbodies)
+                item.isKinematic = true;
+        }
     }
 
     private IEnumerator DeathTimer()
     {
         yield return new WaitForSeconds(despawnTimer);
-        Pool.EnqueueObject(gameObject);
+
+        if (Pool != null)
+            Pool.EnqueueObject(gameObject);
+
+        else
+            Destroy(gameObject);
+
         yield return new WaitForEndOfFrame();
     }
 

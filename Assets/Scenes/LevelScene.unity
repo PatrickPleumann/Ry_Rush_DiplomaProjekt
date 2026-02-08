@@ -349,6 +349,54 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventName: MagOut
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1719669136}
+          m_TargetAssemblyTypeName: AudioHandler, Assembly-CSharp
+          m_MethodName: PlaySound_sourceShooting
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 4b4e7ac2e45d65e4797c752045dad7ca, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: MagIn
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1719669136}
+          m_TargetAssemblyTypeName: AudioHandler, Assembly-CSharp
+          m_MethodName: PlaySound_sourceShooting
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 4315b4bb797c08d4aa4f2f9a5483bb5e, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: RecieverClick
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1719669136}
+          m_TargetAssemblyTypeName: AudioHandler, Assembly-CSharp
+          m_MethodName: PlaySound_sourceShooting
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 928a1c9feb32a6345998bf0c58b502bb, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &2639665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52338,6 +52386,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1706564864}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: CurrentAmmo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: weaponAnims
       value: 
       objectReference: {fileID: 1777283313}
@@ -52345,6 +52397,10 @@ PrefabInstance:
       propertyPath: audioHandler
       value: 
       objectReference: {fileID: 1719669136}
+    - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: RemainingAmmo
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: maxCurrentAmmo
       value: 14
@@ -52355,7 +52411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: maxRemainingAmmo
-      value: 2000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: shootingCooldownTimer
@@ -52390,6 +52446,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1706564864}
     - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: audioHandler
+      value: 
+      objectReference: {fileID: 1719669136}
+    - target: {fileID: 6220149968717170397, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: beatTracking
       value: 
       objectReference: {fileID: 577735996}
@@ -52419,7 +52479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.33
+      value: -20.329992
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalPosition.y
@@ -52427,7 +52487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.66
+      value: 8.660019
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52439,7 +52499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0997348
+      value: -0.09973475
       objectReference: {fileID: 0}
     - target: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: m_LocalRotation.z
@@ -137209,7 +137269,7 @@ MonoBehaviour:
   playerCamera: {fileID: 7795456001599112986}
   lerpIntensityRot: 50
   smoothDampSpeed: 0.01
-  refVector2: {x: 10, y: 10, z: 10}
+  refVector2: {x: 1, y: 1, z: 1}
   isAiming: 1
 --- !u!4 &1666840447
 Transform:
@@ -142232,6 +142292,7 @@ GameObject:
   - component: {fileID: 1719669136}
   - component: {fileID: 1719669134}
   - component: {fileID: 1719669137}
+  - component: {fileID: 1719669138}
   m_Layer: 0
   m_Name: AudioHandler
   m_TagString: Untagged
@@ -142364,17 +142425,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioHandler
   controller: {fileID: 358316735}
-  sourceShooting: {fileID: 0}
-  sourcePlayerMovement: {fileID: 0}
+  sourceShooting: {fileID: 1719669134}
+  sourcePlayerMovement: {fileID: 1719669137}
+  sourceActionAmbience: {fileID: 1719669138}
   sourceShooting_Volume: 0.1
   sourcePlayerMovement_Volume: 0.1
+  sourceActionAmbience_Volume: 0.05
   playerAim: {fileID: 0}
   playerShoot: {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
   playerShootCharged: {fileID: 8300000, guid: 6a32a0d49cd240b4cb9934adf37a49a5, type: 3}
+  gunMagOut: {fileID: 8300000, guid: 4b4e7ac2e45d65e4797c752045dad7ca, type: 3}
+  gunMagIn: {fileID: 8300000, guid: 4315b4bb797c08d4aa4f2f9a5483bb5e, type: 3}
+  gunRecieverClick: {fileID: 8300000, guid: 928a1c9feb32a6345998bf0c58b502bb, type: 3}
+  noAmmoClick: {fileID: 8300000, guid: c6339c6bc7f5c3e4dac2c5895cc17797, type: 3}
   playerJump: {fileID: 0}
   playerLanded: {fileID: 0}
   playerWallrun: {fileID: 0}
   playerDash: {fileID: 0}
+  hitmarker_1: {fileID: 8300000, guid: c4f5b83d21a90f94ea0b26797b434e47, type: 3}
+  hitmarker_2: {fileID: 8300000, guid: cff52624e325f1444a11243f93f85bee, type: 3}
+  hitmarker_3: {fileID: 8300000, guid: 15ed9d62ba9716f4c80c695892c27123, type: 3}
+  hitmarker_4: {fileID: 8300000, guid: 50b5acb41da38454ea4094a6ba7669e8, type: 3}
 --- !u!82 &1719669137
 AudioSource:
   m_ObjectHideFlags: 0
@@ -142386,7 +142457,104 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 27a27eb1bb7f6984384903ed5f67ac65, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1719669138
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719669133}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: cff52624e325f1444a11243f93f85bee, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -197913,8 +198081,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_CameraShake
   controller: {fileID: 358316735}
-  lerpTime: 1
-  shakeIntensity: 0.1
+  lerpTime: 10
+  shakeIntensity: 0.015
 --- !u!114 &7795456001599112989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198011,8 +198179,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1666840447}
-  - {fileID: 7417546468599023003}
   - {fileID: 663163570}
+  - {fileID: 7417546468599023003}
   - {fileID: 2086436827}
   - {fileID: 1537268822}
   - {fileID: 1406606652}

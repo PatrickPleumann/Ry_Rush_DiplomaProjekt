@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5082828897047368399}
   - component: {fileID: 3453048442624303298}
-  - component: {fileID: 9113040059091861388}
   - component: {fileID: 7494240623970834838}
   - component: {fileID: 3822410651520641484}
   m_Layer: 10
@@ -58,19 +57,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9113040059091861388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717835785787592908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e15d1aa9e627f74daa82b3980b126f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventReceiver
-  AnimationEvents: []
 --- !u!114 &7494240623970834838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,9 +447,6 @@ PrefabInstance:
       insertIndex: 0
       addedObject: {fileID: 4552869968983788568}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ffbc391ef420a141bff124d540ab6bd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4062413347708493956}
     - targetCorrespondingSourceObject: {fileID: 1082271958561512970, guid: 9ffbc391ef420a141bff124d540ab6bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8118061669578713256}
@@ -786,32 +769,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HurtboxBehaviour
   dmgMultiplier: 1
   controller: {fileID: 7494240623970834838}
---- !u!1 &2172235072083876043 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9ffbc391ef420a141bff124d540ab6bd, type: 3}
-  m_PrefabInstance: {fileID: 1361280727130924442}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &4062413347708493956
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2172235072083876043}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2605702121570382033 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3948933247560734027, guid: 9ffbc391ef420a141bff124d540ab6bd, type: 3}

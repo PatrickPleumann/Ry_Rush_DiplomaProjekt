@@ -8,6 +8,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private PlayerController controller;
     [SerializeField] private Scoreboard_UI scoreboard;
     [SerializeField] private BeatTracking beatTracking;
+    [SerializeField] private AudioHandler audioHandler;
     [Space]
 
     [SerializeField] private LayerMask targetLayerMask;
@@ -31,7 +32,7 @@ public class PlayerShooting : MonoBehaviour
         controller.onShootInvoked_started.RemoveListener(Player_ShootWeapon);
     }
 
-    public void Player_ShootWeapon(InputAction.CallbackContext context)
+    public void Player_ShootWeapon()
     {
 
         onBeat = false;
@@ -48,10 +49,16 @@ public class PlayerShooting : MonoBehaviour
         if (temp == true && hit.transform.TryGetComponent(out HurtboxBehaviour current))
         {
             if (onBeat)
+            {
                 current.ApplyDamageToEnemy(bulletDamage * scoreboard.currentCombo * shootOnBeatMultiplier); //more dmg pls
+                audioHandler.PlaySound_sourceActionAmbience(audioHandler.hitmarker_2);
+            }
 
             else
+            {
                 current.ApplyDamageToEnemy(bulletDamage * scoreboard.currentCombo);
+                audioHandler.PlaySound_sourceActionAmbience(audioHandler.hitmarker_1);
+            }
         }
     }
 }

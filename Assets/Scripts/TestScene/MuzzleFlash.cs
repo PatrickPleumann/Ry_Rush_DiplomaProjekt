@@ -26,7 +26,7 @@ public class MuzzleFlash : MonoBehaviour
         controller.onShootInvoked_started.RemoveListener(ShowMuzzleFlash);
     }
 
-    private void ShowMuzzleFlash(InputAction.CallbackContext ctx)
+    private void ShowMuzzleFlash()
     {
         muzzleFlash.Play();
     }
