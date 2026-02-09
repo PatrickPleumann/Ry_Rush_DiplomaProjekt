@@ -1,10 +1,22 @@
+using System.ComponentModel;
+using System.Drawing.Text;
 using System.Security.Policy;
 using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "CentralizedValues", menuName = "Scriptable Objects/CentralizedValues")]
+
+
 public class CentralizedValues : ScriptableObject
 {
+
+    private void SetDefaultValues()
+    {
+        CurrentCombo_Value = 1;
+        CurrentComboOvershoot_Value = 0;
+        CurrentScore_Value = 0;
+        currentSamples_UI = 0;
+    }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
     /// Those properties single usecase is to transfer data towards another system after they were changed. This happens eventbased.
@@ -12,7 +24,7 @@ public class CentralizedValues : ScriptableObject
     /// in the main menu, because they are changed permanently while runtime.
     /// </summary>
 
-
+    [Header("Input Values")]
     [SerializeField] private float moveInput_Value;
     [HideInInspector] public UnityEvent<float> MoveInput_OnValueChanged;
     public float MoveInput_Value
@@ -29,36 +41,37 @@ public class CentralizedValues : ScriptableObject
     }
 
     [Space]
-
-    [SerializeField] private int currentSamples_Value;
+    [Header("Beattracking Values")]
+    [SerializeField] private int currentSamples_UI;
     [HideInInspector] public UnityEvent<int> CurrentSamples_OnValueChanged;
     public int CurrentSamples_Value
     {
-        get => currentSamples_Value;
+        get => currentSamples_UI;
         set
         {
-            if (currentSamples_Value != value)
+            if (currentSamples_UI != value)
             {
-                currentSamples_Value = value;
-                CurrentSamples_OnValueChanged.Invoke(currentSamples_Value);
+                currentSamples_UI = value;
+                CurrentSamples_OnValueChanged.Invoke(currentSamples_UI);
             }
         }
     }
 
     [Space]
+    [Header("Ingame UI")]
     [SerializeField] public int currentCombo_MaxValue;
     [SerializeField] private int currentCombo_Value;
     [HideInInspector] public UnityEvent<int> CurrentCombo_OnValueChanged;
     public int CurrentCombo_Value
     {
-        get => currentSamples_Value;
+        get => currentCombo_Value;
         set
         {
-            if (currentSamples_Value != value && value <= currentCombo_MaxValue)
+            if (currentCombo_Value != value && value <= currentCombo_MaxValue && value > 0)
             {
-                currentSamples_Value = value;
-                CurrentCombo_OnValueChanged.Invoke(currentSamples_Value);
+                currentCombo_Value = value;
             }
+            CurrentCombo_OnValueChanged.Invoke(currentCombo_Value);
         }
     }
 
@@ -66,7 +79,7 @@ public class CentralizedValues : ScriptableObject
     [SerializeField] public int ComboMaxOvershoot;
     [SerializeField] private int currentComboOvershoot;
     [HideInInspector] public UnityEvent<int> ComboOvershoot_OnValueChanged;
-    public int CurrentComboOvershoot
+    public int CurrentComboOvershoot_Value
     {
         get => currentComboOvershoot;
         set
@@ -80,7 +93,7 @@ public class CentralizedValues : ScriptableObject
     }
 
     [Space]
-
+    [Header("Ammo Values")]
     [SerializeField] private int currentAmmo;
     [HideInInspector] public UnityEvent<int> CurrentAmmo_OnValueChanged;
     public int CurrentAmmo_Value
@@ -97,7 +110,7 @@ public class CentralizedValues : ScriptableObject
     }
 
     [Space]
-
+    [Header("Score Values")]
     [SerializeField] private float currentScore_Value;
     [HideInInspector] public UnityEvent<float> CurrentScore_OnValueChanged;
     public float CurrentScore_Value

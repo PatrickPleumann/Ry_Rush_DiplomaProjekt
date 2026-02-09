@@ -52,13 +52,13 @@ public class PlayerShooting : MonoBehaviour
         {
             if (onBeat)
             {
-                current.ApplyDamageToEnemy(bulletDamage * scoreboard.currentCombo * shootOnBeatMultiplier); //more dmg pls
+                current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value * shootOnBeatMultiplier); //more dmg pls
                 AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_2);
             }
 
             else
             {
-                current.ApplyDamageToEnemy(bulletDamage * scoreboard.currentCombo);
+                current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value);
                 AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_1);
             }
         }

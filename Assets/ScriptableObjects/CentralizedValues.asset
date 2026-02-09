@@ -16,13 +16,18 @@ MonoBehaviour:
   MoveInput_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  currentSamples_Value: 0
+  currentSamples_UI: 0
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   currentCombo_MaxValue: 5
-  currentCombo_Value: 0
+  currentCombo_Value: 1
   CurrentCombo_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  ComboMaxOvershoot: 4
+  currentComboOvershoot: 0
+  ComboOvershoot_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   currentAmmo: 0

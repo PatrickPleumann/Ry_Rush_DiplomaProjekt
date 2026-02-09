@@ -52941,7 +52941,7 @@ PrefabInstance:
       objectReference: {fileID: 1706564864}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: CurrentAmmo
-      value: 14
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: weaponAnims

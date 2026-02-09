@@ -20,12 +20,6 @@ public class Scoreboard_UI : MonoBehaviour
     [SerializeField] private TMP_Text score;
     [Space]
 
-
-    [Header("Combo values")]
-    [SerializeField] public float currentCombo = 1;
-    [SerializeField] public float currentOvershoot = 0;
-    [Space]
-
     [SerializeField] public float maxCombo = 5;
     [SerializeField] public float maxOvershoot = 0; // maximum missed beats till combo counter decreases on it´s own
     [Space]
@@ -40,25 +34,25 @@ public class Scoreboard_UI : MonoBehaviour
 
     private void ComboCounterShapeShift(int _value)
     {
-        if (comboCounterOvershoot.activeSelf == false && _value == values.currentCombo_MaxValue && values.CurrentComboOvershoot > 0)
+        if (comboCounterOvershoot.activeSelf == false && _value >= values.currentCombo_MaxValue && values.CurrentComboOvershoot_Value > 0)
         {
             comboCounterNormal.SetActive(false);
-            comboCounter_Overshoot.text = comboCounter_Text;
             comboCounterOvershoot.SetActive(true);
+            comboCounter_Overshoot.text = comboCounter_Text;
 
         }
         else if (values.CurrentCombo_Value < values.currentCombo_MaxValue)
         {
+            comboCounterOvershoot.SetActive(false);
             comboCounterNormal.SetActive(true);
             comboCounter_Normal.text = comboCounter_Text;
-            comboCounterOvershoot.SetActive(false);
         }
     }
 
     private void Start()
     {
-        comboCounter_Text = "Combo Counter: " + currentCombo;
-        score.text = "Score: " + currentScore;
+        comboCounter_Text = "Combo Counter: " + values.CurrentCombo_Value;
+        score.text = "Score: " + values.CurrentScore_Value;
         comboCounter_Normal.text = comboCounter_Text;
     }
     public void IncreaseComboCounter(int _value)
@@ -75,18 +69,17 @@ public class Scoreboard_UI : MonoBehaviour
 
     public void DecreaseComboCounter()
     {
-        if (currentOvershoot > 0 && currentCombo == maxCombo)
-            currentOvershoot--;
+        if (values.CurrentComboOvershoot_Value > 0 && values.CurrentCombo_Value == values.currentCombo_MaxValue)
+            values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
 
-        else if (currentOvershoot <= 0 && currentCombo > 1)
-            currentCombo--;
+        else if (values.CurrentComboOvershoot_Value <= 0 && values.CurrentCombo_Value > 1)
+            values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
 
-        comboCounter_Text = "Combo Counter: " + currentCombo;
+        comboCounter_Text = "Combo Counter: " + values.CurrentCombo_Value;
     }
 
     public void IncreaseScore(float _points)
     {
-        currentScore += (_points * currentCombo);
         score.text = "Score: " + currentScore;
     }
 }
