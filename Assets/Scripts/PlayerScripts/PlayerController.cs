@@ -48,14 +48,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shootingCooldownTimer;
     [SerializeField] public bool SlowMotion_OnAim;
 
-    [HideInInspector] public Vector3 moveInput;
+    [HideInInspector] public Vector3 moveInput; // into CV_SO
     [HideInInspector] public Vector3 moveDirection;
 
     public bool AllowMovement;
-    [HideInInspector] public bool IsOnBeat;
-    [HideInInspector] public bool LastActionOnBeat;
-    [HideInInspector] public bool isReloading = false;
-    [HideInInspector] public bool canShoot = true;
+    [HideInInspector] public bool IsOnBeat; // into CV_SO
+    [HideInInspector] public bool LastActionOnBeat; // into CV_SO
+    [HideInInspector] public bool isReloading = false; // into CV_SO
+    [HideInInspector] public bool canShoot = true; // into CV_SO
 
     [Space]
 
@@ -64,20 +64,21 @@ public class PlayerController : MonoBehaviour
 
     [Space]
 
-    public int CurrentAmmo;
-    public int RemainingAmmo;
-    private float lastActionOnBeatTime;
+    public int CurrentAmmo; // into CV_SO
+    public int RemainingAmmo; // into CV_SO 
+    private float lastActionOnBeatTime; // into CV_SO
 
     private void Awake()
     {
-        RemainingAmmo = maxRemainingAmmo;
-        CurrentAmmo = maxCurrentAmmo;
+        RemainingAmmo = maxRemainingAmmo; // into CV_SO
+        CurrentAmmo = maxCurrentAmmo; // into CV_SO
         Cursor.lockState = CursorLockMode.Locked;
-        AllowMovement = true;
-        IsOnBeat = false;
+        AllowMovement = true; // into CV_SO
+        IsOnBeat = false; // into CV_SO
     }
     private void OnEnable()
     {
+
         Jump.action.started += onJumpInvoked_started.Invoke;
 
         Shoot.action.started += ProcessShootInput;
@@ -96,6 +97,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDisable()
     {
+        OnSessionEnded_RemoveAllListeners();
+    }
+
+    public void OnSessionEnded_RemoveAllListeners()
+    {
         Jump.action.started -= onJumpInvoked_started.Invoke;
 
         Shoot.action.started -= ProcessShootInput;
@@ -112,26 +118,24 @@ public class PlayerController : MonoBehaviour
 
         //onReload_started.RemoveListener(ProcessReloadInput);
     }
-
-
     private void Start()
     {
-        lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier);
+        lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier); // into CV_SO
     }
 
 
     private void Update()
     {
         GetMoveDirection();
-        IsOnBeat = beat.Return_IsOnBeat();
+        IsOnBeat = beat.Return_IsOnBeat(); // into CV_SO
     }
 
     private void ProcessShootInput(InputAction.CallbackContext ctx)
     {
-        if (canShoot == true && CurrentAmmo > 0)
+        if (canShoot == true && CurrentAmmo > 0) // into CV_SO
         {
             AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.playerShoot);
-            CurrentAmmo--;
+            CurrentAmmo--; // into CV_SO
             StartCoroutine(ShootTimer());
             onShootInvoked_started.Invoke();
         }

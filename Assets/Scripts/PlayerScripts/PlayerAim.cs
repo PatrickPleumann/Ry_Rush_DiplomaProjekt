@@ -11,6 +11,7 @@ public class PlayerAim : MonoBehaviour
     [SerializeField] private GameObject playerWeapon;
     [SerializeField] private PlayerCamera cam;
     [SerializeField] private PlayerController controller;
+    [SerializeField] private CentralizedValues values;
     
     [Space]
     [Header("Zoom In & Out Values")]
@@ -91,7 +92,7 @@ public class PlayerAim : MonoBehaviour
         if (controller.IsOnBeat == true)
         {
             controller.LastActionOnBeat = true;
-            controller.scoreboard.IncreaseComboCounter();
+            values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
         }
         if (isZoomedIn == false)
             isZoomedIn = true;

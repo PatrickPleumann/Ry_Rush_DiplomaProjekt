@@ -17,6 +17,11 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] public Transform ThisEnemy;
     [SerializeField] public PlayerInfo playerInfo;
 
+    [SerializeField] private CentralizedValues centralizedValues;
+
+    [SerializeField] private int initalPoints = 500; // this values gets increased or reduced based on the hits to kill and the multipliers
+    private int hitsTillDeath; // set default
+
     [SerializeField] private Rigidbody[] allRagdollRigidbodies;
     //[SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;  // need to rethink whole logic behind this behaviour
 
@@ -114,14 +119,29 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         SetDefaultValues();
         ActivateRagdoll();
         //SetActive Ragdoll, SetInactiveAgent & apply force to last hit.point
+        CalculatePoints();
         StartCoroutine(DeathTimer());
+    }
+
+    private void CalculatePoints()
+    {
+        if (hitsTillDeath > 0)
+        {
+            var temp = ((float)(initalPoints / hitsTillDeath)) ; // hier noch multiplier hinzufügen
+             centralizedValues.CurrentScore_Value = centralizedValues.CurrentScore_Value + temp;
+        }
+        else
+            Debug.Log("Hits till death are below 1, which can´t be");
     }
 
 
     public void TakeDamage(float _dmgAmount)
     {
         if (enemyIsDead == false)
+        {
             EnemyHealth -= _dmgAmount;
+            hitsTillDeath++;
+        }
 
         if (EnemyHealth <= 0)
             EnemyDying();
@@ -144,8 +164,8 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void SetInactiveRagdollRigibodies() // this is necessary or all rigidbodies, which are suppressed by the animator, will unload an
     {                                           // enormous amount of energy, which causes very weird ragdoll behaviour
-        if (allRagdollRigidbodies != null)  
-        {                                   
+        if (allRagdollRigidbodies != null)
+        {
             foreach (var item in allRagdollRigidbodies)
                 item.isKinematic = true;
         }
@@ -166,9 +186,9 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     public void SetDefaultValues()
     {
+        //reset hits till kill
         //reset hurtboxes
         //reset animator
-        //reset all joint angles
-        //reset object specific values back to default
+        //more to come...
     }
 }

@@ -7,6 +7,7 @@ public class PlayerDash : MonoBehaviour
 {
     [SerializeField] private PlayerCollisionCheck collisionCheck;
     [SerializeField] private PlayerController controller;
+    [SerializeField] private CentralizedValues values;
 
     [SerializeField] private float dashForce;
     [SerializeField] private float dragValueWhileDashing;
@@ -39,7 +40,7 @@ public class PlayerDash : MonoBehaviour
             //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
-                controller.scoreboard.IncreaseComboCounter();
+                values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 controller.LastActionOnBeat = true;
             }
 

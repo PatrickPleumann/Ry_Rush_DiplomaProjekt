@@ -11,12 +11,34 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public Scoreboard_UI scoreboard;
     [SerializeField] public AudioSource source;
     [SerializeField] private SongData songData;
+    [SerializeField] private GameObject SCOREBOARD;
 
     [Header("Gameplay Values")]
     [SerializeField] private float timeTillSongStarts = 3f;
 
-    [Header("Events")]
-    public UnityAction onBeatInvoke;
+    [Header("Events & Actions")]
+    [HideInInspector] public UnityAction onBeatInvoke;
+    [HideInInspector] public UnityAction OnSongLoaded;
+    private UnityAction OnSongEnded;
+
+    [SerializeField] private int estimatedBeatsPerTrack = 9; // dirty magic number just for additional saftey, gets overwritten anyway
+    [SerializeField] private int remainingBeatsBeforeGameEnds = 8; //hard coded but depends on the fadeout of the song when it ends
+    [SerializeField] private int currentBeatsInTrack = 0;
+    [Header("Properties")]
+    public int CurrentBeatsInTrack
+    {
+        get => currentBeatsInTrack;
+
+        set
+        {
+            if (currentBeatsInTrack != value)
+            {
+                currentBeatsInTrack = value;
+                if (currentBeatsInTrack > (estimatedBeatsPerTrack - remainingBeatsBeforeGameEnds))
+                    OnSongEnded.Invoke();
+            }
+        }
+    }
 
     [Header("Beat Tracking Values")]
 
@@ -24,7 +46,7 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public float beatOffsetMultiplier;
     [SerializeField] public int samplesPerBeat = 0;
     [SerializeField] public float bpm = 0f;
-    [SerializeField] public float lastActionOnBeatTimer;
+    [SerializeField] public float lastActionOnBeatTimer; // into CV_SO
 
     public int currentSamples = 0;
     public int currentTimeSamplesMin = 0;
@@ -34,22 +56,24 @@ public class BeatTracking : MonoBehaviour
     public int beatCounter = 1;
 
     [Header("Beattracking Values for UI Visualization")]
-    public int currentSamples_UI = 0;
-    public int samplesPerBeat_UI = 0;
+    public int currentSamples_UI = 0; // into CV_SO
+    public int samplesPerBeat_UI = 0; // into CV_SO
 
-    public int lastActionOnBeatCounter = 0;
-    public bool lastActionOnBeat = false;
+    public int lastActionOnBeatCounter = 0; // into CV_SO
+    public bool lastActionOnBeat = false; // into CV_SO
 
     [SerializeField] private int ComboOvershootValue = 3;
+    private bool songStarted = false;
 
     private int lastFrameSamples = 0;
     private int beatMultiplier = 1;
     private string destPath;
 
 
+
     private void Awake()
     {
-        //Time.timeScale = 0.5f;
+
         destPath = Application.persistentDataPath + "/";
         source = GetComponent<AudioSource>();
 
@@ -63,6 +87,24 @@ public class BeatTracking : MonoBehaviour
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
     }
 
+    private void OnEnable()
+    {
+        OnSongLoaded += GetEstimatesBeatsPerTrack;
+        OnSongEnded += SongEnds;
+    }
+    private void OnDisable()
+    {
+        OnSongLoaded -= GetEstimatesBeatsPerTrack;
+        OnSongEnded -= SongEnds;
+    }
+    private void GetEstimatesBeatsPerTrack() // works
+    {
+        if (source.clip != null)
+        {
+            var temp = source.clip.length;
+            estimatedBeatsPerTrack = (int)(temp * (bpm / 60));
+        }
+    }
 
     private void Start()
     {
@@ -74,20 +116,18 @@ public class BeatTracking : MonoBehaviour
     }
     private void Update()
     {
-        isOnBeat = CheckForNewBeat();
+        if (songStarted == true)
+            isOnBeat = CheckForNewBeat();
     }
 
     IEnumerator StartSongDelayed(float _timeTillSongStarts)
     {
-        
+
         yield return new WaitForSecondsRealtime(_timeTillSongStarts);
+        songStarted = true;
         source.Play();
     }
 
-    private void ValidateSongValues()
-    {
-
-    }
     public bool CheckForNewBeat()
     {
         currentSamples += source.timeSamples - lastFrameSamples;
@@ -98,7 +138,7 @@ public class BeatTracking : MonoBehaviour
         {
             currentSamples -= samplesPerBeat;
             onBeatInvoke.Invoke();
-            beatCounter++;
+            CurrentBeatsInTrack = currentBeatsInTrack + 1; // maybe important to set some default values
 
             if (controller.LastActionOnBeat == true)
                 controller.LastActionOnBeat = false;
@@ -107,24 +147,21 @@ public class BeatTracking : MonoBehaviour
                 scoreboard.DecreaseComboCounter();
         }
 
-        if ((currentSamples_UI / samplesPerBeat_UI) >= 1) // for testing
+        if ((currentSamples_UI / samplesPerBeat_UI) >= 1) // for testing // maybe a second logic for a second visualizer 
             currentSamples_UI = currentSamples;
-
 
         if ((currentSamples - samplesPerBeat) <= 0 && (currentSamples - samplesPerBeat) > (-onBeatOffset))
             return true;
 
-
         if (currentSamples > 0 && (currentSamples <= onBeatOffset))
             return true;
-
 
         return false;
     }
 
     public bool Return_IsOnBeat()
     {
-        return isOnBeat;
+        return isOnBeat; // into CV_SO 
     }
 
     private void AssignAudioFile(string _fileName)
@@ -146,7 +183,17 @@ public class BeatTracking : MonoBehaviour
             else
             {
                 source.clip = DownloadHandlerAudioClip.GetContent(www);
+                OnSongLoaded.Invoke();
             }
         }
+    }
+
+    private void SongEnds()
+    {
+        songStarted = false;
+        
+        source.Stop();
+        SCOREBOARD.SetActive(true);
+        Debug.Log("GAME OVER");    
     }
 }

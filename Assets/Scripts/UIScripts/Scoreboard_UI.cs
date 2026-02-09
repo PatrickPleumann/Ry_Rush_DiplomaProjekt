@@ -5,7 +5,8 @@ public class Scoreboard_UI : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private BeatTracking beatTracking;
-
+    [SerializeField] private CentralizedValues values;
+ 
     [SerializeField] private GameObject comboCounterNormal;
     [SerializeField] private GameObject comboCounterOvershoot;
     [Space]
@@ -33,22 +34,20 @@ public class Scoreboard_UI : MonoBehaviour
     private float currentScore = 0;
     private void OnEnable()
     {
-        beatTracking.onBeatInvoke += ComboCounterShapeShift;
-        ComboCounterShapeShift();
-        
+        values.CurrentScore_OnValueChanged.AddListener(IncreaseScore);
+        values.CurrentCombo_OnValueChanged.AddListener(IncreaseComboCounter);
     }
 
-    private void ComboCounterShapeShift()
+    private void ComboCounterShapeShift(int _value)
     {
-        if (comboCounterOvershoot.activeSelf == false && currentCombo == maxCombo && currentOvershoot > 0)
+        if (comboCounterOvershoot.activeSelf == false && _value == values.currentCombo_MaxValue && values.CurrentComboOvershoot > 0)
         {
             comboCounterNormal.SetActive(false);
-            //overshoot_Material.SetFloat(ShaderUtilities.ID_FaceDilate, 0.2f * currentOvershoot); // does not work
             comboCounter_Overshoot.text = comboCounter_Text;
             comboCounterOvershoot.SetActive(true);
 
         }
-        else if (currentCombo < maxCombo)
+        else if (values.CurrentCombo_Value < values.currentCombo_MaxValue)
         {
             comboCounterNormal.SetActive(true);
             comboCounter_Normal.text = comboCounter_Text;
@@ -62,15 +61,16 @@ public class Scoreboard_UI : MonoBehaviour
         score.text = "Score: " + currentScore;
         comboCounter_Normal.text = comboCounter_Text;
     }
-    public void IncreaseComboCounter()
+    public void IncreaseComboCounter(int _value)
     {
-        if (currentCombo < maxCombo && currentOvershoot == 0)
-            currentCombo++;
+        //if (currentCombo < maxCombo && currentOvershoot == 0)
+        //    currentCombo++;
 
-        else if (currentOvershoot < maxOvershoot && currentCombo == maxCombo)
-            currentOvershoot++;
+        //else if (currentOvershoot < maxOvershoot && currentCombo == maxCombo)
+        //    currentOvershoot++;
+        ComboCounterShapeShift(_value);
 
-        comboCounter_Text = "Combo Counter: " + currentCombo;
+        comboCounter_Text = "Combo Counter: " + _value;
     }
 
     public void DecreaseComboCounter()

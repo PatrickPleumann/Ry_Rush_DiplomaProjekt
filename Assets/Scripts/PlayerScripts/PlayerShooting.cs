@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
+
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private PlayerController controller;
     [SerializeField] private Scoreboard_UI scoreboard;
     [SerializeField] private BeatTracking beatTracking;
-    [SerializeField] private AudioHandler audioHandler;
+    [SerializeField] private CentralizedValues values;
     [Space]
 
     [SerializeField] private LayerMask targetLayerMask;
@@ -25,11 +25,13 @@ public class PlayerShooting : MonoBehaviour
     private void OnEnable()
     {
         controller.onShootInvoked_started.AddListener(Player_ShootWeapon);
+        
     }
 
     private void OnDisable()
     {
         controller.onShootInvoked_started.RemoveListener(Player_ShootWeapon);
+        
     }
 
     public void Player_ShootWeapon()
@@ -38,7 +40,7 @@ public class PlayerShooting : MonoBehaviour
         onBeat = false;
         if (controller.IsOnBeat == true)
         {
-            scoreboard.IncreaseComboCounter();
+            values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
             controller.LastActionOnBeat = true;
             onBeat = true;
         }
@@ -51,13 +53,13 @@ public class PlayerShooting : MonoBehaviour
             if (onBeat)
             {
                 current.ApplyDamageToEnemy(bulletDamage * scoreboard.currentCombo * shootOnBeatMultiplier); //more dmg pls
-                audioHandler.PlaySound_sourceActionAmbience(audioHandler.hitmarker_2);
+                AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_2);
             }
 
             else
             {
                 current.ApplyDamageToEnemy(bulletDamage * scoreboard.currentCombo);
-                audioHandler.PlaySound_sourceActionAmbience(audioHandler.hitmarker_1);
+                AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_1);
             }
         }
     }

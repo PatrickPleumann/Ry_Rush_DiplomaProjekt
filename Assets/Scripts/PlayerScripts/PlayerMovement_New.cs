@@ -8,6 +8,7 @@ public class PlayerMovement_New : MonoBehaviour
     [Header("General")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private PlayerCollisionCheck collisionCheck;
+    [SerializeField] private CentralizedValues values;
 
     private Rigidbody rb_player;
 
@@ -151,7 +152,7 @@ public class PlayerMovement_New : MonoBehaviour
             //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
-                controller.scoreboard.IncreaseComboCounter();
+                values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 controller.LastActionOnBeat = true;
             }
             collisionCheck.canJump = false;
@@ -269,7 +270,7 @@ public class PlayerMovement_New : MonoBehaviour
         {
             if (controller.IsOnBeat == true)
             {
-                controller.scoreboard.IncreaseComboCounter();
+                values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 controller.LastActionOnBeat = true;
             }
             collisionCheck.exitingWall = true;

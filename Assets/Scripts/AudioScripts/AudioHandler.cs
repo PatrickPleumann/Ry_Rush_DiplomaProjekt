@@ -5,6 +5,7 @@ public class AudioHandler : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerController controller;
+
     [SerializeField] public AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
     [SerializeField] private AudioSource sourceActionAmbience;
@@ -36,6 +37,11 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip hitmarker_3;
     [SerializeField] public AudioClip hitmarker_4;
 
+    [Header("Scoreboard Audio")]
+    [SerializeField] public AudioClip scoreboard_Hit;
+    [SerializeField] public AudioClip scoreboard_Hit2;
+
+
     public static AudioHandler Instance;
 
     private void Awake()
@@ -48,7 +54,7 @@ public class AudioHandler : MonoBehaviour
 
     private void Start()
     {
-        //var sources = GetComponents<AudioSource>();
+        //var sources = GetComponents<AudioSource>(); // audiosources assigned in editor
 
         //sourceShooting = sources[0];
         //sourcePlayerMovement = sources[1];
@@ -57,6 +63,7 @@ public class AudioHandler : MonoBehaviour
         sourceShooting.volume = sourceShooting_Volume;
         sourcePlayerMovement.volume = sourcePlayerMovement_Volume;
         sourceActionAmbience.volume = sourceActionAmbience_Volume;
+
     }
 
     //only for shooting gun related sounds because sounds interrupt each other
@@ -78,19 +85,14 @@ public class AudioHandler : MonoBehaviour
         sourceActionAmbience.clip = _clip;
         sourceActionAmbience.Play();
     }
-
-    public void PlaySound_Test3()
-    {
-        sourceActionAmbience.Play();
-    }
-
-    public void PlaySound_Test2()
-    {
-        sourcePlayerMovement.Play();
-    }
-
     private void OnDestroy()
     {
         Instance = null;
+    }
+
+    public void PlayScoreboardSounds(AudioClip _clip)
+    {
+        sourceActionAmbience.clip = _clip;
+        sourceActionAmbience.Play();
     }
 }
