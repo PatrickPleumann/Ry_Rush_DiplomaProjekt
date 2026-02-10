@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] public Transform ThisEnemy;
     [SerializeField] public PlayerInfo playerInfo;
 
-    [SerializeField] private CentralizedValues centralizedValues;
+    [SerializeField] private CentralizedValues values;
 
     [SerializeField] private int initalPoints = 500; // this values gets increased or reduced based on the hits to kill and the multipliers
     private int hitsTillDeath; // set default
@@ -115,6 +115,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     private void EnemyDying()
     {
+        values.Kills++;
         enemyIsDead = true;
         SetDefaultValues();
         ActivateRagdoll();
@@ -128,7 +129,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         if (hitsTillDeath > 0)
         {
             var temp = ((float)(initalPoints / hitsTillDeath)) ; // hier noch multiplier hinzufügen
-             centralizedValues.CurrentScore_Value = centralizedValues.CurrentScore_Value + temp;
+             values.CurrentScore_Value = values.CurrentScore_Value + temp;
         }
         else
             Debug.Log("Hits till death are below 1, which can´t be");
@@ -139,11 +140,12 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     {
         if (enemyIsDead == false)
         {
+            values.ShotsHit++;
             EnemyHealth -= _dmgAmount;
             hitsTillDeath++;
         }
 
-        if (EnemyHealth <= 0)
+        if (EnemyHealth <= 0 && enemyIsDead == false)
             EnemyDying();
     }
 

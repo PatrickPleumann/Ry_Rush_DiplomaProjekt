@@ -18,13 +18,12 @@ public class Scoreboard_UI : MonoBehaviour
     private string comboCounter_Text;
 
     [SerializeField] private TMP_Text score;
-    [Space]
 
-    [SerializeField] public float maxCombo = 5;
-    [SerializeField] public float maxOvershoot = 0; // maximum missed beats till combo counter decreases on it´s own
-    [Space]
+    //[SerializeField] public float maxCombo = 5;
+    //[SerializeField] public float maxOvershoot = 0; // maximum missed beats till combo counter decreases on it´s own
+    //[Space]
 
-    private float currentScore = 0;
+    //private float currentScore = 0;
     private void OnEnable()
     {
         values.CurrentScore_OnValueChanged.AddListener(ShowScore);
@@ -62,24 +61,24 @@ public class Scoreboard_UI : MonoBehaviour
         comboCounter_Normal.text = comboCounter_Text;
     }
 
-    private void DecreaseComboCounter()
-    {
-        if (values.CurrentComboOvershoot_Value > 0 && values.CurrentCombo_Value == values.currentCombo_MaxValue)
-            values.CurrentComboOvershoot_Value = values.CurrentComboOvershoot_Value - 1;
+    //private void DecreaseComboCounter()
+    //{
+    //    if (values.CurrentComboOvershoot_Value > 0 && values.CurrentCombo_Value == values.currentCombo_MaxValue)
+    //        values.CurrentComboOvershoot_Value = values.CurrentComboOvershoot_Value - 1;
 
-        else if (values.CurrentComboOvershoot_Value <= 0 && values.CurrentCombo_Value > 1)
-            values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
+    //    else if (values.CurrentComboOvershoot_Value <= 0 && values.CurrentCombo_Value > 1)
+    //        values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
 
-        comboCounter_Text = "Combo Counter: " + values.CurrentCombo_Value;
-    }
+    //    comboCounter_Text = "Combo Counter: " + values.CurrentCombo_Value;
+    //}
 
     private void ShowScore(float _value)
     {
         score.text = "Score: " + _value;
     }
 
-    private void ShowComboCounter(int _value)
-    {
-        comboCounter_Normal.text = "Combo Counter: " + _value;
-    }
+    //private void ShowComboCounter(int _value)
+    //{
+    //    comboCounter_Normal.text = "Combo Counter: " + _value;
+    //}
 }

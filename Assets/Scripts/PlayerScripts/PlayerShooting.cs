@@ -36,7 +36,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void Player_ShootWeapon()
     {
-
+        values.ShotsFired++;
         onBeat = false;
         if (controller.IsOnBeat == true)
         {

@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4b12f574f0e184aa7defcbdacdded4, type: 3}
   m_Name: CentralizedValues
   m_EditorClassIdentifier: Assembly-CSharp::CentralizedValues
-  moveInput_Value: 0
+  moveInput_Value: {x: 0, y: 0}
   MoveInput_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  LookInput_Value: {x: 0, y: 0}
+  AllowInput_Bool: 0
   currentSamples_UI: 0
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   LastActionOnBeat_Bool: 0
   currentCombo_MaxValue: 5
-  currentCombo_Value: 0
+  currentCombo_Value: 1
   CurrentCombo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -37,7 +39,7 @@ MonoBehaviour:
       m_Calls: []
   hitsOnEnemy: 0
   shotsFired: 0
-  currentScore_Value: 0
+  currentScore_Value: 500
   CurrentScore_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -199,9 +199,9 @@ public class BeatTracking : MonoBehaviour
     private void SongEnds()
     {
         songStarted = false;
-
-        source.Stop();
-        SCOREBOARD.SetActive(true);
+        //source.Stop();
+        values.AllowInput_Bool = false;
+        values.onSessionEnds.Invoke();
         Debug.Log("GAME OVER");
     }
 }

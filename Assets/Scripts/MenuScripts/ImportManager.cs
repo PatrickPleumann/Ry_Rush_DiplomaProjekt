@@ -139,7 +139,7 @@ public class ImportManager : MonoBehaviour
 
         view.BPM_GO.SetActive(false);
         view.BPMInput_InputField.interactable = true;
-        view.BPMInput_InputField.text = "Enter BPM here...";
+        view.BPMInput_InputField.text = "Enter BMP here... 30 - 200";
         view.ConfirmBPM_Button.interactable = true;
 
         view.AsyncValue_GO.gameObject.SetActive(false);
@@ -160,7 +160,7 @@ public class ImportManager : MonoBehaviour
     }
     private void ConfirmBPM()
     {
-        if (float.TryParse(view.BPMInput_InputField.text, out float output))
+        if (float.TryParse(view.BPMInput_InputField.text, out float output) && output < 201 && output > 30)
         {
             FillSongData();
             bpm = output;
@@ -171,7 +171,10 @@ public class ImportManager : MonoBehaviour
         }
 
         else
+        {
+            view.BPMInput_InputField.text = "Enter BMP here... 30 - 200";
             Debug.Log("Invalid input for BPM input field");
+        }
     }
 
     private void BrowseFilesForSong()
@@ -199,7 +202,10 @@ public class ImportManager : MonoBehaviour
         }
 
         else
+        
+            
             Debug.Log("No file chosen");
+        
     }
 
 

@@ -5,15 +5,15 @@ public class PlayerCamera : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private Transform playerOrientation;
+    [SerializeField] private CentralizedValues values;
 
     [Header("Camera Values")]
     [SerializeField] public float sensitivityX;
     [SerializeField] public float sensitivityY;
+
     [SerializeField] private float smoothingTime = 20f; //TODO: if player option, this value HAS to be clamped between aproximatly 10 - 30 depends on framerate
-                                                        //TODO: below 10 appears to be too slow and above 30 can cause issues while having very low frames
     [SerializeField] private float cameraClampUp = 89f;
     [SerializeField] private float cameraClampDown = -85f;
-
 
     private float xRotation;
     private float yRotation;
@@ -25,19 +25,21 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        //Application.targetFrameRate = 100;
         ySmoothRot = mousePos.x;
         xSmoothRot = mousePos.y;// needs to get at least one value otherwise lerped values can stuck the camera
     }
     private void LateUpdate()
     {
-        UpdateCamera();
-        UpdateRotation();
+        if (values.AllowInput_Bool == true)
+        {
+            UpdateCamera();
+            UpdateRotation();
+        }
     }
 
     private void UpdateCamera()
     {
-        mousePos = controller.Look.action.ReadValue<Vector2>();
+        mousePos = controller.Look.action.ReadValue<Vector2>(); // needs to stay as it this, does not work with onValueChanged
 
         mousePos.x *= sensitivityX;
         mousePos.y *= sensitivityY;
@@ -51,7 +53,7 @@ public class PlayerCamera : MonoBehaviour
         ySmoothRot = Mathf.Lerp(ySmoothRot, yRotation, smoothingTime * Time.deltaTime);
     }
 
-    private void UpdateRotation()
+    private void UpdateRotation() // smoothed
     {
         transform.rotation = Quaternion.Euler(xSmoothRot, ySmoothRot, 0f);
         playerOrientation.rotation = Quaternion.Euler(0f, ySmoothRot, 0f);

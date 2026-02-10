@@ -76,7 +76,7 @@ MonoBehaviour:
   Data: {fileID: 11400000, guid: 83c03fc1c1f82cc41b85180a30ae9027, type: 2}
   ThisEnemy: {fileID: 5082828897047368399}
   playerInfo: {fileID: 11400000, guid: c9748b2ac70789849b194bcbad3cf35f, type: 2}
-  centralizedValues: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
+  values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
   initalPoints: 500
   allRagdollRigidbodies: []
   EnemyDirSmoothSpeed: 1.5

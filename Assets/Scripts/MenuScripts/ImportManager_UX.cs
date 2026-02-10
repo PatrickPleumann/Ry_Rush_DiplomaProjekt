@@ -25,5 +25,4 @@ public class ImportManager_UX : MonoBehaviour
     [SerializeField] public TMP_Dropdown songs_DropdownMenu;
     [SerializeField] public Button ResetValues_Button;
     [SerializeField] public Button Back_Button;
-                      
 }

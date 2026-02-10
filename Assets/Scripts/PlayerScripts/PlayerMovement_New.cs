@@ -85,12 +85,15 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Wallrunning && controller.AllowMovement == true)
-            WallRunning();
+        if (values.AllowInput_Bool == true)
+        {
+            if (Wallrunning && controller.AllowMovement == true)
+                WallRunning();
 
-        else if (controller.AllowMovement == true)
-            MovePlayer();
+            else if (controller.AllowMovement == true)
+                MovePlayer();
 
+        }
         if (controller.AllowMovement == true)
             PlayerSpeedControl();
 
@@ -145,7 +148,7 @@ public class PlayerMovement_New : MonoBehaviour
         rb_player.linearDamping = _isGrounded ? groundDragValue : 0;
     }
 
-    public void Jump(InputAction.CallbackContext context)
+    public void Jump()
     {
         if (collisionCheck.canJump && collisionCheck.IsGrounded)
         {
@@ -264,7 +267,7 @@ public class PlayerMovement_New : MonoBehaviour
         Wallrunning = false;
     }
 
-    public void WallJump(InputAction.CallbackContext context)
+    public void WallJump()
     {
         if (collisionCheck.exitingWall == false && Wallrunning && collisionCheck.canJump == true)
         {

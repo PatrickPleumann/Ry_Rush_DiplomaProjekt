@@ -9,16 +9,17 @@ using UnityEngine.Events;
 
 public class CentralizedValues : ScriptableObject
 {
-
-    private void SetDefaultValues()
+    public void SetDefaultValues()
     {
         CurrentCombo_Value = 1;
         CurrentComboOvershoot_Value = 0;
         CurrentScore_Value = 0;
         currentSamples_UI = 0;
 
-        hitsOnEnemy = 0;
-        shotsFired = 0;
+        ShotsHit = 0;
+        ShotsFired = 0;
+        Kills = 0;
+        AllowInput_Bool = true;
     }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
@@ -28,20 +29,24 @@ public class CentralizedValues : ScriptableObject
     /// </summary>
 
     [Header("Input Values")]
-    [SerializeField] private float moveInput_Value;
-    [HideInInspector] public UnityEvent<float> MoveInput_OnValueChanged;
-    public float MoveInput_Value
+    [SerializeField] private Vector2 moveInput_Value;
+    [HideInInspector] public UnityEvent<Vector2> MoveInput_OnValueChanged;
+    public Vector2 MoveInput_Value
     {
         get => moveInput_Value;
         set
         {
-            if (moveInput_Value != value)
+            if (AllowInput_Bool == true && moveInput_Value != value)
             {
                 moveInput_Value = value;
                 MoveInput_OnValueChanged.Invoke(moveInput_Value);
             }
         }
     }
+
+    [SerializeField] public Vector2 LookInput_Value;
+
+    [SerializeField] public bool AllowInput_Bool = true;
 
     [Space]
     [Header("Beattracking Values")]
@@ -123,10 +128,9 @@ public class CentralizedValues : ScriptableObject
     [Space]
     [Header("Score Values")]
 
-    [SerializeField] public int hitsOnEnemy = 0;
-    [SerializeField] public int shotsFired = 0;
-
-
+    [SerializeField] public float ShotsFired = 0;
+    [SerializeField] public float ShotsHit = 0;
+    [SerializeField] public float Kills;
 
     [SerializeField] private float currentScore_Value;
     [HideInInspector] public UnityEvent<float> CurrentScore_OnValueChanged;
@@ -142,4 +146,8 @@ public class CentralizedValues : ScriptableObject
             }
         }
     }
+
+    [Space]
+    [Header("Game Manager")]
+    [HideInInspector] public UnityAction onSessionEnds;
 }

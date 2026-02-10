@@ -28,15 +28,15 @@ public class PlayerController : MonoBehaviour
     [Header("Unity Events")]
     [HideInInspector] public UnityEvent onShootInvoked_started;
 
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onAimInvoked_started;
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onAimInvoked_canceled;
+    [HideInInspector] public UnityEvent onAimInvoked_started;
+    [HideInInspector] public UnityEvent onAimInvoked_canceled;
 
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onJumpInvoked_started;
+    [HideInInspector] public UnityEvent onJumpInvoked_started;
 
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onDashInvoked_started;
+    [HideInInspector] public UnityEvent onDashInvoked_started;
 
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_started;
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onSlowMotion_canceled;
+    [HideInInspector] public UnityEvent onSlowMotion_started;
+    [HideInInspector] public UnityEvent onSlowMotion_canceled;
     [HideInInspector] public UnityEvent onReload_started;
     [HideInInspector] public UnityEvent onReload_Finished;
 
@@ -73,56 +73,55 @@ public class PlayerController : MonoBehaviour
         RemainingAmmo = maxRemainingAmmo; // into CV_SO
         CurrentAmmo = maxCurrentAmmo; // into CV_SO
         Cursor.lockState = CursorLockMode.Locked;
-        AllowMovement = true; // into CV_SO
         IsOnBeat = false; // into CV_SO
     }
+
     private void OnEnable()
     {
-
-        Jump.action.started += onJumpInvoked_started.Invoke;
+        OnSessionStart_AddAllListeners();
+    }
+    private void OnSessionStart_AddAllListeners()
+    {
+        Jump.action.started += ProcessJumpInput;
 
         Shoot.action.started += ProcessShootInput;
 
-        Aim.action.started += onAimInvoked_started.Invoke;
-        Aim.action.canceled += onAimInvoked_canceled.Invoke;
+        Aim.action.started += ProcessAimInput;
+        Aim.action.canceled += ProcessAimInput;
 
-        Dash.action.started += onDashInvoked_started.Invoke;
+        Dash.action.started += ProcessDashInput;
 
-        SlowMotion.action.started += onSlowMotion_started.Invoke;
-        SlowMotion.action.canceled += onSlowMotion_canceled.Invoke;
+        SlowMotion.action.started += ProcessSlowMotionInput;
+        SlowMotion.action.canceled += ProcessSlowMotionInput;
 
         Reload.action.started += ProcessReloadInput;
-
-        //onReload_started.AddListener(ProcessReloadInput);
     }
+
     private void OnDisable()
     {
         OnSessionEnded_RemoveAllListeners();
     }
-
     public void OnSessionEnded_RemoveAllListeners()
     {
-        Jump.action.started -= onJumpInvoked_started.Invoke;
+        Jump.action.started -= ProcessJumpInput;
 
         Shoot.action.started -= ProcessShootInput;
 
-        Aim.action.started -= onAimInvoked_started.Invoke;
-        Aim.action.canceled -= onAimInvoked_canceled.Invoke;
+        Aim.action.started -= ProcessAimInput;
+        Aim.action.canceled -= ProcessAimInput;
 
-        Dash.action.started -= onDashInvoked_started.Invoke;
+        Dash.action.started -= ProcessDashInput;
 
-        SlowMotion.action.started -= onSlowMotion_started.Invoke;
-        SlowMotion.action.canceled -= onSlowMotion_canceled.Invoke;
+        SlowMotion.action.started -= ProcessSlowMotionInput;
+        SlowMotion.action.canceled -= ProcessSlowMotionInput;
 
         Reload.action.started -= ProcessReloadInput;
-
-        //onReload_started.RemoveListener(ProcessReloadInput);
     }
+
     private void Start()
     {
         lastActionOnBeatTime = (((1 / beat.bpm) * 60) - beat.beatOffsetMultiplier); // into CV_SO
     }
-
 
     private void Update()
     {
@@ -130,28 +129,31 @@ public class PlayerController : MonoBehaviour
         IsOnBeat = beat.Return_IsOnBeat(); // into CV_SO
     }
 
+    #region Process Input Methods
     private void ProcessShootInput(InputAction.CallbackContext ctx)
     {
-        if (canShoot == true && CurrentAmmo > 0) // into CV_SO
+        if (values.AllowInput_Bool == true)
         {
-            AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.playerShoot);
-            CurrentAmmo--; // into CV_SO
-            StartCoroutine(ShootTimer());
-            onShootInvoked_started.Invoke();
-        }
+            if (canShoot == true && CurrentAmmo > 0) // into CV_SO
+            {
+                AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.playerShoot);
+                CurrentAmmo--; // into CV_SO
+                StartCoroutine(ShootTimer());
+                onShootInvoked_started.Invoke();
+            }
 
-        else if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
-        {
-            AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
-            ProcessReloadInput(ctx);
+            else if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+            {
+                AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
+                ProcessReloadInput(ctx);
+            }
+            else
+                AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
         }
-        else
-            AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
     }
-
     private void ProcessReloadInput(InputAction.CallbackContext ctx)
     {
-        if (isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+        if (values.AllowInput_Bool == true && isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
         {
             isReloading = true;
             onReload_started.Invoke();
@@ -162,7 +164,34 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    private void ProcessJumpInput(InputAction.CallbackContext ctx)
+    {
+        if (values.AllowInput_Bool == true && ctx.started)
+            onJumpInvoked_started.Invoke();
+    }
+    private void ProcessAimInput(InputAction.CallbackContext ctx)
+    {
+        if (values.AllowInput_Bool == true && ctx.started == true)
+            onAimInvoked_started.Invoke();
 
+        else
+            onAimInvoked_canceled.Invoke();
+    }
+    private void ProcessSlowMotionInput(InputAction.CallbackContext ctx)
+    {
+        if (values.AllowInput_Bool == true && ctx.started == true)
+        {
+            onSlowMotion_started.Invoke();
+        }
+        else
+            onSlowMotion_canceled.Invoke();
+    }
+    private void ProcessDashInput(InputAction.CallbackContext ctx)
+    {
+        if (values.AllowInput_Bool == true && ctx.started == true)
+            onDashInvoked_started.Invoke();
+        }
+    #endregion
     private void GetMoveDirection()
     {
         if (AllowMovement == true)
@@ -179,8 +208,8 @@ public class PlayerController : MonoBehaviour
         LastActionOnBeat = true;
         yield return new WaitForSeconds(lastActionOnBeatTime);
         LastActionOnBeat = false;
-        yield break;
-    }
+        yield return new WaitForEndOfFrame();
+    } //TODO: Check if necessary
 
     private IEnumerator ShootTimer()
     {

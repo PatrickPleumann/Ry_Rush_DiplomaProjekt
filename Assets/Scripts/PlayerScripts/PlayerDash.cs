@@ -33,11 +33,10 @@ public class PlayerDash : MonoBehaviour
     {
         rb_player = GetComponent<Rigidbody>();
     }
-    public void Dash(InputAction.CallbackContext ctx)
+    public void Dash()
     {
         if (canDash == true)
         {
-            //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;

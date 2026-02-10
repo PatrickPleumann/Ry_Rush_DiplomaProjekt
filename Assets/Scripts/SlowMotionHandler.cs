@@ -26,8 +26,6 @@ public class SlowMotionHandler : MonoBehaviour
             controller.onAimInvoked_started.AddListener(StartSlowMotion);
             controller.onAimInvoked_canceled.AddListener(StopSlowMotion);
         }
-
-        
     }
 
     private void OnDisable()
@@ -42,7 +40,7 @@ public class SlowMotionHandler : MonoBehaviour
         }
     }
 
-    private void StartSlowMotion(InputAction.CallbackContext ctx)
+    private void StartSlowMotion()
     {
         if (increaseTimeScale != null)  //TODO: nullcheck maybe dangerous, but isUnityNull() does not work
         {
@@ -51,7 +49,7 @@ public class SlowMotionHandler : MonoBehaviour
         decreaseTimeScale = StartCoroutine(DecreaseTimeScale());
     }
 
-    private void StopSlowMotion(InputAction.CallbackContext ctx)
+    private void StopSlowMotion()
     {
         if (decreaseTimeScale != null) //TODO: nullcheck maybe dangerous, but isUnityNull() does not work
             StopCoroutine(decreaseTimeScale);

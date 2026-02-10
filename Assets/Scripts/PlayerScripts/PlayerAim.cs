@@ -87,7 +87,7 @@ public class PlayerAim : MonoBehaviour
         playerWeapon.transform.position = Vector3.Lerp(playerWeapon.transform.position, weaponHold.position, smoothedZoomTime * Time.deltaTime);
         playerWeapon.transform.rotation = Quaternion.Lerp(playerWeapon.transform.rotation, weaponHold.rotation, smoothedZoomTime * Time.deltaTime);
     }
-    public void Zoom_True(InputAction.CallbackContext ctx)
+    public void Zoom_True()
     {
         if (controller.IsOnBeat == true)
         {
@@ -98,20 +98,20 @@ public class PlayerAim : MonoBehaviour
             isZoomedIn = true;
     }
 
-    public void Zoom_False(InputAction.CallbackContext ctx)
+    public void Zoom_False()
     {
         if (isZoomedIn == true)
             isZoomedIn = false;
     }
 
-    public void ReduceMouseSensitivity(InputAction.CallbackContext ctx)
+    public void ReduceMouseSensitivity()
     {
         tempSensX = cam.sensitivityX;
         tempSensY = cam.sensitivityY;
         cam.sensitivityX = cam.sensitivityX * X_Sens_Multiplier;
         cam.sensitivityY = cam.sensitivityY * Y_Sens_Multiplier;
     }
-    public void ReIncreaseReducedMouseSensitivity(InputAction.CallbackContext ctx)
+    public void ReIncreaseReducedMouseSensitivity()
     {
         if (tempSensX != 0 && tempSensY != 0)
         {
