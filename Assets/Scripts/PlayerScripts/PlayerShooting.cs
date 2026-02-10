@@ -16,7 +16,6 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private float shootOnBeatMultiplier = 1;
 
 
-    public UnityAction OnWeaponShoot;
     private Vector3 cameraCenterPoint = new Vector3(0.5f, 0.5f, 1.0f);
     private Ray crosshairCenterRay;
     private RaycastHit hit;
@@ -25,13 +24,11 @@ public class PlayerShooting : MonoBehaviour
     private void OnEnable()
     {
         controller.onShootInvoked_started.AddListener(Player_ShootWeapon);
-        
     }
 
     private void OnDisable()
     {
         controller.onShootInvoked_started.RemoveListener(Player_ShootWeapon);
-        
     }
 
     public void Player_ShootWeapon()

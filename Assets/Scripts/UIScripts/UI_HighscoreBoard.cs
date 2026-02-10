@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,10 +17,10 @@ public class UI_HighscoreBoard : MonoBehaviour
     [SerializeField] public TMP_Text Kills;
     [SerializeField] public TMP_Text YourScore;
 
-
-    [SerializeField][Range(1f, 2f)] private float timeToTillShowScore;
-    [SerializeField][Range(0.1f, 0.5f)] private float timeBetweenScoreShowingUp;
-    [SerializeField][Range(0.2f, 1f)] private float timeBeforeEndScorePopsUp;
+    //maybe switch the score board pop up values to the time between two beats so the fade out takes 2 beats (time) and every value 1 beat
+    [SerializeField][Range(1f, 2f)] private float timeToTillShowScore; // 2 beats time
+    [SerializeField][Range(0.1f, 0.5f)] private float timeBetweenScoreShowingUp; // 1 beat time for each value
+    [SerializeField][Range(0.2f, 1f)] private float timeBeforeEndScorePopsUp; // 2 beats time for YourScore Value
 
     [SerializeField] public Button backButton;
 
@@ -29,7 +28,6 @@ public class UI_HighscoreBoard : MonoBehaviour
     {
         backButton.onClick.AddListener(OnBackButton);
     }
-
 
     private void OnDisable()
     {
@@ -39,41 +37,45 @@ public class UI_HighscoreBoard : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(ShowHighscoreScreen());
+        var _timeBetween = values.TimeBetweenBeats;
+        Debug.Log("Time between beats: " + _timeBetween);
+        StartCoroutine(ShowHighscoreScreen(_timeBetween));
     }
 
 
-    private IEnumerator ShowHighscoreScreen()
+    private IEnumerator ShowHighscoreScreen(float _timeBetween)
     {
-        yield return new WaitForSeconds(timeToTillShowScore);
-
-        yield return new WaitForSeconds(timeBetweenScoreShowingUp);
+        yield return new WaitForSeconds(_timeBetween * 2);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsFired.text = Get_ShotsFired();
 
-        yield return new WaitForSeconds(timeBetweenScoreShowingUp);
+        yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsHit.text = Get_ShotsHit();
 
-        yield return new WaitForSeconds(timeBetweenScoreShowingUp);
+        yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         Accuracy.text = Get_Accuracy();
 
-        yield return new WaitForSeconds(timeBetweenScoreShowingUp);
+        yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         PointsPerKill.text = Get_PointsPerKill();
 
-        yield return new WaitForSeconds(timeBetweenScoreShowingUp);
+        yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         PointsPerHit.text = Get_PointsPerHit();
 
-        yield return new WaitForSeconds(timeBetweenScoreShowingUp);
+        yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         Kills.text = Get_Kills();
 
+        yield return new WaitForSeconds(_timeBetween);
+        AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+        //there is a value missing
+
         Cursor.lockState = CursorLockMode.None;
 
-        yield return new WaitForSeconds(timeBeforeEndScorePopsUp);
+        yield return new WaitForSeconds(_timeBetween * 2);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit2);
         YourScore.text = Get_YourScore();
 
@@ -100,7 +102,7 @@ public class UI_HighscoreBoard : MonoBehaviour
     private string Get_Accuracy()
     {
         if (values.ShotsFired > 0 && values.ShotsHit > 0)
-            return Accuracy.text = Utility.FloorFloat_TwoDigits(values.ShotsHit / values.ShotsFired).ToString();
+            return Accuracy.text = (Utility.FloorFloat_TwoDigits(values.ShotsHit / values.ShotsFired) * 100f).ToString();
         else
             return Accuracy.text = "Invalid values";
     }

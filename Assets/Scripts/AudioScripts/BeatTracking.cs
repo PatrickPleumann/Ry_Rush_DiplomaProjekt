@@ -22,8 +22,8 @@ public class BeatTracking : MonoBehaviour
     [HideInInspector] public UnityAction OnSongLoaded;
     private UnityAction OnSongEnded;
 
-    [SerializeField] private int estimatedBeatsPerTrack = 9; // dirty magic number just for additional saftey, gets overwritten anyway
-    [SerializeField] private int remainingBeatsBeforeGameEnds = 8; //hard coded but depends on the fadeout of the song when it ends
+    [SerializeField] private int estimatedBeatsPerTrack = 11; // dirty magic number just for additional saftey, gets overwritten anyway
+    [SerializeField] private int remainingBeatsBeforeGameEnds = 10; //hard coded but depends on the fadeout of the song when it ends
     [SerializeField] private int currentBeatsInTrack = 0;
 
     [Header("Properties")]
@@ -61,8 +61,6 @@ public class BeatTracking : MonoBehaviour
     public int currentSamples_UI = 0; // into CV_SO
     public int samplesPerBeat_UI = 0; // into CV_SO
 
-    public int lastActionOnBeatCounter = 0; // into CV_SO
-
 
     [SerializeField] private int ComboOvershootValue = 3;
     private bool songStarted = false;
@@ -71,11 +69,9 @@ public class BeatTracking : MonoBehaviour
     private int beatMultiplier = 1;
     private string destPath;
 
-
-
     private void Awake()
     {
-
+        values.SetDefaultValues();
         destPath = Application.persistentDataPath + "/";
         source = GetComponent<AudioSource>();
 
@@ -107,9 +103,9 @@ public class BeatTracking : MonoBehaviour
             estimatedBeatsPerTrack = (int)(temp * (bpm / 60));
         }
     }
-
     private void Start()
     {
+        values.TimeBetweenBeats = Utility.FloorFloat_TwoDigits(60 / songData.BPM);
         currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
         currentSamples_UI += onBeatOffset;
@@ -122,14 +118,18 @@ public class BeatTracking : MonoBehaviour
             isOnBeat = CheckForNewBeat();
     }
 
-    IEnumerator StartSongDelayed(float _timeTillSongStarts)
+    private IEnumerator StartSongDelayed(float _timeTillSongStarts)
     {
-
         yield return new WaitForSecondsRealtime(_timeTillSongStarts);
         songStarted = true;
         source.Play();
     }
 
+
+    /// <summary>
+    /// Checks every frame if a new beat just happened.
+    /// </summary>
+    /// <returns></returns>
     public bool CheckForNewBeat()
     {
         currentSamples += source.timeSamples - lastFrameSamples;
@@ -167,6 +167,10 @@ public class BeatTracking : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Returns constantly if an action at this frame is on beat or not.
+    /// </summary>
+    /// <returns></returns>
     public bool Return_IsOnBeat()
     {
         return isOnBeat; // into CV_SO 
@@ -179,6 +183,7 @@ public class BeatTracking : MonoBehaviour
 
         StartCoroutine(LoadCustomSong(uri));
     }
+
     private IEnumerator LoadCustomSong(string uri)
     {
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(uri, AudioType.WAV))
@@ -199,7 +204,6 @@ public class BeatTracking : MonoBehaviour
     private void SongEnds()
     {
         songStarted = false;
-        //source.Stop();
         values.AllowInput_Bool = false;
         values.onSessionEnds.Invoke();
         Debug.Log("GAME OVER");

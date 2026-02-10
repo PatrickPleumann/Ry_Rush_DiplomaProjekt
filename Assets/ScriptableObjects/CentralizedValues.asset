@@ -17,14 +17,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   LookInput_Value: {x: 0, y: 0}
-  AllowInput_Bool: 0
+  AllowInput_Bool: 1
+  TimeBetweenBeats: 0
   currentSamples_UI: 0
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   LastActionOnBeat_Bool: 0
   currentCombo_MaxValue: 5
-  currentCombo_Value: 1
+  currentCombo_Value: 4
   CurrentCombo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -37,9 +38,10 @@ MonoBehaviour:
   CurrentAmmo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  hitsOnEnemy: 0
-  shotsFired: 0
-  currentScore_Value: 500
+  ShotsFired: 14
+  ShotsHit: 6
+  Kills: 2
+  currentScore_Value: 0
   CurrentScore_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

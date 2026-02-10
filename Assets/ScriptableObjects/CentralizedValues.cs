@@ -9,6 +9,7 @@ using UnityEngine.Events;
 
 public class CentralizedValues : ScriptableObject
 {
+
     public void SetDefaultValues()
     {
         CurrentCombo_Value = 1;
@@ -20,6 +21,8 @@ public class CentralizedValues : ScriptableObject
         ShotsFired = 0;
         Kills = 0;
         AllowInput_Bool = true;
+
+        TimeBetweenBeats = 0f;
     }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
@@ -50,7 +53,7 @@ public class CentralizedValues : ScriptableObject
 
     [Space]
     [Header("Beattracking Values")]
-
+    [SerializeField] public float TimeBetweenBeats;
     [SerializeField] private int currentSamples_UI;
     [HideInInspector] public UnityEvent<int> CurrentSamples_OnValueChanged;
     public int CurrentSamples_Value

@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour
             Destroy(Instance);
         }
         Instance = this;
-
-        values.SetDefaultValues();
     }
 
     private void OnEnable()
