@@ -20,6 +20,8 @@ public class CentralizedValues : ScriptableObject
         ShotsHit = 0;
         ShotsFired = 0;
         Kills = 0;
+        OnBeatActions = 0;
+
         AllowInput_Bool = true;
 
         TimeBetweenBeats = 0f;
@@ -131,9 +133,10 @@ public class CentralizedValues : ScriptableObject
     [Space]
     [Header("Score Values")]
 
-    [SerializeField] public float ShotsFired = 0;
-    [SerializeField] public float ShotsHit = 0;
+    [SerializeField] public float ShotsFired;
+    [SerializeField] public float ShotsHit;
     [SerializeField] public float Kills;
+    [SerializeField] public int OnBeatActions;
 
     [SerializeField] private float currentScore_Value;
     [HideInInspector] public UnityEvent<float> CurrentScore_OnValueChanged;

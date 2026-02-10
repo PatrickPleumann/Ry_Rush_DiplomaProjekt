@@ -37,6 +37,7 @@ public class PlayerShooting : MonoBehaviour
         onBeat = false;
         if (controller.IsOnBeat == true)
         {
+            values.OnBeatActions++;
             values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
             values.LastActionOnBeat_Bool = true;
             onBeat = true;
@@ -49,6 +50,7 @@ public class PlayerShooting : MonoBehaviour
         {
             if (onBeat)
             {
+               
                 current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value * shootOnBeatMultiplier); //more dmg pls
                 AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_2);
             }

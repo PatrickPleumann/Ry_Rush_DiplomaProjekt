@@ -39,6 +39,7 @@ public class PlayerDash : MonoBehaviour
         {
             if (controller.IsOnBeat == true)
             {
+                values.OnBeatActions++;
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 values.LastActionOnBeat_Bool = true;
             }

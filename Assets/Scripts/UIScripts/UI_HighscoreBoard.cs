@@ -15,12 +15,13 @@ public class UI_HighscoreBoard : MonoBehaviour
     [SerializeField] public TMP_Text PointsPerKill;
     [SerializeField] public TMP_Text PointsPerHit;
     [SerializeField] public TMP_Text Kills;
+    [SerializeField] public TMP_Text OnBeatActions; // needs UI
     [SerializeField] public TMP_Text YourScore;
 
-    //maybe switch the score board pop up values to the time between two beats so the fade out takes 2 beats (time) and every value 1 beat
-    [SerializeField][Range(1f, 2f)] private float timeToTillShowScore; // 2 beats time
-    [SerializeField][Range(0.1f, 0.5f)] private float timeBetweenScoreShowingUp; // 1 beat time for each value
-    [SerializeField][Range(0.2f, 1f)] private float timeBeforeEndScorePopsUp; // 2 beats time for YourScore Value
+    
+    //[SerializeField][Range(1f, 2f)] private float timeToTillShowScore; 
+    //[SerializeField][Range(0.1f, 0.5f)] private float timeBetweenScoreShowingUp;    // current Scoreboard logic uses time per beat for scores popping up
+    //[SerializeField][Range(0.2f, 1f)] private float timeBeforeEndScorePopsUp; 
 
     [SerializeField] public Button backButton;
 
@@ -71,11 +72,11 @@ public class UI_HighscoreBoard : MonoBehaviour
 
         yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-        //there is a value missing
+        OnBeatActions.text = Get_OnBeatActions();
 
         Cursor.lockState = CursorLockMode.None;
 
-        yield return new WaitForSeconds(_timeBetween * 2);
+        yield return new WaitForSeconds(_timeBetween);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit2);
         YourScore.text = Get_YourScore();
 
@@ -93,36 +94,40 @@ public class UI_HighscoreBoard : MonoBehaviour
     #region Get Scoreboard values methods
     private string Get_ShotsFired()
     {
-        return ShotsFired.text = values.ShotsFired.ToString();
+        return values.ShotsFired.ToString();
     }
     private string Get_ShotsHit()
     {
-        return ShotsHit.text = values.ShotsHit.ToString();
+        return values.ShotsHit.ToString();
     }
     private string Get_Accuracy()
     {
         if (values.ShotsFired > 0 && values.ShotsHit > 0)
-            return Accuracy.text = (Utility.FloorFloat_TwoDigits(values.ShotsHit / values.ShotsFired) * 100f).ToString();
+            return (Utility.FloorFloat_TwoDigits(values.ShotsHit / values.ShotsFired) * 100f).ToString() + " %";
         else
-            return Accuracy.text = "Invalid values";
+            return "Invalid values";
     }
     private string Get_PointsPerKill()
     {
         if (values.CurrentScore_Value > 0 && values.Kills > 0)
-            return PointsPerKill.text = Utility.FloorFloat_TwoDigits(values.CurrentScore_Value / values.Kills).ToString();
+            return Utility.FloorFloat_TwoDigits(values.CurrentScore_Value / values.Kills).ToString();
         else
-            return PointsPerKill.text = "Invalid values";
+            return "Invalid values";
     }
     private string Get_PointsPerHit()
     {
         if (values.CurrentScore_Value > 0 && values.ShotsHit > 0)
-            return PointsPerHit.text = Utility.FloorFloat_TwoDigits(values.CurrentScore_Value / values.ShotsHit).ToString();
+            return Utility.FloorFloat_TwoDigits(values.CurrentScore_Value / values.ShotsHit).ToString();
         else
-            return PointsPerHit.text = "Invalid Values";
+            return "Invalid Values";
     }
     private string Get_Kills()
     {
-        return Kills.text = values.Kills.ToString();
+        return values.Kills.ToString();
+    }
+    private string Get_OnBeatActions()
+    {
+        return values.OnBeatActions.ToString();
     }
     private string Get_YourScore()
     {

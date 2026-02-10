@@ -155,6 +155,7 @@ public class PlayerMovement_New : MonoBehaviour
             //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
+                values.OnBeatActions++;
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 values.LastActionOnBeat_Bool = true;
             }
@@ -273,6 +274,7 @@ public class PlayerMovement_New : MonoBehaviour
         {
             if (controller.IsOnBeat == true)
             {
+                values.OnBeatActions++;
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 values.LastActionOnBeat_Bool = true;
             }

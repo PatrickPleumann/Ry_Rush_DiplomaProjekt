@@ -91,6 +91,7 @@ public class PlayerAim : MonoBehaviour
     {
         if (controller.IsOnBeat == true)
         {
+            values.OnBeatActions++;
             values.LastActionOnBeat_Bool = true;
             values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference Aim;
     [SerializeField] private InputActionReference SlowMotion;
     [SerializeField] private InputActionReference Reload;
+    [SerializeField] private InputActionReference Esc;
 
     [Space]
 
@@ -37,9 +39,11 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public UnityEvent onSlowMotion_started;
     [HideInInspector] public UnityEvent onSlowMotion_canceled;
+
     [HideInInspector] public UnityEvent onReload_started;
     [HideInInspector] public UnityEvent onReload_Finished;
 
+    [HideInInspector] public UnityEvent onEsc_started;
 
     [Space]
 
@@ -95,7 +99,11 @@ public class PlayerController : MonoBehaviour
         SlowMotion.action.canceled += ProcessSlowMotionInput;
 
         Reload.action.started += ProcessReloadInput;
+
+        Esc.action.started += ProcessEscInput;
     }
+
+
 
     private void OnDisable()
     {
@@ -116,6 +124,8 @@ public class PlayerController : MonoBehaviour
         SlowMotion.action.canceled -= ProcessSlowMotionInput;
 
         Reload.action.started -= ProcessReloadInput;
+
+        Esc.action.started -= ProcessEscInput;
     }
 
     private void Start()
@@ -159,6 +169,7 @@ public class PlayerController : MonoBehaviour
             onReload_started.Invoke();
             if (IsOnBeat == true)
             {
+                values.OnBeatActions++;
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
                 values.LastActionOnBeat_Bool = true;
             }
@@ -191,6 +202,10 @@ public class PlayerController : MonoBehaviour
         if (values.AllowInput_Bool == true && ctx.started == true)
             onDashInvoked_started.Invoke();
         }
+    private void ProcessEscInput(InputAction.CallbackContext context)
+    {
+        onEsc_started.Invoke();
+    }
     #endregion
     private void GetMoveDirection()
     {
@@ -203,6 +218,7 @@ public class PlayerController : MonoBehaviour
             moveDirection = Orientation.forward * moveInput.z + Orientation.right * moveInput.x;
         }
     }
+
     private IEnumerator LastActionOnBeatTimer()
     {
         LastActionOnBeat = true;
@@ -210,7 +226,6 @@ public class PlayerController : MonoBehaviour
         LastActionOnBeat = false;
         yield return new WaitForEndOfFrame();
     } //TODO: Check if necessary
-
     private IEnumerator ShootTimer()
     {
         canShoot = false;
