@@ -20,8 +20,9 @@ MonoBehaviour:
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  LastActionOnBeat_Bool: 0
   currentCombo_MaxValue: 5
-  currentCombo_Value: 1
+  currentCombo_Value: 0
   CurrentCombo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -34,6 +35,8 @@ MonoBehaviour:
   CurrentAmmo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  hitsOnEnemy: 0
+  shotsFired: 0
   currentScore_Value: 0
   CurrentScore_OnValueChanged:
     m_PersistentCalls:

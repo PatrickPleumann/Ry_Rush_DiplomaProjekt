@@ -41,7 +41,7 @@ public class PlayerShooting : MonoBehaviour
         if (controller.IsOnBeat == true)
         {
             values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
-            controller.LastActionOnBeat = true;
+            values.LastActionOnBeat_Bool = true;
             onBeat = true;
         }
 

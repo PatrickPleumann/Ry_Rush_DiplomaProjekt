@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovement_New movement;
     [SerializeField] private PlayerDash playerDash;
     [SerializeField] private BeatTracking beat;
-    [SerializeField] public Scoreboard_UI scoreboard;
+    [SerializeField] private CentralizedValues values;
 
     [Space]
 
@@ -155,6 +155,11 @@ public class PlayerController : MonoBehaviour
         {
             isReloading = true;
             onReload_started.Invoke();
+            if (IsOnBeat == true)
+            {
+                values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
+                values.LastActionOnBeat_Bool = true;
+            }
         }
     }
 

@@ -48,16 +48,16 @@ public class EnemySpawnLogic : MonoBehaviour
             var spawnPoint = allSpawnpoints.Dequeue();
             if (CheckIfSpawnPointIsBehindPlayer(spawnPoint) == true)
             {
+                spawnPoint.TryGetComponent(out EnemySpawnPoint spawn);
                 var temp = enemyObjectPool.DeQueueObject();
-                temp.transform.position = spawnPoint.transform.position;
-                temp.SetActive(true);
+                spawn.OnSpawn(temp);
                 currentEnemyCount++;
             }
             allSpawnpoints.Enqueue(spawnPoint);
         }
     }
 
-    private bool CheckIfSpawnPointIsBehindPlayer(GameObject _spawnPoint)
+    private bool CheckIfSpawnPointIsBehindPlayer(GameObject _spawnPoint) // change this to near player
     {
         if (Vector3.Dot((_spawnPoint.transform.position - playerTransform.position).normalized, playerTransform.forward) < 0)
         {

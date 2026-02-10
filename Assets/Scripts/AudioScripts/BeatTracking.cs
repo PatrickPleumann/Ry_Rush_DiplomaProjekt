@@ -12,6 +12,7 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public AudioSource source;
     [SerializeField] private SongData songData;
     [SerializeField] private GameObject SCOREBOARD;
+    [SerializeField] private CentralizedValues values;
 
     [Header("Gameplay Values")]
     [SerializeField] private float timeTillSongStarts = 3f;
@@ -24,6 +25,7 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] private int estimatedBeatsPerTrack = 9; // dirty magic number just for additional saftey, gets overwritten anyway
     [SerializeField] private int remainingBeatsBeforeGameEnds = 8; //hard coded but depends on the fadeout of the song when it ends
     [SerializeField] private int currentBeatsInTrack = 0;
+
     [Header("Properties")]
     public int CurrentBeatsInTrack
     {
@@ -46,7 +48,7 @@ public class BeatTracking : MonoBehaviour
     [SerializeField] public float beatOffsetMultiplier;
     [SerializeField] public int samplesPerBeat = 0;
     [SerializeField] public float bpm = 0f;
-    [SerializeField] public float lastActionOnBeatTimer; // into CV_SO
+
 
     public int currentSamples = 0;
     public int currentTimeSamplesMin = 0;
@@ -60,7 +62,7 @@ public class BeatTracking : MonoBehaviour
     public int samplesPerBeat_UI = 0; // into CV_SO
 
     public int lastActionOnBeatCounter = 0; // into CV_SO
-    public bool lastActionOnBeat = false; // into CV_SO
+
 
     [SerializeField] private int ComboOvershootValue = 3;
     private bool songStarted = false;
@@ -138,13 +140,19 @@ public class BeatTracking : MonoBehaviour
         {
             currentSamples -= samplesPerBeat;
             onBeatInvoke.Invoke();
-            CurrentBeatsInTrack = currentBeatsInTrack + 1; // maybe important to set some default values
+            CurrentBeatsInTrack = CurrentBeatsInTrack + 1; //it doesn´t seem that CurrentBeatsInTrack++ works as expected with the property
 
-            if (controller.LastActionOnBeat == true)
-                controller.LastActionOnBeat = false;
+            if (values.LastActionOnBeat_Bool == false)
+            {
+                if (values.CurrentComboOvershoot_Value > 0)
+                    values.CurrentComboOvershoot_Value = values.CurrentComboOvershoot_Value - 1;
 
-            else if (controller.LastActionOnBeat == false)
-                scoreboard.DecreaseComboCounter();
+                else
+                    values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
+            }
+
+            else
+                values.LastActionOnBeat_Bool = false;
         }
 
         if ((currentSamples_UI / samplesPerBeat_UI) >= 1) // for testing // maybe a second logic for a second visualizer 
@@ -191,9 +199,9 @@ public class BeatTracking : MonoBehaviour
     private void SongEnds()
     {
         songStarted = false;
-        
+
         source.Stop();
         SCOREBOARD.SetActive(true);
-        Debug.Log("GAME OVER");    
+        Debug.Log("GAME OVER");
     }
 }

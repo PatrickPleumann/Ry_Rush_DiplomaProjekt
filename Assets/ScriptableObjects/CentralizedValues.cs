@@ -16,6 +16,9 @@ public class CentralizedValues : ScriptableObject
         CurrentComboOvershoot_Value = 0;
         CurrentScore_Value = 0;
         currentSamples_UI = 0;
+
+        hitsOnEnemy = 0;
+        shotsFired = 0;
     }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
@@ -42,6 +45,7 @@ public class CentralizedValues : ScriptableObject
 
     [Space]
     [Header("Beattracking Values")]
+
     [SerializeField] private int currentSamples_UI;
     [HideInInspector] public UnityEvent<int> CurrentSamples_OnValueChanged;
     public int CurrentSamples_Value
@@ -52,30 +56,39 @@ public class CentralizedValues : ScriptableObject
             if (currentSamples_UI != value)
             {
                 currentSamples_UI = value;
-                CurrentSamples_OnValueChanged.Invoke(currentSamples_UI);
             }
+            CurrentSamples_OnValueChanged.Invoke(currentSamples_UI);
         }
     }
 
     [Space]
+
+    [HideInInspector] public UnityAction decreaseCombo;
+    public bool LastActionOnBeat_Bool = false;
+
+    [Space]
     [Header("Ingame UI")]
+
     [SerializeField] public int currentCombo_MaxValue;
     [SerializeField] private int currentCombo_Value;
     [HideInInspector] public UnityEvent<int> CurrentCombo_OnValueChanged;
     public int CurrentCombo_Value
     {
-        get => currentCombo_Value;
+        get => currentCombo_Value; // muhahaha
         set
         {
-            if (currentCombo_Value != value && value <= currentCombo_MaxValue && value > 0)
-            {
+            if (currentCombo_Value != value && value <= currentCombo_MaxValue && value > 0 && CurrentComboOvershoot_Value <= 0)
                 currentCombo_Value = value;
-            }
-            CurrentCombo_OnValueChanged.Invoke(currentCombo_Value);
+
+            else if (currentCombo_Value == currentCombo_MaxValue && CurrentComboOvershoot_Value < ComboMaxOvershoot)
+                CurrentComboOvershoot_Value = CurrentComboOvershoot_Value + 1;
+
+            CurrentCombo_OnValueChanged.Invoke(CurrentCombo_Value);
         }
     }
 
     [Space]
+
     [SerializeField] public int ComboMaxOvershoot;
     [SerializeField] private int currentComboOvershoot;
     [HideInInspector] public UnityEvent<int> ComboOvershoot_OnValueChanged;
@@ -85,15 +98,13 @@ public class CentralizedValues : ScriptableObject
         set
         {
             if (currentComboOvershoot != value && value <= ComboMaxOvershoot)
-            {
                 currentComboOvershoot = value;
-                ComboOvershoot_OnValueChanged.Invoke(currentComboOvershoot);
-            }
         }
     }
 
     [Space]
     [Header("Ammo Values")]
+
     [SerializeField] private int currentAmmo;
     [HideInInspector] public UnityEvent<int> CurrentAmmo_OnValueChanged;
     public int CurrentAmmo_Value
@@ -111,6 +122,12 @@ public class CentralizedValues : ScriptableObject
 
     [Space]
     [Header("Score Values")]
+
+    [SerializeField] public int hitsOnEnemy = 0;
+    [SerializeField] public int shotsFired = 0;
+
+
+
     [SerializeField] private float currentScore_Value;
     [HideInInspector] public UnityEvent<float> CurrentScore_OnValueChanged;
     public float CurrentScore_Value

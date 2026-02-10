@@ -23,54 +23,49 @@ public class Scoreboard_UI : MonoBehaviour
     [SerializeField] public float maxCombo = 5;
     [SerializeField] public float maxOvershoot = 0; // maximum missed beats till combo counter decreases on it´s own
     [Space]
-    public bool lastActionOnBeat;
 
     private float currentScore = 0;
     private void OnEnable()
     {
-        values.CurrentScore_OnValueChanged.AddListener(IncreaseScore);
-        values.CurrentCombo_OnValueChanged.AddListener(IncreaseComboCounter);
+        values.CurrentScore_OnValueChanged.AddListener(ShowScore);
+        values.CurrentCombo_OnValueChanged.AddListener(ComboCounter_TextShift);
+        //values.decreaseCombo += DecreaseComboCounter;
     }
 
-    private void ComboCounterShapeShift(int _value)
+    private void OnDisable()
+    {
+        values.CurrentScore_OnValueChanged.RemoveListener(ShowScore);
+        values.CurrentCombo_OnValueChanged.RemoveListener(ComboCounter_TextShift);
+        //values.decreaseCombo -= DecreaseComboCounter;
+    }
+    private void ComboCounter_TextShift(int _value)
     {
         if (comboCounterOvershoot.activeSelf == false && _value >= values.currentCombo_MaxValue && values.CurrentComboOvershoot_Value > 0)
         {
             comboCounterNormal.SetActive(false);
             comboCounterOvershoot.SetActive(true);
-            comboCounter_Overshoot.text = comboCounter_Text;
-
+            comboCounter_Overshoot.text = comboCounter_Text + _value;
         }
+
         else if (values.CurrentCombo_Value < values.currentCombo_MaxValue)
         {
             comboCounterOvershoot.SetActive(false);
             comboCounterNormal.SetActive(true);
-            comboCounter_Normal.text = comboCounter_Text;
+            comboCounter_Normal.text = comboCounter_Text + _value;
         }
     }
 
     private void Start()
     {
-        comboCounter_Text = "Combo Counter: " + values.CurrentCombo_Value;
+        comboCounter_Text = "Combo Counter: "; 
         score.text = "Score: " + values.CurrentScore_Value;
         comboCounter_Normal.text = comboCounter_Text;
     }
-    public void IncreaseComboCounter(int _value)
-    {
-        //if (currentCombo < maxCombo && currentOvershoot == 0)
-        //    currentCombo++;
 
-        //else if (currentOvershoot < maxOvershoot && currentCombo == maxCombo)
-        //    currentOvershoot++;
-        ComboCounterShapeShift(_value);
-
-        comboCounter_Text = "Combo Counter: " + _value;
-    }
-
-    public void DecreaseComboCounter()
+    private void DecreaseComboCounter()
     {
         if (values.CurrentComboOvershoot_Value > 0 && values.CurrentCombo_Value == values.currentCombo_MaxValue)
-            values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
+            values.CurrentComboOvershoot_Value = values.CurrentComboOvershoot_Value - 1;
 
         else if (values.CurrentComboOvershoot_Value <= 0 && values.CurrentCombo_Value > 1)
             values.CurrentCombo_Value = values.CurrentCombo_Value - 1;
@@ -78,8 +73,13 @@ public class Scoreboard_UI : MonoBehaviour
         comboCounter_Text = "Combo Counter: " + values.CurrentCombo_Value;
     }
 
-    public void IncreaseScore(float _points)
+    private void ShowScore(float _value)
     {
-        score.text = "Score: " + currentScore;
+        score.text = "Score: " + _value;
+    }
+
+    private void ShowComboCounter(int _value)
+    {
+        comboCounter_Normal.text = "Combo Counter: " + _value;
     }
 }

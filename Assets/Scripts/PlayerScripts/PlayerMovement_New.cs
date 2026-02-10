@@ -153,7 +153,7 @@ public class PlayerMovement_New : MonoBehaviour
             if (controller.IsOnBeat == true)
             {
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
-                controller.LastActionOnBeat = true;
+                values.LastActionOnBeat_Bool = true;
             }
             collisionCheck.canJump = false;
             collisionCheck.exitingSlope = true;
@@ -271,7 +271,7 @@ public class PlayerMovement_New : MonoBehaviour
             if (controller.IsOnBeat == true)
             {
                 values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
-                controller.LastActionOnBeat = true;
+                values.LastActionOnBeat_Bool = true;
             }
             collisionCheck.exitingWall = true;
             StartCoroutine(ExitWallTimer());

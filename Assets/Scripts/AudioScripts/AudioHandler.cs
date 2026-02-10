@@ -9,6 +9,7 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
     [SerializeField] private AudioSource sourceActionAmbience;
+    [SerializeField] private AudioSource sourceActionAmbience2;
 
     [Header("Audio Sources Volumes")]
     [SerializeField] private float sourceShooting_Volume;
@@ -41,6 +42,8 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip scoreboard_Hit;
     [SerializeField] public AudioClip scoreboard_Hit2;
 
+    [Header("Spawn Sound")]
+    [SerializeField] public AudioClip spawnBeamSound;
 
     public static AudioHandler Instance;
 
@@ -94,5 +97,11 @@ public class AudioHandler : MonoBehaviour
     {
         sourceActionAmbience.clip = _clip;
         sourceActionAmbience.Play();
+    }
+
+    public void PlayActionAmbience_2_Sounds(AudioClip _clip)
+    {
+        sourceActionAmbience2.clip = _clip;
+        sourceActionAmbience2.Play();
     }
 }
