@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SongData
   m_EditorClassIdentifier: Assembly-CSharp::SongData
   songName: 
-  AsyncSamplesValue: -10000
+  AsyncSamplesValue: -12000
   BeatMultiplier: 1
   BPM: 103
   SamplesPerBeat: 25689

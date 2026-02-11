@@ -146539,7 +146539,7 @@ MonoBehaviour:
   sourceActionAmbience2: {fileID: 1719669139}
   sourceShooting_Volume: 0.1
   sourcePlayerMovement_Volume: 0.1
-  sourceActionAmbience_Volume: 0.05
+  sourceActionAmbience_Volume: 0.1
   playerAim: {fileID: 0}
   playerShoot: {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
   playerShootCharged: {fileID: 8300000, guid: 6a32a0d49cd240b4cb9934adf37a49a5, type: 3}

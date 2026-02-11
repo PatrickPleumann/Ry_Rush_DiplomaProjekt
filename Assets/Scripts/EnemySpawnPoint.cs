@@ -6,7 +6,7 @@ public class EnemySpawnPoint : MonoBehaviour
     [SerializeField] private float timeTillSpawn;
     [SerializeField] private ObjectPoolBehaviour vfx_objectPool;
 
-    public void OnSpawn(GameObject _enemyPrefab)
+    public void OnRespawn(GameObject _enemyPrefab) // on spawn only to respawn enemys. Initial Enemys Spawning without vfx
     {
         StartCoroutine(SpawnpointBehaviour(timeTillSpawn, _enemyPrefab));
     }
