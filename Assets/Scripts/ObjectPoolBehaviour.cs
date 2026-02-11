@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class ObjectPoolBehaviour : MonoBehaviour
@@ -9,9 +10,7 @@ public class ObjectPoolBehaviour : MonoBehaviour
     private void Awake()
     {
         if (objectToPool != null)
-        {
             InitObjectPool();
-        }
     }
 
     public void EnqueueObject(GameObject _objectToPool)
@@ -19,6 +18,7 @@ public class ObjectPoolBehaviour : MonoBehaviour
         var isValid = _objectToPool.TryGetComponent(out ISetDefaultValues temp);
         if (isValid)
         {
+            _objectToPool.SetActive(false); 
             temp.SetDefaultValues();
             objectPool.Enqueue(_objectToPool);
         }

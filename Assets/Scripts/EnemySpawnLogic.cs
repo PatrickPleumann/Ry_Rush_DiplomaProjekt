@@ -1,35 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class EnemySpawnLogic : MonoBehaviour
 {
+    [SerializeField] private CentralizedValues values;
     [SerializeField] private ObjectPoolBehaviour enemyObjectPool;
-    [SerializeField] private Queue<GameObject> allSpawnpoints;
+    [SerializeField] public Queue<GameObject> allSpawnpoints;
     [SerializeField] private Transform playerTransform;
+    [SerializeField][Range(3f,5f)] private float minSpawnDistanceToPlayer;
+    [SerializeField][Range(10f, 20f)] private float maxSpawnDistanceToPlayer;
+
     [SerializeField] private int EnemiesCountOnStart;
 
-    public static UnityEvent enemyCountReduced;
-    private int currentEnemyCount;
-     
+    private void Awake()
+    {
+        
+    }
     private void OnEnable()
     {
-        currentEnemyCount = 0;
         allSpawnpoints = new();
-        InitSpawnpointPool();
-        //StartCoroutine(SpawnEnemys(EnemiesCountOnStart));
-        if (currentEnemyCount < EnemiesCountOnStart)
-        {
-            SpawnEnemy();
-        }
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (currentEnemyCount < EnemiesCountOnStart)
+        //values.EnemyCount_onValueChanged.RemoveListener(SpawnEnemy);
+    }
+
+    private void Start()
+    {
+        InitSpawnpointPool();
+
+        for (int i = 0; i < EnemiesCountOnStart; i++)
         {
-            SpawnEnemy();
+            var temp = allSpawnpoints.Dequeue();
+            temp.TryGetComponent(out EnemySpawnPoint spawn);
+            spawn.SpawnEnemy(enemyObjectPool.DeQueueObject());
+            allSpawnpoints.Enqueue(temp);
         }
     }
 
@@ -40,26 +49,37 @@ public class EnemySpawnLogic : MonoBehaviour
             allSpawnpoints.Enqueue(transform.GetChild(i).gameObject);
         }
     }
-    public void SpawnEnemy()
+    public void SpawnEnemy(int _currentEnemys)
     {
-        if (enemyObjectPool.objectPool.Count > 0)
+        Debug.Log("Try to spawn enemy");
+        if ((_currentEnemys < EnemiesCountOnStart) && (enemyObjectPool.objectPool.Count > 0))
         {
-
             var spawnPoint = allSpawnpoints.Dequeue();
-            if (CheckIfSpawnPointIsBehindPlayer(spawnPoint) == true)
+            Debug.Log("Try to get valid spawn point");
+            if (CheckSpawnDistanceToPlayer(spawnPoint) == true)
             {
                 spawnPoint.TryGetComponent(out EnemySpawnPoint spawn);
                 var temp = enemyObjectPool.DeQueueObject();
+                Debug.Log("Try to spawn enemy with vfx");
                 spawn.OnSpawn(temp);
-                currentEnemyCount++;
+                values.EnemysAliveCount = values.EnemysAliveCount + 1;
             }
             allSpawnpoints.Enqueue(spawnPoint);
         }
     }
 
-    private bool CheckIfSpawnPointIsBehindPlayer(GameObject _spawnPoint) // change this to near player
+    private bool CheckSpawnDistanceToPlayer(GameObject _spawnPoint) // change this to near player
     {
-        if (Vector3.Dot((_spawnPoint.transform.position - playerTransform.position).normalized, playerTransform.forward) < 0)
+        var min = minSpawnDistanceToPlayer * minSpawnDistanceToPlayer;
+        var max = maxSpawnDistanceToPlayer * maxSpawnDistanceToPlayer;
+        var temp = _spawnPoint.transform.position - playerTransform.transform.position;
+        var sqrAbs = Mathf.Abs(temp.sqrMagnitude);
+
+        //if (Vector3.Dot((_spawnPoint.transform.position - playerTransform.position).normalized, playerTransform.forward) > 0)
+        //{
+        //    return true;
+        //}
+        if (sqrAbs > min && sqrAbs < max)
         {
             return true;
         }
