@@ -80,7 +80,7 @@ MonoBehaviour:
   initalPoints: 500
   allRagdollRigidbodies: []
   EnemyDirSmoothSpeed: 1.5
-  despawnTimer: 2
+  despawnTimer: 3
   canChase: 1
   EnemyHealth: 100
   enemyIsDead: 0

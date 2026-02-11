@@ -13,6 +13,7 @@ public class EnemySpawnPoint : MonoBehaviour
 
     private IEnumerator SpawnpointBehaviour(float _timeTillSpawn, GameObject _enemyPrefab)
     {
+        Debug.Log("Spawn enemy with vfx effect");
         SpawnVFXEffect();
 
         yield return new WaitForSeconds(_timeTillSpawn);
@@ -22,7 +23,7 @@ public class EnemySpawnPoint : MonoBehaviour
         yield return null;
     }
 
-    private void SpawnEnemy(GameObject _enemyPrefab)
+    public void SpawnEnemy(GameObject _enemyPrefab)
     {
         _enemyPrefab.transform.position = gameObject.transform.position;
         _enemyPrefab.SetActive(true);

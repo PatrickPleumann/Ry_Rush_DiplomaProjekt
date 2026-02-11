@@ -25,6 +25,8 @@ public class CentralizedValues : ScriptableObject
         AllowInput_Bool = true;
 
         TimeBetweenBeats = 0f;
+
+        enemysAliveCount = 0;
     }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
@@ -153,7 +155,26 @@ public class CentralizedValues : ScriptableObject
         }
     }
 
+    [Header("Ingame Values")]
+    [SerializeField] private int enemysAliveCount;
+    [HideInInspector] public UnityEvent<int> EnemyCount_onValueChanged;
+    public int EnemysAliveCount
+    {
+        get => enemysAliveCount;
+        set 
+        {
+            if (enemysAliveCount != value)
+            {
+                enemysAliveCount = value;
+                EnemyCount_onValueChanged.Invoke(enemysAliveCount);
+            }
+        }
+    }
+
+
+
     [Space]
     [Header("Game Manager")]
     [HideInInspector] public UnityAction onSessionEnds;
+
 }

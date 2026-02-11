@@ -117,7 +117,8 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     {
         values.Kills++;
         enemyIsDead = true;
-        SetDefaultValues();
+        values.EnemysAliveCount = values.EnemysAliveCount - 1;
+        //SetDefaultValues();
         ActivateRagdoll();
         //SetActive Ragdoll, SetInactiveAgent & apply force to last hit.point
         CalculatePoints();
