@@ -46,6 +46,7 @@ public class UI_HighscoreBoard : MonoBehaviour
 
     private IEnumerator ShowHighscoreScreen(float _timeBetween)
     {
+        //increase volume here to roughly math song volume
         yield return new WaitForSeconds(_timeBetween * 2);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsFired.text = Get_ShotsFired();

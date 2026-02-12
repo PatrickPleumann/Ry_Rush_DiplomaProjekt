@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Design;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class SpawnManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private CentralizedValues values;
     [SerializeField] private ObjectPoolBehaviour enemyObjPool;
     [SerializeField] private ObjectPoolBehaviour vfxObjPool;
     [SerializeField] private Transform playerTransform;
-    [SerializeField] private float timeBetweenVFXAndEnemySpawn = 1;
+    [SerializeField] private EnemySpawnLogic spawns;
+
+    [Header("Adjustable Values")]
     [SerializeField][Range(3f, 5f)] private float minSpawnDistanceToPlayer;
     [SerializeField][Range(10f, 20f)] private float maxSpawnDistanceToPlayer;
+    [SerializeField] private float timeBetweenVFXAndEnemySpawn = 1;
+    [SerializeField] private int EnemyCountOnGameStart;
 
-    [SerializeField] private EnemySpawnLogic spawns;
- 
+    [Header("Nice to know values")]
+    [SerializeField] private float min;
+    [SerializeField] private float max;
+    [SerializeField] private Vector3 sqrMagnitude;
 
+    private Coroutine spawnCoroutine;
     private void OnDisable()
     {
         values.EnemyCount_onValueChanged.RemoveListener(ValidateRespawnAction);
@@ -24,13 +34,42 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        //spawn 30
+        min = minSpawnDistanceToPlayer * minSpawnDistanceToPlayer;
+        max = maxSpawnDistanceToPlayer * maxSpawnDistanceToPlayer;
+
+        values.EnemysAliveCount = 0;
+        SpawnEnemysOnGameStart();
+
         values.EnemyCount_onValueChanged.AddListener(ValidateRespawnAction);
+    }
+
+    private void SpawnEnemysOnGameStart()
+    {
+        for (int i = 0; i < EnemyCountOnGameStart; i++)
+        {
+            GameObject tempSpawn;
+            GameObject tempEnemy;
+            if (spawns.allSpawnpoints != null)
+                tempSpawn = spawns.allSpawnpoints.Dequeue();
+
+            else break;
+
+            if (enemyObjPool.objectPool != null)
+                tempEnemy = enemyObjPool.DeQueueObject();
+
+            else break;
+
+            tempEnemy.transform.position = tempSpawn.transform.position;
+            tempEnemy.SetActive(true);
+            spawns.allSpawnpoints.Enqueue(tempSpawn);
+
+            values.EnemysAliveCount = values.EnemysAliveCount + 1; // Spawn Enemy on value changed subscribes after this method is finished
+        }
     }
 
     private void ValidateRespawnAction(int _enemyCount)
     {
-        if (_enemyCount >= 30)
+        if (_enemyCount >= EnemyCountOnGameStart)
             return;
 
         for (int i = 0; i < spawns.allSpawnpoints.Count; i++)
@@ -39,11 +78,14 @@ public class SpawnManager : MonoBehaviour
             if (CheckSpawnDistanceToPlayer(spawnpoint))
             {
                 StartCoroutine(OnValidate_RespawnEnemy(spawnpoint));
-                Debug.Log("Nach Coroutine");
+                Debug.Log("Respawn in progress");
                 break;
             }
             else
+            {
+                spawns.allSpawnpoints.Enqueue(spawnpoint);
                 continue;
+            }
         }
     }
 
@@ -53,10 +95,15 @@ public class SpawnManager : MonoBehaviour
         GameObject _enemy = OnValidate_GetEnemyPrefab();
 
         if (_vfx == null || _enemy == null)
+        {
+            spawns.allSpawnpoints.Enqueue(_spawn);
             yield break;
+        }
 
+        _vfx.TryGetComponent(out ParticleSystem vfx_Effect);
         _vfx.transform.position = _spawn.transform.position;
         _vfx.SetActive(true);
+        vfx_Effect.Play();
 
         yield return new WaitForSeconds(timeBetweenVFXAndEnemySpawn);
 
@@ -64,10 +111,11 @@ public class SpawnManager : MonoBehaviour
         _enemy.SetActive(true);
 
         spawns.allSpawnpoints.Enqueue(_spawn);
+
+        yield return new WaitForSeconds(1);
+        vfxObjPool.EnqueueObject(_vfx);
+
         values.EnemysAliveCount = values.EnemysAliveCount + 1; //TODO: dangerous
-
-        Debug.Log("In Coroutine");
-
         yield return new WaitForEndOfFrame();
     }
 
@@ -91,14 +139,11 @@ public class SpawnManager : MonoBehaviour
 
     private bool CheckSpawnDistanceToPlayer(GameObject _spawnPoint) // change this to near player
     {
-        var min = minSpawnDistanceToPlayer * minSpawnDistanceToPlayer;
-        var max = maxSpawnDistanceToPlayer * maxSpawnDistanceToPlayer;
-        var temp = _spawnPoint.transform.position - playerTransform.transform.position;
-        var sqrAbs = Mathf.Abs(temp.sqrMagnitude);
+        sqrMagnitude = _spawnPoint.transform.position - playerTransform.transform.position;
 
-        if (sqrAbs > min && sqrAbs < max)
+        if (sqrMagnitude.sqrMagnitude > min && sqrMagnitude.sqrMagnitude < max)
         {
-            return true;
+            return true;    
         }
         return false;
     }

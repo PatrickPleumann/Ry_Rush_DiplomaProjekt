@@ -15,13 +15,8 @@ public class ObjectPoolBehaviour : MonoBehaviour
 
     public void EnqueueObject(GameObject _objectToPool)
     {
-        var isValid = _objectToPool.TryGetComponent(out ISetDefaultValues temp);
-        if (isValid)
-        {
-            _objectToPool.SetActive(false); 
-            temp.SetDefaultValues();
-            objectPool.Enqueue(_objectToPool);
-        }
+        _objectToPool.SetActive(false);
+        objectPool.Enqueue(_objectToPool);
     }
 
     public GameObject DeQueueObject()
