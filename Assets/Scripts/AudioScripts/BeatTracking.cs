@@ -139,7 +139,7 @@ public class BeatTracking : MonoBehaviour
         if ((currentSamples / samplesPerBeat) >= 1)
         {
             currentSamples -= samplesPerBeat;
-            onBeatInvoke.Invoke();
+            //onBeatInvoke.Invoke();
             CurrentBeatsInTrack = CurrentBeatsInTrack + 1; //it doesn´t seem that CurrentBeatsInTrack++ works as expected with the property
 
             if (values.LastActionOnBeat_Bool == false)

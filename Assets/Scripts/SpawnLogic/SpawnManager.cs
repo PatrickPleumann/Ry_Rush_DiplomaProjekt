@@ -26,7 +26,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float max;
     [SerializeField] private Vector3 sqrMagnitude;
 
-    private Coroutine spawnCoroutine;
     private void OnDisable()
     {
         values.EnemyCount_onValueChanged.RemoveListener(ValidateRespawnAction);
