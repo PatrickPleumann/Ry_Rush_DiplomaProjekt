@@ -26,15 +26,7 @@ public class UI_BeatVisualizer : MonoBehaviour
     private float leftValue;
 
     private float valuePerSample;
-    //private void OnEnable()
-    //{
-    //    beatTracking.onBeatInvoke += PulseToBeat;
-    //}
 
-    //private void OnDisable()
-    //{
-    //    beatTracking.onBeatInvoke -= PulseToBeat;
-    //}
     private void Start()
     {
         rightValue = RightBeatVisualizer.rectTransform.localPosition.x;

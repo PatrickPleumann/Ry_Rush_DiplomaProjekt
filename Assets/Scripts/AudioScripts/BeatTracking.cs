@@ -71,7 +71,7 @@ public class BeatTracking : MonoBehaviour
 
     private void Awake()
     {
-        values.SetDefaultValues();
+        
         destPath = Application.persistentDataPath + "/";
         source = GetComponent<AudioSource>();
 
@@ -97,6 +97,7 @@ public class BeatTracking : MonoBehaviour
     }
     private void GetEstimatesBeatsPerTrack() // works
     {
+
         if (source.clip != null)
         {
             var temp = source.clip.length;

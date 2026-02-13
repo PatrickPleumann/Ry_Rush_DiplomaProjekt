@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +9,7 @@ using UnityEngine.UI;
 
 public class ChooseSongManager : MonoBehaviour
 {
+    [SerializeField] private CentralizedValues values;
     [SerializeField] private Button startGame_Button;
     [SerializeField] private Button return_Button;
     [SerializeField] private Button confirmSong_Button;
@@ -37,6 +37,7 @@ public class ChooseSongManager : MonoBehaviour
         chooseYourSong_Dropdown.onValueChanged.AddListener(TryFindSongByFileNameInSongDataDictionary);
         resetSong_Button.onClick.AddListener(ResetSong);
         return_Button.onClick.AddListener(ClearDropdownMenu);
+        startGame_Button.onClick.AddListener(OnStartGameButton_Clicked);
 
         GetDataFromPersistentFolder();
         TryGetValuesFromSongDataDictionary();
@@ -118,20 +119,21 @@ public class ChooseSongManager : MonoBehaviour
         confirmSong_Button.onClick.RemoveListener(ConfirmSongChoice);
         chooseYourSong_Dropdown.onValueChanged.RemoveListener(TryGetValuesFromSongDataDictionary);
         resetSong_Button.onClick.RemoveListener(ResetSong);
+        startGame_Button.onClick.RemoveListener(OnStartGameButton_Clicked);
     }
 
     private void OnStartGameButton_Clicked()
     {
+        values.SetDefaultValues();
         StartCoroutine(OnStartGame(timeTillGameStarts));
     }
 
     private IEnumerator OnStartGame(float _timeTillGameStarts)
     {
-
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
-        yield return new WaitForSeconds(_timeTillGameStarts);
         SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
+        yield break;
     }
 
 

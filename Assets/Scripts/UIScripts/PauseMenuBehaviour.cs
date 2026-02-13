@@ -50,6 +50,7 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     private void OnMainMenuButton_Clicked()
     {
+        values.SetDefaultValues();
         fadeOut_BG.SetActive(true);
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);

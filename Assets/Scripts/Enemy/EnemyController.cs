@@ -178,7 +178,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     {
         yield return new WaitForSeconds(despawnTimer);
 
-        if (Pool != null)
+       if (Pool != null)
             Pool.EnqueueObject(gameObject);
 
         else
