@@ -81,6 +81,8 @@ public class BeatTracking : MonoBehaviour
         samplesPerBeat = songData.SamplesPerBeat;
         asyncValue = songData.AsyncSamplesValue;
 
+        values.AllowInput_Bool = true;
+
         onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
     }

@@ -12,9 +12,6 @@ public class PauseMenuBehaviour : MonoBehaviour
  
     [SerializeField] private Button resume_Button;
     [SerializeField] private Button mainMenu_Button;
-
-    private float currentTimeScale;
-
     private void OnEnable()
     {
         resume_Button.onClick.AddListener(OnResumeButton_Clicked);
@@ -40,7 +37,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 0f; // very slow while pause menu is active
+            Time.timeScale = 0f; 
             Cursor.lockState = CursorLockMode.None;
             values.AllowInput_Bool = false;
             pauseMenu.SetActive(true);
@@ -50,6 +47,7 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     private void OnMainMenuButton_Clicked()
     {
+        Time.timeScale = 1f;
         values.SetDefaultValues();
         fadeOut_BG.SetActive(true);
         var temp = SceneManager.GetActiveScene();

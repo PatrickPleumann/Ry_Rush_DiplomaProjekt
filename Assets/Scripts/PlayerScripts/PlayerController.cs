@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerMovement_New movement;
-    [SerializeField] private PlayerDash playerDash;
     [SerializeField] private BeatTracking beat;
     [SerializeField] private CentralizedValues values;
 
@@ -102,8 +101,6 @@ public class PlayerController : MonoBehaviour
 
         Esc.action.started += ProcessEscInput;
     }
-
-
 
     private void OnDisable()
     {

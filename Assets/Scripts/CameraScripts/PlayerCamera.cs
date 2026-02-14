@@ -30,11 +30,8 @@ public class PlayerCamera : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (values.AllowInput_Bool == true)
-        {
-            UpdateCamera();
-            UpdateRotation();
-        }
+        UpdateCamera();
+        UpdateRotation();
     }
 
     private void UpdateCamera()

@@ -124,6 +124,7 @@ public class ChooseSongManager : MonoBehaviour
 
     private void OnStartGameButton_Clicked()
     {
+        values.AllowInput_Bool = false;
         values.SetDefaultValues();
         StartCoroutine(OnStartGame(timeTillGameStarts));
     }
