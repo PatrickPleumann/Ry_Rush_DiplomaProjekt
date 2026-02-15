@@ -29,10 +29,11 @@ public class AudioHandler : MonoBehaviour
 
 
     [Header("Movement Audio")]
-    [SerializeField] public AudioClip playerJump;
+    [SerializeField] public AudioClip playerWalk_Long; // maybe seperate the footsteps and play them as animation events
+    [SerializeField] public AudioClip[] playerJump;
     [SerializeField] public AudioClip playerLanded;
     [SerializeField] public AudioClip playerWallrun;
-    [SerializeField] public AudioClip playerDash;
+    [SerializeField] public AudioClip[] playerDash;
 
     [Header("Hitmarker Audio")]
     [SerializeField] public AudioClip hitmarker_1;
@@ -75,7 +76,7 @@ public class AudioHandler : MonoBehaviour
     }
 
     //only for shooting gun related sounds because sounds interrupt each other
-    public void PlaySound_sourceShooting(AudioClip _clip) 
+    public void PlaySound_sourceShooting(AudioClip _clip)
     {
         sourceShooting.clip = _clip;
         sourceShooting.Play();
@@ -84,8 +85,12 @@ public class AudioHandler : MonoBehaviour
     //only for movement related sounds, because sounds interrupt each other
     public void PlaySound_sourcePlayerMovement(AudioClip _clip)
     {
-        sourcePlayerMovement.clip = _clip;
-        sourcePlayerMovement.Play();
+        if (_clip != null)
+        {
+            sourcePlayerMovement.clip = _clip;
+            sourcePlayerMovement.Play();
+        }
+        else sourcePlayerMovement.Stop();
     }
 
     public void PlaySound_sourceActionAmbience(AudioClip _clip)

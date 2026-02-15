@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [Space]
 
     [Header("Unity Events")]
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onMoveInvoked;
+
     [HideInInspector] public UnityEvent onShootInvoked_started;
 
     [HideInInspector] public UnityEvent onAimInvoked_started;
@@ -85,6 +87,9 @@ public class PlayerController : MonoBehaviour
     }
     private void OnSessionStart_AddAllListeners()
     {
+        Move.action.started += ProcessMoveInput;
+        Move.action.canceled += ProcessMoveInput;
+
         Jump.action.started += ProcessJumpInput;
 
         Shoot.action.started += ProcessShootInput;
@@ -102,12 +107,20 @@ public class PlayerController : MonoBehaviour
         Esc.action.started += ProcessEscInput;
     }
 
+    private void ProcessMoveInput(InputAction.CallbackContext context)
+    {
+        onMoveInvoked.Invoke(context);
+    }
+
     private void OnDisable()
     {
         OnSessionEnded_RemoveAllListeners();
     }
     public void OnSessionEnded_RemoveAllListeners()
     {
+        Move.action.started -= ProcessMoveInput;
+        Move.action.canceled -= ProcessMoveInput;
+
         Jump.action.started -= ProcessJumpInput;
 
         Shoot.action.started -= ProcessShootInput;

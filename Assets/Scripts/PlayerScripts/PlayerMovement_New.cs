@@ -73,12 +73,14 @@ public class PlayerMovement_New : MonoBehaviour
     {
         controller.onJumpInvoked_started.AddListener(Jump);
         controller.onJumpInvoked_started.AddListener(WallJump);
+        controller.onMoveInvoked.AddListener(MovePlayer_Sound);
     }
 
     private void OnDisable()
     {
         controller.onJumpInvoked_started.RemoveListener(Jump);
         controller.onJumpInvoked_started.RemoveListener(WallJump);
+        controller.onMoveInvoked.RemoveListener(MovePlayer_Sound);
     }
 
     private void Update()
@@ -134,6 +136,15 @@ public class PlayerMovement_New : MonoBehaviour
         rb_player.useGravity = !collisionCheck.OnSlope();
     }
 
+    private void MovePlayer_Sound(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started == true && collisionCheck.IsGrounded)
+            AudioHandler.Instance.PlaySound_sourcePlayerMovement(AudioHandler.Instance.playerWalk_Long);
+
+        else if (ctx.canceled == true)
+            AudioHandler.Instance.PlaySound_sourcePlayerMovement(null);
+    }
+
     private void PlayerSpeedControl()
     {
         if (collisionCheck.exitingSlope == false && collisionCheck.OnSlope() == true)
@@ -166,8 +177,12 @@ public class PlayerMovement_New : MonoBehaviour
 
     public void Jump()
     {
+
         if (collisionCheck.canJump == true && collisionCheck.IsGrounded == true)
         {
+            AudioHandler.Instance.PlaySound_sourcePlayerMovement(
+                AudioHandler.Instance.playerJump[Random.Range(0,AudioHandler.Instance.playerJump.Length)]);
+
             //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
@@ -185,6 +200,9 @@ public class PlayerMovement_New : MonoBehaviour
 
         else if (collisionCheck.canJump == true && collisionCheck.IsGrounded == false && collisionCheck.canDoubleJump == true)
         {
+            AudioHandler.Instance.PlaySound_sourcePlayerMovement(
+                AudioHandler.Instance.playerJump[Random.Range(0, AudioHandler.Instance.playerJump.Length)]);
+
             //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
@@ -271,6 +289,7 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void StartWallRun()
     {
+        AudioHandler.Instance.PlaySound_sourcePlayerMovement(AudioHandler.Instance.playerWallrun);
         Wallrunning = true;
     }
 
@@ -296,6 +315,7 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void StopWallRun()
     {
+        AudioHandler.Instance.PlaySound_sourcePlayerMovement(null);
         Wallrunning = false;
     }
 
@@ -303,6 +323,9 @@ public class PlayerMovement_New : MonoBehaviour
     {
         if (collisionCheck.exitingWall == false && Wallrunning && collisionCheck.canJump == true)
         {
+            AudioHandler.Instance.PlaySound_sourcePlayerMovement(
+                AudioHandler.Instance.playerJump[Random.Range(0, AudioHandler.Instance.playerJump.Length)]);
+
             if (controller.IsOnBeat == true)
             {
                 values.OnBeatActions++;

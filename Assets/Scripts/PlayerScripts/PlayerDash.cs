@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerDash : MonoBehaviour
 {
+
+
     [SerializeField] private PlayerCollisionCheck collisionCheck;
     [SerializeField] private PlayerController controller;
     [SerializeField] private CentralizedValues values;
@@ -37,6 +39,11 @@ public class PlayerDash : MonoBehaviour
     {
         if (canDash == true)
         {
+            values.onDashExecuted.Invoke();
+
+            AudioHandler.Instance.PlaySound_sourcePlayerMovement(
+                AudioHandler.Instance.playerDash[Random.Range(0,AudioHandler.Instance.playerDash.Length)]);
+
             if (controller.IsOnBeat == true)
             {
                 values.OnBeatActions++;
