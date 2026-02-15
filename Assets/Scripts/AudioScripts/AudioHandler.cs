@@ -8,8 +8,10 @@ public class AudioHandler : MonoBehaviour
 
     [SerializeField] public AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
-    [SerializeField] private AudioSource sourceActionAmbience;
-    [SerializeField] private AudioSource sourceActionAmbience2;
+    [SerializeField] private AudioSource sourceActionAmbience_1;
+    [SerializeField] private AudioSource sourceActionAmbience_2; // 
+    [SerializeField] private AudioSource sourceAmbience_1; // background sound
+
 
     [Header("Audio Sources Volumes")]
     [SerializeField] private float sourceShooting_Volume;
@@ -43,7 +45,10 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip scoreboard_Hit2;
 
     [Header("Spawn Sound")]
-    [SerializeField] public AudioClip spawnBeamSound;
+    [SerializeField] public AudioClip[] enemySpawnSounds;
+
+    [Header("Ambience Sound(s)")]
+    [SerializeField] private AudioClip background_AmbienceSound;
 
     public static AudioHandler Instance;
 
@@ -65,7 +70,7 @@ public class AudioHandler : MonoBehaviour
 
         sourceShooting.volume = sourceShooting_Volume;
         sourcePlayerMovement.volume = sourcePlayerMovement_Volume;
-        sourceActionAmbience.volume = sourceActionAmbience_Volume;
+        sourceActionAmbience_1.volume = sourceActionAmbience_Volume;
 
     }
 
@@ -85,8 +90,8 @@ public class AudioHandler : MonoBehaviour
 
     public void PlaySound_sourceActionAmbience(AudioClip _clip)
     {
-        sourceActionAmbience.clip = _clip;
-        sourceActionAmbience.Play();
+        sourceActionAmbience_1.clip = _clip;
+        sourceActionAmbience_1.Play();
     }
     private void OnDestroy()
     {
@@ -95,13 +100,13 @@ public class AudioHandler : MonoBehaviour
 
     public void PlayScoreboardSounds(AudioClip _clip)
     {
-        sourceActionAmbience.clip = _clip;
-        sourceActionAmbience.Play();
+        sourceActionAmbience_1.clip = _clip;
+        sourceActionAmbience_1.Play();
     }
 
     public void PlayActionAmbience_2_Sounds(AudioClip _clip)
     {
-        sourceActionAmbience2.clip = _clip;
-        sourceActionAmbience2.Play();
+        sourceActionAmbience_2.clip = _clip;
+        sourceActionAmbience_2.Play();
     }
 }

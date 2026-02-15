@@ -1,9 +1,25 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerCollisionCheck : MonoBehaviour
 {
     [Header("Ground Check")]
-    [SerializeField] public bool IsGrounded { get; private set; }
+    [SerializeField] private bool isGrounded = false;
+    public UnityAction IsGrounded_onValueChanged;
+    public bool IsGrounded
+    {
+        get => isGrounded;
+        set
+        {
+            if (isGrounded != value)
+            {
+                isGrounded = value;
+                IsGrounded_onValueChanged.Invoke();
+            }
+        }
+    }
+
+
     [SerializeField] private LayerMask groundCheckLayers;
     [SerializeField] private Transform groundCheckRoot;
     [SerializeField] private Vector3 groundCheckPos;
@@ -11,7 +27,9 @@ public class PlayerCollisionCheck : MonoBehaviour
 
     public bool exitingSlope;
     public bool canJump = true;
+    public bool canDoubleJump;
     public bool exitingWall;
+
 
 
     [Header("Wallruning Detection")]
@@ -24,6 +42,7 @@ public class PlayerCollisionCheck : MonoBehaviour
 
     public bool OnLeftWall { get; private set; }
     public bool OnRightWall { get; private set; }
+
     public RaycastHit hitWallLeft;
     public RaycastHit hitWallRight;
 
@@ -35,10 +54,24 @@ public class PlayerCollisionCheck : MonoBehaviour
     [SerializeField] private float wallCheckRadius;
     private float currentAngle = 0f;
 
+    private void OnEnable()
+    {
+        IsGrounded_onValueChanged += AllowDoubleJump;
+    }
+
+    private void OnDisable()
+    {
+        IsGrounded_onValueChanged -= AllowDoubleJump;
+    }
+
+    private void AllowDoubleJump()
+    {
+        if (isGrounded == true)
+            canDoubleJump = true;
+    }
     private void FixedUpdate()
     {
         IsGrounded = Physics.OverlapBox(groundCheckRoot.position, groundCheckSize / 2, Quaternion.identity, groundCheckLayers).Length > 0;
-
         AboveGround = AboveGroundForWallRun();
 
         CheckForWall();

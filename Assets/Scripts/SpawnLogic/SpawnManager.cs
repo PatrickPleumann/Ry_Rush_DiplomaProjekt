@@ -21,6 +21,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float timeBetweenVFXAndEnemySpawn = 1;
     [SerializeField] private int EnemyCountOnGameStart;
 
+    [SerializeField] private float slowMotionBasedDelay; // this value can be used as a multiplier for the time delay on spawn
+    
+
     [Header("Nice to know values")]
     [SerializeField] private float min;
     [SerializeField] private float max;
@@ -98,6 +101,9 @@ public class SpawnManager : MonoBehaviour
             spawns.allSpawnpoints.Enqueue(_spawn);
             yield break;
         }
+
+        AudioHandler.Instance.PlayActionAmbience_2_Sounds
+            (AudioHandler.Instance.enemySpawnSounds[Random.Range(0, AudioHandler.Instance.enemySpawnSounds.Length)]);
 
         _vfx.TryGetComponent(out ParticleSystem vfx_Effect);
         _vfx.transform.position = _spawn.transform.position;

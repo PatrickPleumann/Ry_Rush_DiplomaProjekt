@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.Eventing.Reader;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,7 @@ public class PlayerMovement_New : MonoBehaviour
     private Vector3 speedControl;
     private Vector3 speedControlLimit;
     private float currentMaxMoveSpeed;
+    private Vector3 additionalGravityVector;
 
 
     [Header("Ground Movement")]
@@ -26,6 +28,8 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float jumpCooldown = 0.25f;
     [SerializeField] private float airMultiplier = 0.4f;
+    [SerializeField] private float additionalGravityScaleMultiplier = 1;
+    [SerializeField] private bool canDoubleJump = true;
 
     [Header("Wallrunning & Walljumping")]
     [SerializeField] private float wallJumpUpForce;
@@ -35,6 +39,7 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float maxWallRunSpeed;
     [SerializeField] private float maxWallRunTime;
     [SerializeField] public bool Wallrunning;
+
 
     private float wallRunTimer;
     private bool allowWallJump;
@@ -98,6 +103,17 @@ public class PlayerMovement_New : MonoBehaviour
             PlayerSpeedControl();
 
         ApplyGroundDrag(collisionCheck.IsGrounded);
+
+        if (collisionCheck.IsGrounded == false) 
+            ApplyAdditionalGravity();
+    }
+
+    private void ApplyAdditionalGravity()
+    {
+        additionalGravityVector.x = 0f;
+        additionalGravityVector.y = additionalGravityScaleMultiplier * -9.81f;
+        additionalGravityVector.z = 0f;
+        rb_player.AddForce(additionalGravityVector, ForceMode.Acceleration);
     }
 
     private void MovePlayer()
@@ -150,7 +166,7 @@ public class PlayerMovement_New : MonoBehaviour
 
     public void Jump()
     {
-        if (collisionCheck.canJump && collisionCheck.IsGrounded)
+        if (collisionCheck.canJump == true && collisionCheck.IsGrounded == true)
         {
             //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
@@ -164,7 +180,21 @@ public class PlayerMovement_New : MonoBehaviour
             SwitchState(MovementState.Air);
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
+            StartCoroutine(ResetJump(jumpCooldown));
+        }
 
+        else if (collisionCheck.canJump == true && collisionCheck.IsGrounded == false && collisionCheck.canDoubleJump == true)
+        {
+            //if on beat.... maybe decrease if NOT on beat
+            if (controller.IsOnBeat == true)
+            {
+                values.OnBeatActions++;
+                values.CurrentCombo_Value = values.CurrentCombo_Value + 1;
+                values.LastActionOnBeat_Bool = true;
+            }
+            collisionCheck.canDoubleJump = false;
+            rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
+            rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
             StartCoroutine(ResetJump(jumpCooldown));
         }
     }
@@ -219,6 +249,7 @@ public class PlayerMovement_New : MonoBehaviour
             if (!Wallrunning)
             {
                 StartWallRun();
+                collisionCheck.canDoubleJump = false;
                 allowWallJump = true;
             }
         }
