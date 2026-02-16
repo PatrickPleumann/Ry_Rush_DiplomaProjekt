@@ -20,9 +20,11 @@ public class PlayerHealthSystem : MonoBehaviour
         //Debug.Log("Try to hit player, random number is: " + randomNum);
         if (randomNum == 1)
         {
-            //maybe apply a post process effect & sound effect
+            //maybe an vfx effect on player got hit
             values.PlayerCurrentHealth -= playerDamagePerHit;
-            Debug.Log("I just took damage, current health: " + values.PlayerCurrentHealth);
+            //Debug.Log("I just took damage, current health: " + values.PlayerCurrentHealth);
+
+            AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.playerDamaged_Sound[Random.Range(0, AudioHandler.Instance.playerDamaged_Sound.Length)]);
 
             if (values.PlayerCurrentHealth <= 0)
                 PlayerDies();
@@ -31,14 +33,17 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public void IncreasePlayerHealth(float _healthAmount)
     {
-        Debug.Log("Health increased by value: " + _healthAmount);
+        //Debug.Log("Health increased by value: " + _healthAmount);
         values.PlayerCurrentHealth = values.PlayerCurrentHealth + _healthAmount;
-        Debug.Log("New Health is now: " + values.PlayerCurrentHealth);
+        AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.healthPickUp_Sound[Random.Range(0, AudioHandler.Instance.healthPickUp_Sound.Length)]);
+        //Debug.Log("New Health is now: " + values.PlayerCurrentHealth);
     }
 
     private void PlayerDies()
     {
         Debug.Log("PLAYER DEAD");
+        //play dramatic audio sound or so in ambience_1 source
+
         //some logic for the player to die
         //death screen
         //maybe highscore screen 

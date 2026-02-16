@@ -12,6 +12,8 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] private AudioSource sourceActionAmbience_2; // 
     [SerializeField] private AudioSource sourceAmbience_1; // background sound
 
+    [SerializeField] private AudioSource onShotAudioSource; // to much effort now to figure out which audiosourc best for it
+
 
     [Header("Audio Sources Volumes")]
     [SerializeField] private float sourceShooting_Volume;
@@ -50,6 +52,10 @@ public class AudioHandler : MonoBehaviour
 
     [Header("Ambience Sound(s)")]
     [SerializeField] private AudioClip background_AmbienceSound;
+
+    [Header("Health System Audio")]
+    [SerializeField] public AudioClip[] healthPickUp_Sound;
+    [SerializeField] public AudioClip[] playerDamaged_Sound;
 
     public static AudioHandler Instance;
 
@@ -98,11 +104,6 @@ public class AudioHandler : MonoBehaviour
         sourceActionAmbience_1.clip = _clip;
         sourceActionAmbience_1.Play();
     }
-    private void OnDestroy()
-    {
-        Instance = null;
-    }
-
     public void PlayScoreboardSounds(AudioClip _clip)
     {
         sourceActionAmbience_1.clip = _clip;
@@ -113,5 +114,16 @@ public class AudioHandler : MonoBehaviour
     {
         sourceActionAmbience_2.clip = _clip;
         sourceActionAmbience_2.Play();
+    }
+
+    public void PlayOneShot(AudioClip _clip)
+    {
+        onShotAudioSource.PlayOneShot(_clip);
+    }
+
+
+    private void OnDestroy()
+    {
+        Instance = null;
     }
 }
