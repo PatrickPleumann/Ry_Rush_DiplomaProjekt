@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 
 public class GlobalVolume_ValueApplier : MonoBehaviour
@@ -10,8 +8,10 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
     [SerializeField] private PostProcessVolume pp_volume;
     [SerializeField] private CentralizedValues values;
 
-    [Header("Volume Components & Volume Intensities")]
     [SerializeField] private Vignette vignette;
+    [SerializeField] private float vignette_Intensity;
+    [Header("Volume Components & Volume Intensities")]
+
     [SerializeField] private float BloodyVignette_MaxIntensity;
 
     [Space]
@@ -19,10 +19,7 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
     [SerializeField] private LensDistortion lensDistortion;
     [SerializeField] private float LensDistortion_Intensity;
     [SerializeField] private float LensDistortion_TimeValue;
-    private void Awake()
-    {
-        pp_volume = GetComponent<PostProcessVolume>();
-    }
+
 
     private void OnEnable()
     {
@@ -31,9 +28,8 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
 
     private void Start()
     {
-        pp_volume.profile.TryGetSettings(out Vignette _vignette);
-        vignette = _vignette;
-
+        pp_volume.profile.TryGetSettings(out vignette);
+        pp_volume.profile.TryGetSettings(out lensDistortion);
     }
     private void ApplyBloodyVignette(float _intensity)
     {
@@ -50,7 +46,6 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
 
     private IEnumerator PingPongLenseDistortion()
     {
-        yield return new WaitForEndOfFrame();
-        
+        yield return null;
     }
 }
