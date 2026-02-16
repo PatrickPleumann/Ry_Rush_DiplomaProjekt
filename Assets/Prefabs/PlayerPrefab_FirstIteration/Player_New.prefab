@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3448061684142528027}
   - component: {fileID: 6768048356299993285}
   - component: {fileID: 8293999096856176586}
+  - component: {fileID: 3054335551875811208}
   m_Layer: 2
   m_Name: Player_Model
   m_TagString: Untagged
@@ -113,6 +114,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3054335551875811208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446897932837915100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85df7c440b6bf947bce7796b63a5906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthSystem
+  values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
+  playerMaxHealth: 100
+  playerDamagePerHit: 10
+  percentageToTakeDamage: 20
 --- !u!1 &3753140284131045341
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,21 +183,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   movement: {fileID: 335868793204556249}
-  shooting: {fileID: 6220149968717170397}
-  playerAim: {fileID: 0}
-  playerDash: {fileID: 7871910866262386606}
-  audioHandler: {fileID: 0}
+  beat: {fileID: 0}
+  values: {fileID: 0}
   Move: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   Look: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   Jump: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   Dash: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   Shoot: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  Sprint: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   Aim: {fileID: 4589215524133067534, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  SlowMotion: {fileID: 0}
+  Reload: {fileID: 0}
+  Esc: {fileID: 0}
+  onMoveInvoked:
+    m_PersistentCalls:
+      m_Calls: []
+  onShootInvoked_started:
+    m_PersistentCalls:
+      m_Calls: []
+  onAimInvoked_started:
+    m_PersistentCalls:
+      m_Calls: []
+  onAimInvoked_canceled:
+    m_PersistentCalls:
+      m_Calls: []
+  onJumpInvoked_started:
+    m_PersistentCalls:
+      m_Calls: []
+  onDashInvoked_started:
+    m_PersistentCalls:
+      m_Calls: []
+  onSlowMotion_started:
+    m_PersistentCalls:
+      m_Calls: []
+  onSlowMotion_canceled:
+    m_PersistentCalls:
+      m_Calls: []
+  onReload_started:
+    m_PersistentCalls:
+      m_Calls: []
+  onReload_Finished:
+    m_PersistentCalls:
+      m_Calls: []
+  onEsc_started:
+    m_PersistentCalls:
+      m_Calls: []
   Orientation: {fileID: 8713166033242703164}
+  shootingCooldownTimer: 0
+  SlowMotion_OnAim: 0
   moveInput: {x: 0, y: 0, z: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   AllowMovement: 0
+  IsOnBeat: 0
+  LastActionOnBeat: 0
+  isReloading: 0
+  canShoot: 1
+  maxCurrentAmmo: 0
+  maxRemainingAmmo: 0
+  CurrentAmmo: 0
+  RemainingAmmo: 0
 --- !u!114 &335868793204556249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,12 +255,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement_New
   controller: {fileID: 2904704638296487566}
   collisionCheck: {fileID: 1920900849484156920}
+  values: {fileID: 0}
   groundMoveSpeed: 4
   acceleration: 70
   groundDragValue: 5
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  additionalGravityScaleMultiplier: 1
+  canDoubleJump: 1
   wallJumpUpForce: 7
   wallJumpSideForce: 12
   pushToWallForce: 50
@@ -223,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87456745c3a520419596b53cf2927ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionCheck
+  isGrounded: 0
   groundCheckLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -231,6 +295,7 @@ MonoBehaviour:
   groundCheckSize: {x: 0.5, y: 0.05, z: 0.5}
   exitingSlope: 0
   canJump: 1
+  canDoubleJump: 0
   exitingWall: 0
   WallCheckRoot: {fileID: 3641754438233380347}
   wallCheckLayers:
@@ -254,10 +319,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aed3aaeab1303489c96dfd0cfda2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
-  bullet: {fileID: 9132041622088824371, guid: 9d8c9f20251565144b9e958ba4125454, type: 3}
+  controller: {fileID: 0}
+  scoreboard: {fileID: 0}
+  beatTracking: {fileID: 0}
+  values: {fileID: 0}
+  hitEffect: {fileID: 0}
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+  bulletDamage: 0
+  shootOnBeatMultiplier: 1
 --- !u!114 &7871910866262386606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
   collisionCheck: {fileID: 1920900849484156920}
   controller: {fileID: 2904704638296487566}
+  values: {fileID: 0}
   dashForce: 30
   dragValueWhileDashing: 3
   disallowMovementForSeconds: 0.25

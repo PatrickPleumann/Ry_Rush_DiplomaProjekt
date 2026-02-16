@@ -22150,7 +22150,7 @@ Transform:
   m_GameObject: {fileID: 241193128}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.329992, y: 1.57, z: 8.660019}
+  m_LocalPosition: {x: -21.693, y: 1.57, z: 10.467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29903,7 +29903,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
   m_PrefabInstance: {fileID: 663163570}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843176720}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f588e68c17a85545bba08696aa85f03, type: 3}
@@ -53714,10 +53714,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3753140284131045341, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1397417366}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
 --- !u!1 &663210866 stripped
 GameObject:
@@ -79302,11 +79299,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4681024263303922, guid: 16680ae9308bf314ab472ee2fc1edf45, type: 3}
   m_PrefabInstance: {fileID: 843059393}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &843176720 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3753140284131045341, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
-  m_PrefabInstance: {fileID: 663163570}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &844821744
 PrefabInstance:
@@ -121448,22 +121440,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
   m_PrefabInstance: {fileID: 663163570}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1397417366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843176720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d85df7c440b6bf947bce7796b63a5906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthSystem
-  playerMaxHealth: 100
-  playerCurrentHealth: 0
-  playerDamagePerHit: 10
-  percentageToTakeDamage: 20
 --- !u!1001 &1401032059
 PrefabInstance:
   m_ObjectHideFlags: 0

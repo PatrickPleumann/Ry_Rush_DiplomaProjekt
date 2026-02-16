@@ -208,8 +208,10 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     {
         var temp = Physics.Raycast(enemyWeaponOrigin.position, enemyWeaponOrigin.forward, out hitInfo, 20f);
         enemy_muzzleFlash.Play();
-        if (temp == true && hitInfo.transform.TryGetComponent(out PlayerHealthSystem hit))
+
+        if (temp == true)
         {
+            var hit = hitInfo.transform.GetComponentInChildren<PlayerHealthSystem>();
             if (hit == true && hit != null)
                 hit.TakeDamage_Player();
         }

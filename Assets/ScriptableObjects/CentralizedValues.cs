@@ -27,6 +27,9 @@ public class CentralizedValues : ScriptableObject
         TimeBetweenBeats = 0f;
 
         enemysAliveCount = 0;
+
+        PlayerCurrentHealth = 100;
+        playerMaxHealth = 100;
     }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
@@ -155,7 +158,30 @@ public class CentralizedValues : ScriptableObject
         }
     }
 
+
     [Header("Ingame Values")]
+    [SerializeField] public float playerMaxHealth;
+    [SerializeField] private float playerCurrentHealth;
+    [HideInInspector] public UnityEvent<float> PlayerCurrentHealth_onValueChanged;
+    public float PlayerCurrentHealth
+    {
+        get => playerCurrentHealth;
+        set
+        {
+            if (playerCurrentHealth != value)
+            {
+                if (value > playerMaxHealth)
+                    playerCurrentHealth = playerMaxHealth;
+
+                else
+                    playerCurrentHealth = value;
+
+                Debug.Log("Wurde überschrieben");
+                PlayerCurrentHealth_onValueChanged.Invoke(playerCurrentHealth);
+            }
+        }
+    }
+
     [SerializeField] private int enemysAliveCount;
     [HideInInspector] public UnityEvent<int> EnemyCount_onValueChanged;
     public int EnemysAliveCount
