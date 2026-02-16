@@ -29903,7 +29903,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
   m_PrefabInstance: {fileID: 663163570}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 843176720}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f588e68c17a85545bba08696aa85f03, type: 3}
@@ -31469,6 +31469,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377925687}
   m_Mesh: {fileID: 4300002, guid: aceefbf9822fad4469930d1b1857cd94, type: 3}
+--- !u!1 &378298385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378298388}
+  - component: {fileID: 378298387}
+  - component: {fileID: 378298386}
+  m_Layer: 0
+  m_Name: PostProcessing_Global
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &378298386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378298385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Postprocessing.Runtime::UnityEngine.Rendering.PostProcessing.PostProcessVolume
+  sharedProfile: {fileID: 11400000, guid: 0d9a7308def3627498f3a563ec6d111c, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
+--- !u!114 &378298387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378298385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617ef7df8c53fb649ba728b7cc9d63a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalVolume_ValueApplier
+  pp_volume: {fileID: 0}
+  values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
+  vignette: {fileID: 0}
+  BloodyVignette_MaxIntensity: 0
+  lensDistortion: {fileID: 0}
+  LensDistortion_Intensity: 0
+  LensDistortion_TimeValue: 0
+--- !u!4 &378298388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378298385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 28.45003, y: -1.24162, z: 0.3055}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &378507396
 GameObject:
   m_ObjectHideFlags: 0
@@ -38167,7 +38236,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7795456001599112986}
-  - {fileID: 1857736146}
   m_Father: {fileID: 7417546468599023003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &469271429
@@ -53646,7 +53714,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3753140284131045341, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1397417366}
   m_SourcePrefab: {fileID: 100100000, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
 --- !u!1 &663210866 stripped
 GameObject:
@@ -79231,6 +79302,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4681024263303922, guid: 16680ae9308bf314ab472ee2fc1edf45, type: 3}
   m_PrefabInstance: {fileID: 843059393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &843176720 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3753140284131045341, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+  m_PrefabInstance: {fileID: 663163570}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &844821744
 PrefabInstance:
@@ -121372,6 +121448,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7123102505418897892, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
   m_PrefabInstance: {fileID: 663163570}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1397417366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843176720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85df7c440b6bf947bce7796b63a5906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthSystem
+  playerMaxHealth: 100
+  playerCurrentHealth: 0
+  playerDamagePerHit: 10
+  percentageToTakeDamage: 20
 --- !u!1001 &1401032059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152454,7 +152546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1801789123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183545,57 +183637,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4557940529955958, guid: 1c47894b20f300c4783c3d3bcf8c913a, type: 3}
   m_PrefabInstance: {fileID: 1853935473}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1857736145
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1857736146}
-  - component: {fileID: 1857736147}
-  m_Layer: 0
-  m_Name: PostProcessing_Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1857736146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857736145}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 469271428}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1857736147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857736145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617ef7df8c53fb649ba728b7cc9d63a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GlobalVolume_ValueApplier
-  pp_volume: {fileID: 7795456001599112991}
-  values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
-  vignette: {fileID: 0}
-  BloodyVignette_MaxIntensity: 0
-  lensDistortion: {fileID: 0}
-  LensDistortion_Intensity: 0
-  LensDistortion_TimeValue: 0
 --- !u!1001 &1858070744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203676,7 +203717,6 @@ GameObject:
   - component: {fileID: 6833389314708115370}
   - component: {fileID: 1531332377420508904}
   - component: {fileID: 2451642887759401567}
-  - component: {fileID: 7795456001599112991}
   m_Layer: 0
   m_Name: Player_Camera
   m_TagString: MainCamera
@@ -204110,23 +204150,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &7795456001599112991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2254932990925743913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Postprocessing.Runtime::UnityEngine.Rendering.PostProcessing.PostProcessVolume
-  sharedProfile: {fileID: 11400000, guid: 0d9a7308def3627498f3a563ec6d111c, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
 --- !u!1 &8305454349666178392
 GameObject:
   m_ObjectHideFlags: 0
@@ -204178,3 +204201,4 @@ SceneRoots:
   - {fileID: 1048407013}
   - {fileID: 1558165096}
   - {fileID: 1801789124}
+  - {fileID: 378298388}

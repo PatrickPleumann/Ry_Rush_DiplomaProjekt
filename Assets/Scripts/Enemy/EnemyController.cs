@@ -1,8 +1,10 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 public class EnemyController : MonoBehaviour, ISetDefaultValues
 {
@@ -16,6 +18,11 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] public EnemyFSM_Data Data;
     [SerializeField] public Transform ThisEnemy;
     [SerializeField] public PlayerInfo playerInfo;
+    [SerializeField] private Transform enemyWeaponOrigin;
+
+    [SerializeField] private VisualEffect enemy_muzzleFlash;
+
+    private RaycastHit hitInfo;
 
     [SerializeField] private CentralizedValues values;
 
@@ -118,7 +125,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         values.Kills++;
         enemyIsDead = true;
         values.EnemysAliveCount = values.EnemysAliveCount - 1;
-        //SetDefaultValues();
         ActivateRagdoll();
         //SetActive Ragdoll, SetInactiveAgent & apply force to last hit.point
         CalculatePoints();
@@ -129,8 +135,8 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     {
         if (hitsTillDeath > 0)
         {
-            var temp = ((float)(initalPoints / hitsTillDeath)) ; // hier noch multiplier hinzufügen
-             values.CurrentScore_Value = values.CurrentScore_Value + temp;
+            var temp = ((float)(initalPoints / hitsTillDeath)); // hier noch multiplier hinzufügen
+            values.CurrentScore_Value = values.CurrentScore_Value + temp;
         }
         else
             Debug.Log("Hits till death are below 1, which can´t be");
@@ -178,8 +184,11 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     {
         yield return new WaitForSeconds(despawnTimer);
 
-       if (Pool != null)
+        if (Pool != null)
+        {
+            SetDefaultValues();
             Pool.EnqueueObject(gameObject);
+        }
 
         else
             Destroy(gameObject);
@@ -189,9 +198,20 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     public void SetDefaultValues()
     {
+        SetInactiveRagdollRigibodies();
         //reset hits till kill
-        //reset hurtboxes
         //reset animator
         //more to come...
+    }
+
+    public void Enemy_Shoot()
+    {
+        var temp = Physics.Raycast(enemyWeaponOrigin.position, enemyWeaponOrigin.forward, out hitInfo, 20f);
+        enemy_muzzleFlash.Play();
+        if (temp == true && hitInfo.transform.TryGetComponent(out PlayerHealthSystem hit))
+        {
+            if (hit == true && hit != null)
+                hit.TakeDamage_Player();
+        }
     }
 }
