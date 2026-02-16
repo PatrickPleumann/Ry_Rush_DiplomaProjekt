@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
         Jump.action.started += ProcessJumpInput;
 
         Shoot.action.started += ProcessShootInput;
+        Shoot.action.canceled += ResetShoot;
 
         Aim.action.started += ProcessAimInput;
         Aim.action.canceled += ProcessAimInput;
@@ -124,6 +125,7 @@ public class PlayerController : MonoBehaviour
         Jump.action.started -= ProcessJumpInput;
 
         Shoot.action.started -= ProcessShootInput;
+        Shoot.action.canceled -= ResetShoot;
 
         Aim.action.started -= ProcessAimInput;
         Aim.action.canceled -= ProcessAimInput;
@@ -158,7 +160,6 @@ public class PlayerController : MonoBehaviour
             {
                 AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.playerShoot);
                 CurrentAmmo--; // into CV_SO
-                StartCoroutine(ShootTimer());
                 onShootInvoked_started.Invoke();
             }
 
@@ -236,11 +237,13 @@ public class PlayerController : MonoBehaviour
         LastActionOnBeat = false;
         yield return new WaitForEndOfFrame();
     } //TODO: Check if necessary
-    private IEnumerator ShootTimer()
+
+    private void ResetShoot(InputAction.CallbackContext ctx)
     {
-        canShoot = false;
-        yield return new WaitForSeconds(shootingCooldownTimer);
-        canShoot = true;
+        if (ctx.canceled == true)
+        {
+            canShoot = true;
+        }
     }
 }
 

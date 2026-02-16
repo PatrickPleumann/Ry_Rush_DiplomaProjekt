@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnReloadEnd
   triggerTime: 0.93
+  resetTriggerTime: 0
 --- !u!114 &-2986479467054173921
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: MagOut
   triggerTime: 0.1
+  resetTriggerTime: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -285,6 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnReload_RefreshUI
   triggerTime: 0.94
+  resetTriggerTime: 0
 --- !u!114 &4568435570499041574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnReloadStart
   triggerTime: 0
+  resetTriggerTime: 0
 --- !u!114 &5460809444015071084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,6 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: MagIn
   triggerTime: 0.7
+  resetTriggerTime: 0
 --- !u!1101 &5630448095745275253
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -352,6 +357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: RecieverClick
   triggerTime: 0.8
+  resetTriggerTime: 0
 --- !u!1107 &9107519260111759199
 AnimatorStateMachine:
   serializedVersion: 6

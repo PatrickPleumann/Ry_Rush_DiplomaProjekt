@@ -19,7 +19,6 @@ public class HitEffect : MonoBehaviour
     private void Start()
     {
         hitEffect = GetComponent<VisualEffect>();
-        hitEffect.visualEffectAsset = hitEffect_asset;
     }
 
     private void PlayHitEffect(Vector3 _hitPoint)

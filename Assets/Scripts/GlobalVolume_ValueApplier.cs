@@ -34,7 +34,6 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
         pp_volume.profile.TryGetSettings(out Vignette _vignette);
         vignette = _vignette;
 
-
     }
     private void ApplyBloodyVignette(float _intensity)
     {

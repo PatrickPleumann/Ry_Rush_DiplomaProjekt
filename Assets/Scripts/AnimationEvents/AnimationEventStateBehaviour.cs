@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class AnimationEventStateBehaviour : StateMachineBehaviour
 {
     public string eventName;
     [Range(0f, 1f)] public float triggerTime;
+    [SerializeField] private float resetTriggerTime;
+    
 
     bool hasTriggered;
     float currentTime;
@@ -22,6 +24,7 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour
         {
             NotifyReceiver(animator);
             hasTriggered = true;
+            ResetTimer(stateInfo.length);
         }
     }
 
@@ -33,5 +36,12 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour
         {
             receiver.OnAnimationEventTriggered(eventName);
         }
+    }
+
+    private async void ResetTimer(float _timeInSeconds) //void is dangerous, but no issues with just a specialized timer
+    {
+        //works perfect with "stateinfo.Lenght"
+        await Task.Delay((int)(_timeInSeconds * 1000));
+        hasTriggered = false;
     }
 }
