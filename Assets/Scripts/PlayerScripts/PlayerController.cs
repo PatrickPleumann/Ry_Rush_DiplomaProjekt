@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
     {
         if (values.AllowInput_Bool == true && ctx.started == true)
             onDashInvoked_started.Invoke();
-        }
+    }
     private void ProcessEscInput(InputAction.CallbackContext context)
     {
         onEsc_started.Invoke();

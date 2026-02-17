@@ -23,9 +23,12 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
 
     private void OnEnable()
     {
-        values.onDashExecuted += ApplyLensDistortion;
+        values.onDashExecuted.AddListener(ApplyLensDistortion);
     }
-
+    private void OnDisable()
+    {
+        values.onDashExecuted.RemoveListener(ApplyLensDistortion);
+    }
     private void Start()
     {
         pp_volume.profile.TryGetSettings(out vignette);

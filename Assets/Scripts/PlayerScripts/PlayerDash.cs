@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerDash : MonoBehaviour
 {
-
-
     [SerializeField] private PlayerCollisionCheck collisionCheck;
     [SerializeField] private PlayerController controller;
     [SerializeField] private CentralizedValues values;

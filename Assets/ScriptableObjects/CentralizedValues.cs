@@ -201,7 +201,7 @@ public class CentralizedValues : ScriptableObject
 
     [Space]
     [Header("Game Manager")]
-    [HideInInspector] public UnityAction onSessionEnds;
-    [HideInInspector] public UnityAction onDashExecuted;
+    [HideInInspector] public UnityEvent onSessionEnds;
+    [HideInInspector] public UnityEvent onDashExecuted;
 
 }
