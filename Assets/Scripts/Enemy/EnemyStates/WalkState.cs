@@ -19,6 +19,7 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
+        controller.Agent.updateRotation = false;
         //Debug.Log(controller.SqrDistanceToPlayer);
         //Debug.Log("Enter State: Walk");
         controller.Animator.SetTrigger("Walk");
@@ -27,6 +28,7 @@ public class WalkState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
+        controller.Agent.updateRotation = true;
         controller.Animator.ResetTrigger("Walk");
     }
 

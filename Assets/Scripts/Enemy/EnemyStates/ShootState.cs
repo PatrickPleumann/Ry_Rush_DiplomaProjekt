@@ -39,6 +39,7 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
         //Debug.Log("Enter State: ShootState");
 
         controller.Agent.speed = 0f; // just for turning the enemy while shooting
+        controller.Agent.updateRotation = false;
     }
 
     public override void UpdateState()
@@ -54,6 +55,7 @@ public class ShootState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
+        controller.Agent.updateRotation = true;
         //Debug.Log("Exit State: ShootState");
         controller.Animator.ResetTrigger("ShootAnim");
     }

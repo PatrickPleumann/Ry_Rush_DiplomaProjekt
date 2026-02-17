@@ -40,6 +40,7 @@ public class WalkBackwardsState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
+        controller.Agent.updateRotation = true;
         //Debug.Log("Exit State: WalkBackwardsState");
         controller.Animator.ResetTrigger("BackwardsAnim");
     }

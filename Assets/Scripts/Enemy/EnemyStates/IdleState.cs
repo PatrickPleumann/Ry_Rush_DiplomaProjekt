@@ -13,6 +13,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
     {
         animTimer = controller.Data.idleAnimTimer;
         chaseDistance = controller.Data.maxDistanceToPlayer * controller.Data.maxDistanceToPlayer;
+        controller.switchToChaseTimer = 1;
     }
 
     public override BaseState<T> CheckConditions()
@@ -50,6 +51,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
 
     public override void ExitState()
     {
+        controller.Agent.updateRotation = true;
         controller.Animator.ResetTrigger("IdleAnim");
         controller.Animator.ResetTrigger("IdleAnim2");
     }

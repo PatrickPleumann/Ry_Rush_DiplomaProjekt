@@ -3,10 +3,10 @@ using UnityEngine.AI;
 
 public class ChaseState<T> : BaseState<T> where T : EnemyController
 {
-    private float chaseStateTimer;
+
     public ChaseState(T _controller) : base(_controller)
     {
-        chaseStateTimer = 1f;
+
     }
 
     public override BaseState<T> CheckConditions()
@@ -28,21 +28,24 @@ public class ChaseState<T> : BaseState<T> where T : EnemyController
 
     public override void EnterState()
     {
+        controller.Agent.updateRotation = false;
         controller.Data.canSeePlayer = true;
     }
 
     public override void ExitState()
     {
+        controller.Agent.updateRotation = true;
         controller.Animator.ResetTrigger("WalkAnim");
     }
 
     public override void UpdateState()
     {
         controller.UpdateEnemyRotation();
-        chaseStateTimer -= Time.deltaTime;
+        controller.switchToChaseTimer -= Time.deltaTime;
 
-        if (chaseStateTimer <= 0)
+        if (controller.switchToChaseTimer <= 0)
         {
+            controller.Agent.updateRotation = true;
             controller.Animator.SetTrigger("WalkAnim");
             controller.Agent.speed = controller.Data.enemyMaxSpeedWalking;
             controller.Agent.destination = controller.Player.position;

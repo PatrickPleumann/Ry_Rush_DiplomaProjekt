@@ -16,6 +16,10 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] public Transform ThisEnemy;
     [SerializeField] public PlayerInfo playerInfo;
     [SerializeField] private Transform enemyWeaponOrigin;
+    [SerializeField] public float switchToChaseTimer = 1;
+    [SerializeField] [Range(1f,5f)] private float deathOnBeatMultiplier = 1.5f;
+
+    private bool lastHitOnBeat;
 
     [SerializeField] private VisualEffect enemy_muzzleFlash;
 
@@ -66,7 +70,10 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
             Player = FindFirstObjectByType<PlayerController>().transform;
 
         enemyIsDead = false;
+        lastHitOnBeat = false;
     }
+
+
 
     private void CacheSquaredValues()
     {
@@ -96,6 +103,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         controller.currentState.EnterState(); //point of entry
     }
 
+
     private void Update()
     {
         controller.Update();
@@ -117,22 +125,32 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         transform.rotation = Quaternion.LookRotation(newDirectionSmoothed);
     }
 
-    private void EnemyDying()
+    private void EnemyDying(bool _onBeat)
     {
         values.Kills++;
         enemyIsDead = true;
         values.EnemysAliveCount = values.EnemysAliveCount - 1;
         ActivateRagdoll();
-        //SetActive Ragdoll, SetInactiveAgent & apply force to last hit.point
-        CalculatePoints();
+        CalculatePoints(_onBeat);
         StartCoroutine(DeathTimer());
+
+        //maybe apply shader while death timer running down
     }
 
-    private void CalculatePoints()
+    private void CalculatePoints(bool _onBeat)
     {
         if (hitsTillDeath > 0)
         {
-            var temp = ((float)(initalPoints / hitsTillDeath)); // hier noch multiplier hinzufügen
+            float temp;
+            if (!_onBeat)
+                temp = ((float)(initalPoints / hitsTillDeath));
+
+            else
+            {
+                temp = ((float)(initalPoints / hitsTillDeath));
+                temp *= deathOnBeatMultiplier;
+            }
+            // hier noch multiplier hinzufügen
             values.CurrentScore_Value = values.CurrentScore_Value + temp;
         }
         else
@@ -140,17 +158,18 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     }
 
 
-    public void TakeDamage(float _dmgAmount)
+    public void TakeDamage(float _dmgAmount, bool _onBeat)
     {
         if (enemyIsDead == false)
         {
             values.ShotsHit++;
             EnemyHealth -= _dmgAmount;
             hitsTillDeath++;
+            lastHitOnBeat = _onBeat;
         }
 
         if (EnemyHealth <= 0 && enemyIsDead == false)
-            EnemyDying();
+            EnemyDying(_onBeat);
     }
 
     private void ActivateRagdoll()
@@ -193,12 +212,22 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         yield return new WaitForEndOfFrame();
     }
 
-    public void SetDefaultValues()
+    public void SetDefaultValues() // resets all important values for a fresh respawn
     {
         SetInactiveRagdollRigibodies();
-        //reset hits till kill
-        //reset animator
-        //more to come...
+        Animator.enabled = true;
+        enemyIsDead = false;
+        hitsTillDeath = 0;
+
+        if (controller != null)
+            ResetStateMachine();
+    }
+
+    private void ResetStateMachine()
+    {
+        controller = null;
+        controller = new Enemy_FSM<EnemyController>(this);
+        controller.currentState.EnterState(); // FSM point of entry
     }
 
     public void Enemy_Shoot()
