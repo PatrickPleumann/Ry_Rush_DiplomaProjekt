@@ -29,7 +29,6 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float jumpCooldown = 0.25f;
     [SerializeField] private float airMultiplier = 0.4f;
     [SerializeField] private float additionalGravityScaleMultiplier = 1;
-    [SerializeField] private bool canDoubleJump = true;
 
     [Header("Wallrunning & Walljumping")]
     [SerializeField] private float wallJumpUpForce;
@@ -316,6 +315,7 @@ public class PlayerMovement_New : MonoBehaviour
     private void StopWallRun()
     {
         AudioHandler.Instance.PlaySound_sourcePlayerMovement(null);
+        collisionCheck.canDoubleJump = true;
         Wallrunning = false;
     }
 
