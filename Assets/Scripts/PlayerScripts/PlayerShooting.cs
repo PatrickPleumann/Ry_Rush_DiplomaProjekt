@@ -52,6 +52,7 @@ public class PlayerShooting : MonoBehaviour
         {
             if (onBeat)
             {
+                values.onEnemyHit.Invoke();
                 hitEffect.onEnemyHit.Invoke(hit.point);
                 current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value * shootOnBeatMultiplier, true); //more dmg pls
                 AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_2);
@@ -59,6 +60,7 @@ public class PlayerShooting : MonoBehaviour
 
             else
             {
+                values.onEnemyHit.Invoke();
                 hitEffect.onEnemyHit.Invoke(hit.point);
                 current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value, false);
                 AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_1);

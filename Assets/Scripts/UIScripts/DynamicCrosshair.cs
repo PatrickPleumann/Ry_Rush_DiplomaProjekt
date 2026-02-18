@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,7 @@ public class DynamicCrosshair : MonoBehaviour
 {
     //need to precisely go 300 units for each beattracking visualizer
     [SerializeField] private BeatTracking beatTracking;
+    [SerializeField] private CentralizedValues values;
 
     [SerializeField] private float leftOffset; // -230 currently
     [SerializeField] private float rightOffset; // 230 currently
@@ -18,6 +20,11 @@ public class DynamicCrosshair : MonoBehaviour
     [SerializeField] private Color onBeatColor;
     [SerializeField] private Color offBeatColor;
 
+    [SerializeField] private CanvasGroup hitmarker_canvasGrp;
+    [SerializeField] private float timeTillHitmarkerVanishes = 1;
+
+    private Task currentHitmarkerVanishing;
+
 
     private float valuePerSample;
 
@@ -25,10 +32,12 @@ public class DynamicCrosshair : MonoBehaviour
     private void OnEnable()
     {
         //change color depends on if on beat is true or false
+        values.onEnemyHit.AddListener(ShowHitMarker);
     }
 
     private void OnDisable()
     {
+        values.onEnemyHit.RemoveListener(ShowHitMarker);
         //change color depends on if on beat is true or false
     }
     private void Start()
@@ -49,6 +58,21 @@ public class DynamicCrosshair : MonoBehaviour
 
         rightVisualizer.transform.localPosition = new Vector3
             (rightOffset - (valuePerSample * beatTracking.currentSamples_UI), 0f, 0f);
+    }
+
+    private void ShowHitMarker()
+    {
+        hitmarker_canvasGrp.alpha = 1;
+        HitMarkerVanishes(timeTillHitmarkerVanishes);
+    }
+
+    private async void HitMarkerVanishes(float _timeInSec)
+    { // works clunky, but works. It would maybe
+        while (hitmarker_canvasGrp.alpha > 0)
+        {
+            await Task.Delay((int)(Time.deltaTime * 1000 * _timeInSec));
+            hitmarker_canvasGrp.alpha -= Time.deltaTime;
+        }
     }
 
     private void ChangeColor(bool _onBeat)

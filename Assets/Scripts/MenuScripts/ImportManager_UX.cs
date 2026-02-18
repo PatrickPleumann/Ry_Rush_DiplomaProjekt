@@ -18,6 +18,7 @@ public class ImportManager_UX : MonoBehaviour
     [Header("Choose & Confirm Async Value UX/UI")]
     [SerializeField] public GameObject AsyncValue_GO;
     [SerializeField] public Slider SampleOffset_Slider;
+    [SerializeField] public Slider SongSpecificVolume_Slider;
     [SerializeField] public TMP_Text ShowAsyncSamples_Text;
 
     [SerializeField] public Button SaveSongValues_Button;

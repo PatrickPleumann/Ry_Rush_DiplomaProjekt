@@ -17,3 +17,4 @@ MonoBehaviour:
   BeatMultiplier: 1
   BPM: 103
   SamplesPerBeat: 25689
+  SongSpecificVolume: 0.1

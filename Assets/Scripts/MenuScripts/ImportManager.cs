@@ -1,4 +1,5 @@
 using SFB;
+using System;
 using System.Collections;
 using System.IO;
 using TMPro;
@@ -30,9 +31,11 @@ public class ImportManager : MonoBehaviour
         canChooseMultipleFiles = false;
         destPath = Application.persistentDataPath + "/"; // + "/" is necessary to "hit" the correct folder
     }
+
     private void AddAllListener()
     {
         view.SampleOffset_Slider.onValueChanged.AddListener(ShowAsyncSamples);
+        view.SongSpecificVolume_Slider.onValueChanged.AddListener(ChangeVolume);
         view.SampleOffset_Slider.onValueChanged.AddListener(songPreview.OverrideCurrentAsyncSamples);
 
         view.LoadYourSong_Button.onClick.AddListener(BrowseFilesForSong);
@@ -51,6 +54,7 @@ public class ImportManager : MonoBehaviour
     private void RemoveAllListeners()
     {
         view.SampleOffset_Slider.onValueChanged.RemoveListener(ShowAsyncSamples);
+        view.SongSpecificVolume_Slider.onValueChanged.RemoveListener(ChangeVolume);
         view.SampleOffset_Slider.onValueChanged.RemoveListener(songPreview.OverrideCurrentAsyncSamples);
 
         view.LoadYourSong_Button.onClick.RemoveListener(BrowseFilesForSong);
@@ -66,6 +70,7 @@ public class ImportManager : MonoBehaviour
         view.Back_Button.onClick.RemoveListener(ResetAllValues);
 
     }
+
     private void OnEnable()
     {
         AddAllListener();
@@ -101,6 +106,11 @@ public class ImportManager : MonoBehaviour
         songPreview.AssignSongDataValuesToPreview(data);
     }
 
+    private void ChangeVolume(float _volume)
+    {
+        songPreview.source_song.volume = _volume;
+        songPreview.source_metronome.volume = _volume;
+    }
 
     private void FillSongData() //method has to be called earlier
     {
@@ -109,6 +119,7 @@ public class ImportManager : MonoBehaviour
         data.SamplesPerBeat = GetSamplesPerBeat();
         data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
         data.BeatMultiplier = 1;
+        data.SongSpecificVolume = view.SongSpecificVolume_Slider.value;
     }
     private void ConfirmCurrentSong()
     {

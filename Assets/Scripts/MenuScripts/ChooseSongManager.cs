@@ -62,11 +62,7 @@ public class ChooseSongManager : MonoBehaviour
 
     private void ResetSongData()
     {
-        songData.songName = "";
-        songData.BPM = 0;
-        songData.AsyncSamplesValue = 0;
-        songData.BeatMultiplier = 1;
-        songData.SamplesPerBeat = 0;
+        songData.EraseData();
     }
 
     private void TryFindSongByFileNameInSongDataDictionary(int _ = 0)
@@ -92,6 +88,7 @@ public class ChooseSongManager : MonoBehaviour
         songData.AsyncSamplesValue = tempSongData.AsyncSamplesValue;
         songData.BeatMultiplier = tempSongData.BeatMultiplier;
         songData.SamplesPerBeat = tempSongData.SamplesPerBeat;
+        songData.SongSpecificVolume = tempSongData.SongSpecificVolume;
 
         confirmSong_Button.interactable = false;
         chooseYourSong_Dropdown.interactable = false;
@@ -124,9 +121,15 @@ public class ChooseSongManager : MonoBehaviour
 
     private void OnStartGameButton_Clicked()
     {
+        startGame_Button.interactable = false;
+        return_Button.interactable = false ;
+        confirmSong_Button.interactable = false;
+        resetSong_Button.interactable = false;
+
         values.AllowInput_Bool = false;
         values.SetDefaultValues();
         StartCoroutine(OnStartGame(timeTillGameStarts));
+
     }
 
     private IEnumerator OnStartGame(float _timeTillGameStarts)

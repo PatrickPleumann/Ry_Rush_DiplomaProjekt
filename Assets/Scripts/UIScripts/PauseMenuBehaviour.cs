@@ -17,11 +17,18 @@ public class PauseMenuBehaviour : MonoBehaviour
         resume_Button.onClick.AddListener(OnResumeButton_Clicked);
         mainMenu_Button.onClick.AddListener(OnMainMenuButton_Clicked);
         controller.onEsc_started.AddListener(EscButton_Clicked);
+        values.onSessionEnds.AddListener(UnAssign_ESCButton);
     }
     private void OnDisable()
     {
         resume_Button.onClick.RemoveListener(OnResumeButton_Clicked);
         mainMenu_Button.onClick.RemoveListener(OnMainMenuButton_Clicked);
+        controller.onEsc_started.RemoveListener(EscButton_Clicked);
+        values.onSessionEnds.RemoveListener(UnAssign_ESCButton);
+    }
+
+    private void UnAssign_ESCButton()
+    { // so ESC can´t be pressed anymore, when Scoreboard pops up
         controller.onEsc_started.RemoveListener(EscButton_Clicked);
     }
 

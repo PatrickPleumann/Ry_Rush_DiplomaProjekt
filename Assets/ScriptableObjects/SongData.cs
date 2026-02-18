@@ -8,6 +8,7 @@ public class SongData : ScriptableObject
     public int BeatMultiplier = 1;
     public float BPM = 0;
     public int SamplesPerBeat = 0;
+    public float SongSpecificVolume = 0.1f;
 
     public void EraseData()
     {
@@ -16,5 +17,6 @@ public class SongData : ScriptableObject
         BeatMultiplier = 1;
         BPM = 0;
         SamplesPerBeat = 0;
+        SongSpecificVolume = 0.1f;
     }
 }

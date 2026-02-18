@@ -8,7 +8,7 @@ public class SongPreviewBeatTracking : MonoBehaviour
     [SerializeField] private float bpm_Preview;
 
     [SerializeField] public AudioSource source_song;
-    [SerializeField] private AudioSource source_metronome;
+    [SerializeField] public AudioSource source_metronome;
 
     public AudioClip clip;
     [SerializeField] private AudioClip metronome;
@@ -93,7 +93,6 @@ public class SongPreviewBeatTracking : MonoBehaviour
 
     private void PlayMetronome()
     {
-
         source_metronome.Play();
     }
 }

@@ -80,6 +80,7 @@ public class BeatTracking : MonoBehaviour
         beatMultiplier = songData.BeatMultiplier;
         samplesPerBeat = songData.SamplesPerBeat;
         asyncValue = songData.AsyncSamplesValue;
+        source.volume = songData.SongSpecificVolume;
 
         values.AllowInput_Bool = true;
 
