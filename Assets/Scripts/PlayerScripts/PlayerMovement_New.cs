@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Diagnostics.Eventing.Reader;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -194,7 +195,8 @@ public class PlayerMovement_New : MonoBehaviour
             SwitchState(MovementState.Air);
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
-            StartCoroutine(ResetJump(jumpCooldown));
+
+            ResetJump(jumpCooldown); // async
         }
 
         else if (collisionCheck.canJump == true && collisionCheck.IsGrounded == false && collisionCheck.canDoubleJump == true)
@@ -212,20 +214,16 @@ public class PlayerMovement_New : MonoBehaviour
             collisionCheck.canDoubleJump = false;
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
-            StartCoroutine(ResetJump(jumpCooldown));
+
+            ResetJump(jumpCooldown); // async
         }
     }
 
-    private IEnumerator ResetJump(float _jumpCooldown)
+    private async void ResetJump(float _jumpCooldown)
     {
-        yield return new WaitForSeconds(_jumpCooldown);
+        await Task.Delay((int)(_jumpCooldown * 1000));
         collisionCheck.canJump = true;
         collisionCheck.exitingSlope = false;
-    }
-
-    private IEnumerator StateTransitionTimer(float _transitionTimer)
-    {
-        yield return new WaitForSeconds(_transitionTimer);
     }
 
     private void SwitchState(MovementState _state)
@@ -333,7 +331,7 @@ public class PlayerMovement_New : MonoBehaviour
                 values.LastActionOnBeat_Bool = true;
             }
             collisionCheck.exitingWall = true;
-            StartCoroutine(ExitWallTimer());
+            ExitWallTimer();
             SwitchState(MovementState.WallJumping);
             Vector3 wallNormal = collisionCheck.OnRightWall ? collisionCheck.hitWallRight.normal : collisionCheck.hitWallLeft.normal;
 
@@ -345,10 +343,9 @@ public class PlayerMovement_New : MonoBehaviour
     }
 
 
-    private IEnumerator ExitWallTimer() // takes a float and a bool and set´s boo
+    private async void ExitWallTimer() // takes a float and a bool and set´s boo
     {
-        yield return new WaitForSeconds(exitWallTime);
+        await Task.Delay((int)(exitWallTime * 1000));
         collisionCheck.exitingWall = false;
-        yield break;
     }
 }

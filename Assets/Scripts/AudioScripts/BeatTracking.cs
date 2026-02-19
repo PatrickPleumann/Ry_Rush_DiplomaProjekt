@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -114,7 +115,7 @@ public class BeatTracking : MonoBehaviour
         currentSamples_UI = currentSamples;
         currentSamples_UI += onBeatOffset;
 
-        StartCoroutine(StartSongDelayed(timeTillSongStarts));
+        StartSongDelayed(timeTillSongStarts);
     }
     private void Update()
     {
@@ -122,9 +123,9 @@ public class BeatTracking : MonoBehaviour
             isOnBeat = CheckForNewBeat();
     }
 
-    private IEnumerator StartSongDelayed(float _timeTillSongStarts)
+    private async void StartSongDelayed(float _timeTillSongStarts)
     {
-        yield return new WaitForSecondsRealtime(_timeTillSongStarts);
+        await Task.Delay((int)(_timeTillSongStarts * 1000));
         songStarted = true;
         source.Play();
     }

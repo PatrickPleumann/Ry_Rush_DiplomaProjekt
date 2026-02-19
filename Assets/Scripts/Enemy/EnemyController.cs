@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.VFX;
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] public PlayerInfo playerInfo;
     [SerializeField] private Transform enemyWeaponOrigin;
     [SerializeField] public float switchToChaseTimer = 1;
+
     [SerializeField] [Range(1f,5f)] private float deathOnBeatMultiplier = 1.5f;
 
     private bool lastHitOnBeat;
@@ -28,10 +30,10 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     [SerializeField] private CentralizedValues values;
 
     [SerializeField] private int initalPoints = 500; // this values gets increased or reduced based on the hits to kill and the multipliers
-    private int hitsTillDeath; // set default
+    private int hitsTillDeath;
 
     [SerializeField] private Rigidbody[] allRagdollRigidbodies;
-    //[SerializeField] public EnemyMaxChasingCounter maxEnemiesChasing;  // need to rethink whole logic behind this behaviour
+
 
     public float EnemyDirSmoothSpeed;
     [SerializeField] private float despawnTimer = 1;
@@ -132,7 +134,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         values.EnemysAliveCount = values.EnemysAliveCount - 1;
         ActivateRagdoll();
         CalculatePoints(_onBeat);
-        StartCoroutine(DeathTimer());
+        DeathTimer();
 
         //maybe apply shader while death timer running down
     }
@@ -196,9 +198,10 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         }
     }
 
-    private IEnumerator DeathTimer()
+    private async void DeathTimer()
     {
-        yield return new WaitForSeconds(despawnTimer);
+        
+        await Task.Delay((int)(despawnTimer * 1000));
 
         if (Pool != null)
         {
@@ -208,8 +211,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
         else
             Destroy(gameObject);
-
-        yield return new WaitForEndOfFrame();
     }
 
     public void SetDefaultValues() // resets all important values for a fresh respawn
@@ -219,12 +220,15 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         enemyIsDead = false;
         hitsTillDeath = 0;
 
+
         if (controller != null)
             ResetStateMachine();
     }
 
     private void ResetStateMachine()
     {
+        Agent.updatePosition = true;
+        Agent.updateRotation = true;
         controller = null;
         controller = new Enemy_FSM<EnemyController>(this);
         controller.currentState.EnterState(); // FSM point of entry
@@ -232,14 +236,17 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
 
     public void Enemy_Shoot()
     {
-        var temp = Physics.Raycast(enemyWeaponOrigin.position, enemyWeaponOrigin.forward, out hitInfo, 20f);
-        enemy_muzzleFlash.Play();
-
-        if (temp == true)
+        if (values.GameIsPaused == false)
         {
-            var hit = hitInfo.transform.GetComponentInChildren<PlayerHealthSystem>();
-            if (hit == true && hit != null)
-                hit.TakeDamage_Player();
+            var temp = Physics.Raycast(enemyWeaponOrigin.position, enemyWeaponOrigin.forward, out hitInfo, 20f);
+            enemy_muzzleFlash.Play();
+
+            if (temp == true)
+            {
+                var hit = hitInfo.transform.GetComponentInChildren<PlayerHealthSystem>();
+                if (hit == true && hit != null)
+                    hit.TakeDamage_Player();
+            }
         }
     }
 }

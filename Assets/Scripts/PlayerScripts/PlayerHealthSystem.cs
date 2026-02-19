@@ -1,11 +1,15 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
+    [SerializeField] private BeatTracking beatTracking;
     [SerializeField] private CentralizedValues values;
     [SerializeField] private float playerMaxHealth;
     [SerializeField] private float playerDamagePerHit;
     [SerializeField] private float percentageToTakeDamage;
+
+    [SerializeField][Range(1f, 5f)] private float decreaseTimeScaleOnPlayerDeathMultiplier = 2f;
 
     private float percentageIntoRandomNumber;
 
@@ -14,15 +18,17 @@ public class PlayerHealthSystem : MonoBehaviour
         percentageIntoRandomNumber = Mathf.FloorToInt(100 / percentageToTakeDamage);
         values.PlayerCurrentHealth = playerMaxHealth;
     }
+
+    /// <summary>
+    /// Methods gets called if an enemy hits the player with a Raycast. If the damage gets through is random, which simulates bloom effect on weapons.
+    /// At default the rate of enemies actually hitting the player is 20 %.
+    /// </summary>
     public void TakeDamage_Player()
     {
         var randomNum = Mathf.FloorToInt(Random.Range(0, percentageIntoRandomNumber - 1)); //beware, maxInclusive
-        //Debug.Log("Try to hit player, random number is: " + randomNum);
-        if (randomNum == 1)
+        if (randomNum == 1 &&  values.PlayerIsDead == false)
         {
-            //maybe an vfx effect on player got hit
             values.PlayerCurrentHealth -= playerDamagePerHit;
-            //Debug.Log("I just took damage, current health: " + values.PlayerCurrentHealth);
 
             AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.playerDamaged_Sound[Random.Range(0, AudioHandler.Instance.playerDamaged_Sound.Length)]);
 
@@ -31,27 +37,46 @@ public class PlayerHealthSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// On Health item pickup, this method increases the players health. Gets called only if player health is below max health.
+    /// </summary>
+    /// <param name="_healthAmount"></param>
     public void IncreasePlayerHealth(float _healthAmount)
     {
-        //Debug.Log("Health increased by value: " + _healthAmount);
         values.PlayerCurrentHealth = values.PlayerCurrentHealth + _healthAmount;
         AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.healthPickUp_Sound[Random.Range(0, AudioHandler.Instance.healthPickUp_Sound.Length)]);
-        //Debug.Log("New Health is now: " + values.PlayerCurrentHealth);
     }
 
     private void PlayerDies()
     {
+        values.PlayerIsDead = true;
+        values.onPlayerDeath.Invoke();
         Debug.Log("PLAYER DEAD");
-        //play dramatic audio sound or so in ambience_1 source
-
-        //some logic for the player to die
-        //death screen
-        //maybe highscore screen 
-        //invoke some death screen event here..
+        AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.playerDead_Sounds[Random.Range(0, AudioHandler.Instance.playerDead_Sounds.Length)]);
+        DecreaseTimeOnPlayerDead(decreaseTimeScaleOnPlayerDeathMultiplier);
     }
 
+    /// <summary>
+    /// Validates if current player health is below max player health. This return false if player health is equal to max health
+    /// </summary>
+    /// <returns></returns>
     public bool OnValidate_PickUpHealthItem()
     {
         return values.PlayerCurrentHealth < values.playerMaxHealth;
+    }
+
+    private async void DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier)
+    {
+        while (Time.timeScale > 0.01f) // only makes problems when game is below 20 fps, which is barely playable
+        {
+            //this would be problematic if you would use unscaledDeltaTime and would have more than 1000 Frames
+            await Task.Delay((int)(_decreaseTimeScaleOnPlayerDeathMultiplier * 1000 * Time.deltaTime));
+            Time.timeScale -= Time.deltaTime;
+
+            if (beatTracking.source.volume > Time.timeScale)
+                beatTracking.source.volume -= Time.deltaTime;
+        }
+        Time.timeScale = 0f;
+        beatTracking.source.volume = 0f;
     }
 }

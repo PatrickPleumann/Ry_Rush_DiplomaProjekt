@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -50,7 +51,7 @@ public class SongPreviewBeatTracking : MonoBehaviour
         beatMultiplier_Preview = _data.BeatMultiplier;
         samplesPerBeat_Preview = _data.SamplesPerBeat;
 
-        StartCoroutine(StartSong());
+        StartSong();
     }
 
     public void EraseData()
@@ -66,11 +67,11 @@ public class SongPreviewBeatTracking : MonoBehaviour
         samplesPerBeat_Preview = 0;
     }
 
-    private IEnumerator StartSong()
+    private async void StartSong()
     {
         songPreviewPlaying = true;
         source_song.volume = 0.2f;
-        yield return new WaitForSeconds(0.5f);
+        await Task.Delay(500); // hard coded magic num
         source_song.Play();
     }
 

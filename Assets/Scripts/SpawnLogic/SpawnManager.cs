@@ -8,6 +8,9 @@ using UnityEngine.Rendering.Universal;
 
 public class SpawnManager : MonoBehaviour
 {
+    /// <summary>
+    /// Whole class takes care of spawning and respawning enemies at the begin and throughout the session
+    /// </summary>
     [Header("References")]
     [SerializeField] private CentralizedValues values;
     [SerializeField] private ObjectPoolBehaviour enemyObjPool;
@@ -22,7 +25,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int EnemyCountOnGameStart;
 
     [SerializeField] private float slowMotionBasedDelay; // this value can be used as a multiplier for the time delay on spawn
-    
 
     [Header("Nice to know values")]
     [SerializeField] private float min;

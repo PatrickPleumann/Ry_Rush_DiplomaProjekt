@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Drawing.Text;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,6 +31,9 @@ public class CentralizedValues : ScriptableObject
 
         PlayerCurrentHealth = 100;
         playerMaxHealth = 100;
+
+        GameIsPaused = false;
+        PlayerIsDead = false;
     }
     /// <summary>
     /// Every single Properties is seperated with a [Space]
@@ -187,7 +191,7 @@ public class CentralizedValues : ScriptableObject
     public int EnemysAliveCount
     {
         get => enemysAliveCount;
-        set 
+        set
         {
             if (enemysAliveCount != value)
             {
@@ -197,12 +201,41 @@ public class CentralizedValues : ScriptableObject
         }
     }
 
+    [SerializeField] private bool gameIsPaused;
+    [HideInInspector] public UnityEvent<bool> GameIsPaused_onValueChangend;
+    public bool GameIsPaused
+    {
+        get => gameIsPaused;
+        set
+        {
+            if (gameIsPaused != value)
+            {
+                gameIsPaused = value;
+                GameIsPaused_onValueChangend.Invoke(gameIsPaused);
+            }
+        }
+    }
 
+    [SerializeField] private bool playerIsDead = false;
+    [HideInInspector] public UnityEvent<bool> PlayerIsDead_onValueChanged;
+    public bool PlayerIsDead
+    {
+        get => playerIsDead;
+        set
+        {
+            if (playerIsDead != value)
+            {
+                playerIsDead = value;
+                PlayerIsDead_onValueChanged.Invoke(playerIsDead);
+            }
+        }
+    }
 
     [Space]
     [Header("Game Manager")]
     [HideInInspector] public UnityEvent onSessionEnds;
     [HideInInspector] public UnityEvent onDashExecuted;
     [HideInInspector] public UnityEvent onEnemyHit;
+    [HideInInspector] public UnityEvent onPlayerDeath;
 
 }

@@ -128,16 +128,15 @@ public class ChooseSongManager : MonoBehaviour
 
         values.AllowInput_Bool = false;
         values.SetDefaultValues();
-        StartCoroutine(OnStartGame(timeTillGameStarts));
+        OnStartGame(timeTillGameStarts);
 
     }
 
-    private IEnumerator OnStartGame(float _timeTillGameStarts)
+    private void OnStartGame(float _timeTillGameStarts)
     {
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
         SceneManager.LoadSceneAsync(1);   // Menu Scene is 0, Game Scene is 1
-        yield break;
     }
 
 

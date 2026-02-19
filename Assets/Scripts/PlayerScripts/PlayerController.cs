@@ -229,15 +229,6 @@ public class PlayerController : MonoBehaviour
             moveDirection = Orientation.forward * moveInput.z + Orientation.right * moveInput.x;
         }
     }
-
-    private IEnumerator LastActionOnBeatTimer()
-    {
-        LastActionOnBeat = true;
-        yield return new WaitForSeconds(lastActionOnBeatTime);
-        LastActionOnBeat = false;
-        yield return new WaitForEndOfFrame();
-    } //TODO: Check if necessary
-
     private void ResetShoot(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled == true)

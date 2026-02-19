@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -39,8 +40,8 @@ public class PlayerDash : MonoBehaviour
         {
             values.onDashExecuted.Invoke();
 
-            AudioHandler.Instance.PlaySound_sourcePlayerMovement(
-                AudioHandler.Instance.playerDash[Random.Range(0,AudioHandler.Instance.playerDash.Length)]);
+            AudioHandler.Instance.PlayOneShot(
+                AudioHandler.Instance.playerDash[Random.Range(0, AudioHandler.Instance.playerDash.Length)]);
 
             if (controller.IsOnBeat == true)
             {
@@ -53,7 +54,7 @@ public class PlayerDash : MonoBehaviour
             canDash = false;
             rb_player.linearDamping = 0f;
 
-            StartCoroutine(ResetDash(disallowMovementForSeconds,dashCooldown));
+            ResetDash(disallowMovementForSeconds, dashCooldown);
 
             dashForceVector.x = controller.moveDirection.x * dashForce;
             dashForceVector.y = 0f;
@@ -63,15 +64,13 @@ public class PlayerDash : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetDash(float _allowMovementTimer, float _dashCooldown)
+
+    private async void ResetDash(float _allowMovementTimer, float _dashCooldown)
     {
-        //this WaitForSeconds stack up and need to be subtracted
-        yield return new WaitForSeconds(_allowMovementTimer);
+        await Task.Delay((int)(_allowMovementTimer * 1000));
         controller.AllowMovement = true;
-        yield return new WaitForSeconds(_dashCooldown - _allowMovementTimer);
+        await Task.Delay((int)((_dashCooldown - _allowMovementTimer) * 1000));
         canDash = true;
         collisionCheck.exitingSlope = false;
-
-        yield break;
     }
 }

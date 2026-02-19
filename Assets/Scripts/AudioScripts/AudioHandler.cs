@@ -12,7 +12,7 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] private AudioSource sourceActionAmbience_2; // 
     [SerializeField] private AudioSource sourceAmbience_1; // background sound
 
-    [SerializeField] private AudioSource onShotAudioSource; // to much effort now to figure out which audiosourc best for it
+    [SerializeField] private AudioSource onShotAudioSource; // to much effort now to figure out which audiosource is best for it
 
 
     [Header("Audio Sources Volumes")]
@@ -31,7 +31,7 @@ public class AudioHandler : MonoBehaviour
 
 
     [Header("Movement Audio")]
-    [SerializeField] public AudioClip playerWalk_Long; // maybe seperate the footsteps and play them as animation events
+    [SerializeField] public AudioClip playerWalk_Long;
     [SerializeField] public AudioClip[] playerJump;
     [SerializeField] public AudioClip playerLanded;
     [SerializeField] public AudioClip playerWallrun;
@@ -56,7 +56,8 @@ public class AudioHandler : MonoBehaviour
     [Header("Health System Audio")]
     [SerializeField] public AudioClip[] healthPickUp_Sound;
     [SerializeField] public AudioClip[] playerDamaged_Sound;
-
+    [SerializeField] public AudioClip[] playerDead_Sounds;
+ 
     public static AudioHandler Instance;
 
     private void Awake()
@@ -69,16 +70,11 @@ public class AudioHandler : MonoBehaviour
 
     private void Start()
     {
-        //var sources = GetComponents<AudioSource>(); // audiosources assigned in editor
-
-        //sourceShooting = sources[0];
-        //sourcePlayerMovement = sources[1];
-        //sourceActionAmbience = sources[2];
-
+        //TODO: we still need some settings for this sources
         sourceShooting.volume = sourceShooting_Volume;
         sourcePlayerMovement.volume = sourcePlayerMovement_Volume;
         sourceActionAmbience_1.volume = sourceActionAmbience_Volume;
-
+        onShotAudioSource.volume = 0.2f;
     }
 
     //only for shooting gun related sounds because sounds interrupt each other
@@ -88,7 +84,7 @@ public class AudioHandler : MonoBehaviour
         sourceShooting.Play();
     }
 
-    //only for movement related sounds, because sounds interrupt each other
+    //only for movement related sounds, because sounds interrupt each other, playerDash Sounds gets onShotted
     public void PlaySound_sourcePlayerMovement(AudioClip _clip)
     {
         if (_clip != null)
@@ -120,7 +116,6 @@ public class AudioHandler : MonoBehaviour
     {
         onShotAudioSource.PlayOneShot(_clip);
     }
-
 
     private void OnDestroy()
     {
