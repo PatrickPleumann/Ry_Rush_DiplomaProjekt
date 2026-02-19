@@ -67,7 +67,7 @@ public class DynamicCrosshair : MonoBehaviour
     }
 
     private async void HitMarkerVanishes(float _timeInSec)
-    { // works clunky, but works. It would maybe
+    { // works clunky, but works.
         while (hitmarker_canvasGrp.alpha > 0)
         {
             await Task.Delay((int)(Time.deltaTime * 1000 * _timeInSec));

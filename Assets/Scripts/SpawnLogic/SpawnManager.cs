@@ -19,8 +19,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private EnemySpawnLogic spawns;
 
     [Header("Adjustable Values")]
-    [SerializeField][Range(3f, 5f)] private float minSpawnDistanceToPlayer;
-    [SerializeField][Range(10f, 20f)] private float maxSpawnDistanceToPlayer;
+    [SerializeField][Range(15f, 25f)] private float minSpawnDistanceToPlayer;
+    [SerializeField][Range(30f, 50f)] private float maxSpawnDistanceToPlayer;
     [SerializeField] private float timeBetweenVFXAndEnemySpawn = 1;
     [SerializeField] private int EnemyCountOnGameStart;
 
@@ -147,6 +147,9 @@ public class SpawnManager : MonoBehaviour
     private bool CheckSpawnDistanceToPlayer(GameObject _spawnPoint) // change this to near player
     {
         sqrMagnitude = _spawnPoint.transform.position - playerTransform.transform.position;
+
+        if (Vector3.Dot(sqrMagnitude, playerTransform.forward) < 0)
+            return false;
 
         if (sqrMagnitude.sqrMagnitude > min && sqrMagnitude.sqrMagnitude < max)
         {
