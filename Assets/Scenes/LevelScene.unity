@@ -43279,8 +43279,8 @@ MonoBehaviour:
   controller: {fileID: 358316735}
   playerOrientation: {fileID: 635317367}
   values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
-  sensitivityX: 0.03
-  sensitivityY: 0.03
+  sensitivityX: 0.1
+  sensitivityY: 0.1
   smoothingTime: 25
   cameraClampUp: 89
   cameraClampDown: -85

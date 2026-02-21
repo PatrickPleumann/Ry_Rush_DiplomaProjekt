@@ -114,7 +114,7 @@ public class AudioHandler : MonoBehaviour
 
     public void PlayOneShot(AudioClip _clip)
     {
-        onShotAudioSource.PlayOneShot(_clip);
+        onShotAudioSource.PlayOneShot(_clip, onShotAudioSource.volume);
     }
 
     private void OnDestroy()
