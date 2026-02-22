@@ -10,7 +10,7 @@ public class PlayerHealthSystem : MonoBehaviour
     [SerializeField] private float playerDamagePerHit;
     [SerializeField] private float percentageToTakeDamage;
 
-    [SerializeField][Range(1f, 5f)] private float decreaseTimeScaleOnPlayerDeathMultiplier = 2f;
+    [SerializeField][Range(1f, 5f)] private float decreaseTimeScaleOnPlayerDeathMultiplier = 1f;
 
     private float percentageIntoRandomNumber;
 
@@ -68,16 +68,11 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private async UniTask DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier)
     {
-        while (Time.timeScale > 0.01f) // only makes problems when game is below 20 fps, which is barely playable
+        while (Time.timeScale > 0.01f)
         {
-            //this would be problematic if you would use unscaledDeltaTime and would have more than 1000 Frames
             await UniTask.Delay((int)(_decreaseTimeScaleOnPlayerDeathMultiplier * 1000 * Time.deltaTime),true);
             Time.timeScale -= Time.deltaTime;
-
-            if (beatTracking.source != null && beatTracking.source.volume > Time.timeScale)
-                beatTracking.source.volume -= Time.deltaTime;
         }
         Time.timeScale = 0f;
-        beatTracking.source.volume = 0f;
     }
 }

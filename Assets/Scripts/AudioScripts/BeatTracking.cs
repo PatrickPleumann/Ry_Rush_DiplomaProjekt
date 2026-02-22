@@ -94,11 +94,13 @@ public class BeatTracking : MonoBehaviour
     {
         OnSongLoaded += GetEstimatesBeatsPerTrack;
         OnSongEnded += SongEnds;
+        values.onPlayerDeath.AddListener(DecreaseSourceVolume);
     }
     private void OnDisable()
     {
         OnSongLoaded -= GetEstimatesBeatsPerTrack;
         OnSongEnded -= SongEnds;
+        values.onPlayerDeath.RemoveListener(DecreaseSourceVolume);
     }
     private void GetEstimatesBeatsPerTrack() // works
     {
@@ -126,16 +128,29 @@ public class BeatTracking : MonoBehaviour
 
     private async void StartSong()
     {
-       await  StartSongDelayed(timeTillSongStarts);
+       await  StartSongDelayedAsync(timeTillSongStarts);
     }
 
-    private async UniTask StartSongDelayed(float _timeTillSongStarts)
+    private async UniTask StartSongDelayedAsync(float _timeTillSongStarts)
     {
         await UniTask.Delay((int)(_timeTillSongStarts * 1000));
         songStarted = true;
         source.Play();
     }
 
+    private async void DecreaseSourceVolume()
+    {
+        await DecreaseSourceVolumeAsync();
+    }
+    private async UniTask DecreaseSourceVolumeAsync()
+    {
+        while (source.volume > 0.001f) // feels very good, so song fades out very long until it completely disappears
+        {
+            source.volume -= Time.deltaTime;
+            await UniTask.Delay((int)(Time.deltaTime * 1000 * (1 / source.volume)), true);
+        }
+        source.volume = 0f;
+    }
 
     /// <summary>
     /// Checks every frame if a new beat just happened.
@@ -150,7 +165,6 @@ public class BeatTracking : MonoBehaviour
         if ((currentSamples / samplesPerBeat) >= 1)
         {
             currentSamples -= samplesPerBeat;
-            //onBeatInvoke.Invoke();
             CurrentBeatsInTrack = CurrentBeatsInTrack + 1; //it doesn´t seem that CurrentBeatsInTrack++ works as expected with the property
 
             if (values.LastActionOnBeat_Bool == false)
