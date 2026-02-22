@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -47,13 +48,13 @@ public class PlayerHealthSystem : MonoBehaviour
         AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.healthPickUp_Sound[Random.Range(0, AudioHandler.Instance.healthPickUp_Sound.Length)]);
     }
 
-    private void PlayerDies()
+    private async void PlayerDies()
     {
         values.PlayerIsDead = true;
         values.onPlayerDeath.Invoke();
         Debug.Log("PLAYER DEAD");
         AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.playerDead_Sounds[Random.Range(0, AudioHandler.Instance.playerDead_Sounds.Length)]);
-        DecreaseTimeOnPlayerDead(decreaseTimeScaleOnPlayerDeathMultiplier);
+        await DecreaseTimeOnPlayerDead(decreaseTimeScaleOnPlayerDeathMultiplier);
     }
 
     /// <summary>
@@ -65,15 +66,15 @@ public class PlayerHealthSystem : MonoBehaviour
         return values.PlayerCurrentHealth < values.playerMaxHealth;
     }
 
-    private async void DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier)
+    private async UniTask DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier)
     {
         while (Time.timeScale > 0.01f) // only makes problems when game is below 20 fps, which is barely playable
         {
             //this would be problematic if you would use unscaledDeltaTime and would have more than 1000 Frames
-            await Task.Delay((int)(_decreaseTimeScaleOnPlayerDeathMultiplier * 1000 * Time.deltaTime));
+            await UniTask.Delay((int)(_decreaseTimeScaleOnPlayerDeathMultiplier * 1000 * Time.deltaTime),true);
             Time.timeScale -= Time.deltaTime;
 
-            if (beatTracking.source.volume > Time.timeScale)
+            if (beatTracking.source != null && beatTracking.source.volume > Time.timeScale)
                 beatTracking.source.volume -= Time.deltaTime;
         }
         Time.timeScale = 0f;

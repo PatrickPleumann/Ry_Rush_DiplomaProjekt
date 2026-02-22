@@ -1,30 +1,28 @@
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class AnimationEventStateBehaviour : StateMachineBehaviour
 {
     public string eventName;
-    [Range(0f, 1f)] public float triggerTime;
-    [SerializeField] private float resetTriggerTime;
-    
+    [Range(0f, 1f)] public float TriggerTime;
 
-    bool hasTriggered;
-    float currentTime;
+    private bool hasTriggered;
+    private float currentTime;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         hasTriggered = false;
     }
 
-    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override async void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         currentTime = stateInfo.normalizedTime % 1f;
 
-        if (hasTriggered == false && currentTime >= triggerTime)
+        if (hasTriggered == false && currentTime >= TriggerTime)
         {
             NotifyReceiver(animator);
             hasTriggered = true;
-            ResetTimer(stateInfo.length);
+            await ResetTimer(stateInfo.length);
         }
     }
 
@@ -38,10 +36,9 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour
         }
     }
 
-    private async void ResetTimer(float _timeInSeconds) //void is dangerous, but no issues with just a specialized timer
+    private async UniTask ResetTimer(float _timeInSeconds)
     {
-        //works perfect with "stateinfo.Lenght"
-        await Task.Delay((int)(_timeInSeconds * 1000));
+        await UniTask.Delay((int)(_timeInSeconds * 1000));
         hasTriggered = false;
     }
 }

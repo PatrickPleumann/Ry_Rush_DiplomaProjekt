@@ -7,7 +7,7 @@ public class Utility
     /// </summary>
     /// <param name="_value">The value which gets floored</param>
     /// <returns></returns>
-    public static float FloorFloat_TwoDigits(float _value)
+    public static float FloorFloatToTwoDigits(float _value)
     {
         if (_value > 0)
         {

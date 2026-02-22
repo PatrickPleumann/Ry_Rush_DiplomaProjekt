@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Cysharp.Threading.Tasks;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -34,7 +31,7 @@ public class PlayerDash : MonoBehaviour
     {
         rb_player = GetComponent<Rigidbody>();
     }
-    public void Dash()
+    public async void Dash()
     {
         if (canDash == true)
         {
@@ -54,22 +51,22 @@ public class PlayerDash : MonoBehaviour
             canDash = false;
             rb_player.linearDamping = 0f;
 
-            ResetDash(disallowMovementForSeconds, dashCooldown);
-
             dashForceVector.x = controller.moveDirection.x * dashForce;
             dashForceVector.y = 0f;
             dashForceVector.z = controller.moveDirection.z * dashForce;
 
             rb_player.AddForce(dashForceVector, ForceMode.Impulse);
+
+            await ResetDash(disallowMovementForSeconds, dashCooldown);
         }
     }
 
 
-    private async void ResetDash(float _allowMovementTimer, float _dashCooldown)
+    private async UniTask ResetDash(float _allowMovementTimer, float _dashCooldown)
     {
-        await Task.Delay((int)(_allowMovementTimer * 1000));
+        await UniTask.Delay((int)(_allowMovementTimer * 1000));
         controller.AllowMovement = true;
-        await Task.Delay((int)((_dashCooldown - _allowMovementTimer) * 1000));
+        await UniTask.Delay((int)((_dashCooldown - _allowMovementTimer) * 1000));
         canDash = true;
         collisionCheck.exitingSlope = false;
     }

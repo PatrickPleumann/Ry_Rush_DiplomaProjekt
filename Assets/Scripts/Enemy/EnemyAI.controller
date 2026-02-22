@@ -424,8 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnShoot
-  triggerTime: 0.4
-  resetTriggerTime: 0
+  TriggerTime: 0
 --- !u!1101 &5079426260072165556
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -521,8 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnShoot
-  triggerTime: 0.15
-  resetTriggerTime: 0.5
+  TriggerTime: 0.15
 --- !u!1102 &7811924395859729420
 AnimatorState:
   serializedVersion: 6

@@ -17,20 +17,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   LookInput_Value: {x: 0, y: 0}
-  AllowInput_Bool: 0
-  TimeBetweenBeats: 0.61
+  AllowInput: 0
+  TimeBetweenBeats: 0.58
   currentSamples_UI: 0
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   LastActionOnBeat_Bool: 0
   currentCombo_MaxValue: 5
-  currentCombo_Value: 5
+  currentCombo_Value: 1
   CurrentCombo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   ComboMaxOvershoot: 4
-  currentComboOvershoot: 1
+  currentComboOvershoot: 0
   ComboOvershoot_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -38,11 +38,11 @@ MonoBehaviour:
   CurrentAmmo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  ShotsFired: 176
-  ShotsHit: 112
-  Kills: 48
-  OnBeatActions: 220
-  currentScore_Value: 14519
+  ShotsFired: 1
+  ShotsHit: 0
+  Kills: 0
+  OnBeatActions: 1
+  currentScore_Value: 0
   CurrentScore_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -51,7 +51,7 @@ MonoBehaviour:
   PlayerCurrentHealth_onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  enemysAliveCount: 3
+  enemysAliveCount: 20
   EnemyCount_onValueChanged:
     m_PersistentCalls:
       m_Calls: []

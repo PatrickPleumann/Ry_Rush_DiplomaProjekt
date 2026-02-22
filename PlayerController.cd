@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PlayerAim" Collapsed="true">
+    <Position X="16.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASIABAIAAQAIgAGQAEEAIAAAAAAAQCCIAAAIAIQADEI=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerAim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true">
+    <Position X="10.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DAQQAAAgA6QULiRQAagAAAKgBCAKmCQuGAQAWCAACFA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerMovement_New" Collapsed="true">
+    <Position X="12.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgQAAICxAgCFIEFxIAIAAABACBgwAGQMSBEIBIEACEA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerMovement_New.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerReload" Collapsed="true">
+    <Position X="18.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAQAAGAAEAAAAAAAAAAAAAAAAIAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerReload.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerShooting" Collapsed="true">
+    <Position X="10.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAgGAAAAAAIABCAAIACoIAAAABAAAKAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerShooting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

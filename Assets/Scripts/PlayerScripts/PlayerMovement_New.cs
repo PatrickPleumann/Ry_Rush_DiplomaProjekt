@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Diagnostics.Eventing.Reader;
+using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,9 +39,6 @@ public class PlayerMovement_New : MonoBehaviour
     [SerializeField] private float maxWallRunTime;
     [SerializeField] public bool Wallrunning;
 
-
-    private float wallRunTimer;
-    private bool allowWallJump;
     private Vector3 wallJumpForceApplied;
 
     [Header("Exiting Wall")]
@@ -175,7 +171,7 @@ public class PlayerMovement_New : MonoBehaviour
         rb_player.linearDamping = _isGrounded ? groundDragValue : 0;
     }
 
-    public void Jump()
+    public async void Jump()
     {
 
         if (collisionCheck.canJump == true && collisionCheck.IsGrounded == true)
@@ -183,7 +179,6 @@ public class PlayerMovement_New : MonoBehaviour
             AudioHandler.Instance.PlaySound_sourcePlayerMovement(
                 AudioHandler.Instance.playerJump[Random.Range(0,AudioHandler.Instance.playerJump.Length)]);
 
-            //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
                 values.OnBeatActions++;
@@ -196,7 +191,7 @@ public class PlayerMovement_New : MonoBehaviour
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
 
-            ResetJump(jumpCooldown); // async
+            await ResetJump(jumpCooldown);
         }
 
         else if (collisionCheck.canJump == true && collisionCheck.IsGrounded == false && collisionCheck.canDoubleJump == true)
@@ -204,7 +199,6 @@ public class PlayerMovement_New : MonoBehaviour
             AudioHandler.Instance.PlaySound_sourcePlayerMovement(
                 AudioHandler.Instance.playerJump[Random.Range(0, AudioHandler.Instance.playerJump.Length)]);
 
-            //if on beat.... maybe decrease if NOT on beat
             if (controller.IsOnBeat == true)
             {
                 values.OnBeatActions++;
@@ -215,13 +209,13 @@ public class PlayerMovement_New : MonoBehaviour
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(rb_player.transform.up * jumpForce, ForceMode.Impulse);
 
-            ResetJump(jumpCooldown); // async
+            await ResetJump(jumpCooldown); 
         }
     }
 
-    private async void ResetJump(float _jumpCooldown)
-    {
-        await Task.Delay((int)(_jumpCooldown * 1000));
+    private async UniTask ResetJump(float _jumpCooldown) 
+    { 
+        await UniTask.Delay((int)(_jumpCooldown * 1000));
         collisionCheck.canJump = true;
         collisionCheck.exitingSlope = false;
     }
@@ -265,7 +259,6 @@ public class PlayerMovement_New : MonoBehaviour
             {
                 StartWallRun();
                 collisionCheck.canDoubleJump = false;
-                allowWallJump = true;
             }
         }
         else if (collisionCheck.exitingWall)
@@ -279,7 +272,6 @@ public class PlayerMovement_New : MonoBehaviour
             if (Wallrunning)
             {
                 StopWallRun();
-                allowWallJump = false;
             }
         }
     }
@@ -317,7 +309,7 @@ public class PlayerMovement_New : MonoBehaviour
         Wallrunning = false;
     }
 
-    public void WallJump()
+    public async void WallJump()
     {
         if (collisionCheck.exitingWall == false && Wallrunning && collisionCheck.canJump == true)
         {
@@ -331,7 +323,6 @@ public class PlayerMovement_New : MonoBehaviour
                 values.LastActionOnBeat_Bool = true;
             }
             collisionCheck.exitingWall = true;
-            ExitWallTimer();
             SwitchState(MovementState.WallJumping);
             Vector3 wallNormal = collisionCheck.OnRightWall ? collisionCheck.hitWallRight.normal : collisionCheck.hitWallLeft.normal;
 
@@ -339,13 +330,14 @@ public class PlayerMovement_New : MonoBehaviour
 
             rb_player.linearVelocity = new Vector3(rb_player.linearVelocity.x, 0f, rb_player.linearVelocity.z);
             rb_player.AddForce(wallJumpForceApplied, ForceMode.Impulse);
+
+            await ExitWallTimer();
         }
     }
 
-
-    private async void ExitWallTimer() // takes a float and a bool and set´s boo
+    private async UniTask ExitWallTimer() // takes a float and a bool and set´s boo
     {
-        await Task.Delay((int)(exitWallTime * 1000));
+        await UniTask.Delay((int)(exitWallTime * 1000));
         collisionCheck.exitingWall = false;
     }
 }

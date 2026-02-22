@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -126,14 +127,14 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         transform.rotation = Quaternion.LookRotation(newDirectionSmoothed);
     }
 
-    private void EnemyDying(bool _onBeat)
+    private async void EnemyDying(bool _onBeat)
     {
         values.Kills++;
         enemyIsDead = true;
         values.EnemysAliveCount = values.EnemysAliveCount - 1;
         ActivateRagdoll();
         CalculatePoints(_onBeat);
-        DeathTimer();
+        await DeathTimer();
 
         //maybe apply shader while death timer running down
     }
@@ -194,10 +195,10 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
                 item.isKinematic = true;
         }
     }
-    private async void DeathTimer()
+    private async UniTask DeathTimer()
     {
         
-        await Task.Delay((int)(despawnTimer * 1000));
+        await UniTask.Delay((int)(despawnTimer * 1000));
 
         if (Pool != null)
         {

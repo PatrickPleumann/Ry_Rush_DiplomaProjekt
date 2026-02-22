@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -110,12 +111,12 @@ public class BeatTracking : MonoBehaviour
     }
     private void Start()
     {
-        values.TimeBetweenBeats = Utility.FloorFloat_TwoDigits(60 / songData.BPM);
+        values.TimeBetweenBeats = Utility.FloorFloatToTwoDigits(60 / songData.BPM);
         currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
         currentSamples_UI += onBeatOffset;
 
-        StartSongDelayed(timeTillSongStarts);
+        StartSong();
     }
     private void Update()
     {
@@ -123,9 +124,14 @@ public class BeatTracking : MonoBehaviour
             isOnBeat = CheckForNewBeat();
     }
 
-    private async void StartSongDelayed(float _timeTillSongStarts)
+    private async void StartSong()
     {
-        await Task.Delay((int)(_timeTillSongStarts * 1000));
+       await  StartSongDelayed(timeTillSongStarts);
+    }
+
+    private async UniTask StartSongDelayed(float _timeTillSongStarts)
+    {
+        await UniTask.Delay((int)(_timeTillSongStarts * 1000));
         songStarted = true;
         source.Play();
     }

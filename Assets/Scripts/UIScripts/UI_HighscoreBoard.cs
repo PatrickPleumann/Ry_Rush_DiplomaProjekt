@@ -104,21 +104,21 @@ public class UI_HighscoreBoard : MonoBehaviour
     private string Get_Accuracy()
     {
         if (values.ShotsFired > 0 && values.ShotsHit > 0)
-            return (Utility.FloorFloat_TwoDigits(values.ShotsHit / values.ShotsFired) * 100f).ToString() + " %";
+            return (Utility.FloorFloatToTwoDigits(values.ShotsHit / values.ShotsFired) * 100f).ToString() + " %";
         else
             return "Invalid values";
     }
     private string Get_PointsPerKill()
     {
         if (values.CurrentScore_Value > 0 && values.Kills > 0)
-            return Utility.FloorFloat_TwoDigits(values.CurrentScore_Value / values.Kills).ToString();
+            return Utility.FloorFloatToTwoDigits(values.CurrentScore_Value / values.Kills).ToString();
         else
             return "Invalid values";
     }
     private string Get_PointsPerHit()
     {
         if (values.CurrentScore_Value > 0 && values.ShotsHit > 0)
-            return Utility.FloorFloat_TwoDigits(values.CurrentScore_Value / values.ShotsHit).ToString();
+            return Utility.FloorFloatToTwoDigits(values.CurrentScore_Value / values.ShotsHit).ToString();
         else
             return "Invalid Values";
     }
