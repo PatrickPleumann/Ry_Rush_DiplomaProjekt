@@ -44,6 +44,7 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
     private Vector3 targetDirection;
     private Vector3 newDirection;
     private Vector3 newDirectionSmoothed;
+
     public bool enemyIsDead;
 
     #region Sqare Distances for better Performace
@@ -74,8 +75,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         enemyIsDead = false;
         lastHitOnBeat = false;
     }
-
-
 
     private void CacheSquaredValues()
     {
@@ -179,7 +178,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         Animator.enabled = false;
         SetActiveRagdollRigidbodies();
     }
-
     private void SetActiveRagdollRigidbodies() // this is necessary or all rigidbodies, which are suppressed by the animator will unload an
     {                                          // enormous amount of energy, which causes very weird ragdoll behaviour
         if (allRagdollRigidbodies != null)
@@ -188,7 +186,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
                 item.isKinematic = false;
         }
     }
-
     private void SetInactiveRagdollRigibodies() // this is necessary or all rigidbodies, which are suppressed by the animator, will unload an
     {                                           // enormous amount of energy, which causes very weird ragdoll behaviour
         if (allRagdollRigidbodies != null)
@@ -197,7 +194,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
                 item.isKinematic = true;
         }
     }
-
     private async void DeathTimer()
     {
         
@@ -212,7 +208,6 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
         else
             Destroy(gameObject);
     }
-
     public void SetDefaultValues() // resets all important values for a fresh respawn
     {
         SetInactiveRagdollRigibodies();

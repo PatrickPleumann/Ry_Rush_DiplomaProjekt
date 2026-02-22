@@ -1,7 +1,5 @@
-using NUnit.Framework.Interfaces;
-using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.AI;
+
 public class IdleState<T> : BaseState<T> where T : EnemyController
 {
     private bool sawPlayer = false;
@@ -45,7 +43,7 @@ public class IdleState<T> : BaseState<T> where T : EnemyController
         if (animTimer <= 0f)
         {
             controller.Animator.SetTrigger("IdleAnim2");
-            animTimer = Random.Range(5,30);
+            animTimer = Random.Range(5, 30);
         }
     }
 

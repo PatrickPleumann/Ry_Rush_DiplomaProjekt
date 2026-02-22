@@ -83,7 +83,7 @@ public class BeatTracking : MonoBehaviour
         asyncValue = songData.AsyncSamplesValue;
         source.volume = songData.SongSpecificVolume;
 
-        values.AllowInput_Bool = true;
+        values.AllowInput = true;
 
         onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
         samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
@@ -209,7 +209,7 @@ public class BeatTracking : MonoBehaviour
     private void SongEnds()
     {
         songStarted = false;
-        values.AllowInput_Bool = false;
+        values.AllowInput = false;
         values.onSessionEnds.Invoke();
         Debug.Log("GAME OVER");
     }

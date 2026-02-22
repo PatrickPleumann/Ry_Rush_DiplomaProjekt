@@ -10,7 +10,6 @@ public class PlayerInfo : ScriptableObject
     /// </summary>
     public void FindPlayerPosition()
     {
-        Debug.Log("Player Transform wird gesucht und zu gewiesen");
         PlayerPosition = FindFirstObjectByType<PlayerController>().transform;
     }
 }

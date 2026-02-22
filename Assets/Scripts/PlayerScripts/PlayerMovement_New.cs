@@ -92,7 +92,7 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (values.AllowInput_Bool == true)
+        if (values.AllowInput == true)
         {
             if (Wallrunning && controller.AllowMovement == true)
                 WallRunning();

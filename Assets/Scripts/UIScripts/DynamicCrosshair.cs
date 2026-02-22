@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class DynamicCrosshair : MonoBehaviour
 {
-    //need to precisely go 300 units for each beattracking visualizer
     [SerializeField] private BeatTracking beatTracking;
     [SerializeField] private CentralizedValues values;
 
@@ -23,22 +22,16 @@ public class DynamicCrosshair : MonoBehaviour
     [SerializeField] private CanvasGroup hitmarker_canvasGrp;
     [SerializeField] private float timeTillHitmarkerVanishes = 1;
 
-    private Task currentHitmarkerVanishing;
-
-
     private float valuePerSample;
-
 
     private void OnEnable()
     {
-        //change color depends on if on beat is true or false
         values.onEnemyHit.AddListener(ShowHitMarker);
     }
 
     private void OnDisable()
     {
         values.onEnemyHit.RemoveListener(ShowHitMarker);
-        //change color depends on if on beat is true or false
     }
     private void Start()
     {
@@ -67,7 +60,7 @@ public class DynamicCrosshair : MonoBehaviour
     }
 
     private async void HitMarkerVanishes(float _timeInSec)
-    { // works clunky, but works.
+    { 
         while (hitmarker_canvasGrp.alpha > 0)
         {
             await Task.Delay((int)(Time.deltaTime * 1000 * _timeInSec));

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private PlayerMovement_New movement;
     [SerializeField] private BeatTracking beat;
     [SerializeField] private CentralizedValues values;
 
@@ -154,7 +153,7 @@ public class PlayerController : MonoBehaviour
     #region Process Input Methods
     private void ProcessShootInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput_Bool == true)
+        if (values.AllowInput == true)
         {
             if (canShoot == true && CurrentAmmo > 0) // into CV_SO
             {
@@ -174,7 +173,7 @@ public class PlayerController : MonoBehaviour
     }
     private void ProcessReloadInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput_Bool == true && isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+        if (values.AllowInput == true && isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
         {
             isReloading = true;
             onReload_started.Invoke();
@@ -188,12 +187,12 @@ public class PlayerController : MonoBehaviour
     }
     private void ProcessJumpInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput_Bool == true && ctx.started)
+        if (values.AllowInput == true && ctx.started)
             onJumpInvoked_started.Invoke();
     }
     private void ProcessAimInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput_Bool == true && ctx.started == true)
+        if (values.AllowInput == true && ctx.started == true)
             onAimInvoked_started.Invoke();
 
         else
@@ -201,7 +200,7 @@ public class PlayerController : MonoBehaviour
     }
     private void ProcessSlowMotionInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput_Bool == true && ctx.started == true)
+        if (values.AllowInput == true && ctx.started == true)
         {
             onSlowMotion_started.Invoke();
         }
@@ -210,7 +209,7 @@ public class PlayerController : MonoBehaviour
     }
     private void ProcessDashInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput_Bool == true && ctx.started == true)
+        if (values.AllowInput == true && ctx.started == true)
             onDashInvoked_started.Invoke();
     }
     private void ProcessEscInput(InputAction.CallbackContext context)

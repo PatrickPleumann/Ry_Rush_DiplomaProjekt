@@ -1,7 +1,3 @@
-using System.ComponentModel;
-using System.Drawing.Text;
-using System.Runtime.CompilerServices;
-using System.Security.Policy;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,7 +19,7 @@ public class CentralizedValues : ScriptableObject
         Kills = 0;
         OnBeatActions = 0;
 
-        AllowInput_Bool = true;
+        AllowInput = true;
 
         TimeBetweenBeats = 0f;
 
@@ -35,6 +31,7 @@ public class CentralizedValues : ScriptableObject
         GameIsPaused = false;
         PlayerIsDead = false;
     }
+
     /// <summary>
     /// Every single Properties is seperated with a [Space]
     /// Those properties single usecase is to transfer data towards another system after they were changed. This happens eventbased.
@@ -50,7 +47,7 @@ public class CentralizedValues : ScriptableObject
         get => moveInput_Value;
         set
         {
-            if (AllowInput_Bool == true && moveInput_Value != value)
+            if (AllowInput == true && moveInput_Value != value)
             {
                 moveInput_Value = value;
                 MoveInput_OnValueChanged.Invoke(moveInput_Value);
@@ -60,7 +57,7 @@ public class CentralizedValues : ScriptableObject
 
     [SerializeField] public Vector2 LookInput_Value;
 
-    [SerializeField] public bool AllowInput_Bool = true;
+    [SerializeField] public bool AllowInput = true;
 
     [Space]
     [Header("Beattracking Values")]
@@ -86,8 +83,8 @@ public class CentralizedValues : ScriptableObject
     public bool LastActionOnBeat_Bool = false;
 
     [Space]
-    [Header("Ingame UI")]
 
+    [Header("Ingame UI")]
     [SerializeField] public int currentCombo_MaxValue;
     [SerializeField] private int currentCombo_Value;
     [HideInInspector] public UnityEvent<int> CurrentCombo_OnValueChanged;
@@ -122,8 +119,8 @@ public class CentralizedValues : ScriptableObject
     }
 
     [Space]
-    [Header("Ammo Values")]
 
+    [Header("Ammo Values")]
     [SerializeField] private int currentAmmo;
     [HideInInspector] public UnityEvent<int> CurrentAmmo_OnValueChanged;
     public int CurrentAmmo_Value
@@ -140,8 +137,8 @@ public class CentralizedValues : ScriptableObject
     }
 
     [Space]
-    [Header("Score Values")]
 
+    [Header("Score Values")]
     [SerializeField] public float ShotsFired;
     [SerializeField] public float ShotsHit;
     [SerializeField] public float Kills;
@@ -162,6 +159,7 @@ public class CentralizedValues : ScriptableObject
         }
     }
 
+    [Space]
 
     [Header("Ingame Values")]
     [SerializeField] public float playerMaxHealth;
@@ -232,10 +230,10 @@ public class CentralizedValues : ScriptableObject
     }
 
     [Space]
+
     [Header("Game Manager")]
     [HideInInspector] public UnityEvent onSessionEnds;
     [HideInInspector] public UnityEvent onDashExecuted;
     [HideInInspector] public UnityEvent onEnemyHit;
     [HideInInspector] public UnityEvent onPlayerDeath;
-
 }

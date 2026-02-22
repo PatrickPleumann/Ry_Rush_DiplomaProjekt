@@ -92,7 +92,8 @@ public class AudioHandler : MonoBehaviour
             sourcePlayerMovement.clip = _clip;
             sourcePlayerMovement.Play();
         }
-        else sourcePlayerMovement.Stop();
+
+        else  sourcePlayerMovement.Stop();
     }
 
     public void PlaySound_sourceActionAmbience(AudioClip _clip)

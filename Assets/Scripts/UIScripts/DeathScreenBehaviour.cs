@@ -31,7 +31,7 @@ public class DeathScreenBehaviour : MonoBehaviour
 
     public void InitDeathScreen()
     {
-        values.AllowInput_Bool = false;
+        values.AllowInput = false;
         PlayerIngameUI.SetActive(false);
         deathScreen.SetActive(true);
         FadeInDeathScreen();
@@ -40,7 +40,6 @@ public class DeathScreenBehaviour : MonoBehaviour
     {
         while (deathScreen_canvasGrp.alpha < 1)
         {
-            //Time.deltaTime should be always above 0.001f which is fine for this usecase, worst case is the death screen does not fade in but pops up
             await Task.Delay((int)(Time.deltaTime * 1000));
             deathScreen_canvasGrp.alpha += Time.deltaTime;
         }

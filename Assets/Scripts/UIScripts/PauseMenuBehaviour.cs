@@ -42,7 +42,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         {
             Time.timeScale = 1f; // 
             Cursor.lockState = CursorLockMode.Locked;
-            values.AllowInput_Bool = true;
+            values.AllowInput = true;
             pauseMenu.SetActive(false);
             beatTracking.source.UnPause();
         }
@@ -50,7 +50,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         {
             Time.timeScale = 0f; 
             Cursor.lockState = CursorLockMode.None;
-            values.AllowInput_Bool = false;
+            values.AllowInput = false;
             pauseMenu.SetActive(true);
             beatTracking.source.Pause();
         }

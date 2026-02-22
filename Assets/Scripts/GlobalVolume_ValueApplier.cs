@@ -8,9 +8,11 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
     [SerializeField] private PostProcessVolume pp_volume;
     [SerializeField] private CentralizedValues values;
 
+
+    [Header("Volume Components & Volume Intensities")]
+
     [SerializeField] private Vignette vignette;
     [SerializeField] private float vignette_Intensity;
-    [Header("Volume Components & Volume Intensities")]
 
     [SerializeField] private float BloodyVignette_MaxIntensity;
 

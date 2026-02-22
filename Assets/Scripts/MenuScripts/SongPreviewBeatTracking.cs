@@ -11,8 +11,8 @@ public class SongPreviewBeatTracking : MonoBehaviour
     [SerializeField] public AudioSource source_song;
     [SerializeField] public AudioSource source_metronome;
 
-    public AudioClip clip;
     [SerializeField] private AudioClip metronome;
+    public AudioClip clip;
 
     [SerializeField] private int currentSamples_Preview = 0;
     [SerializeField] private int asyncValues_Preview = 0;
