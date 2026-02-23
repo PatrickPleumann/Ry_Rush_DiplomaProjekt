@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class SlowMotionHandler : MonoBehaviour
 {
     [SerializeField] private PlayerController controller;
-    [SerializeField] private AudioHandler audio;
+
     [SerializeField] private float duration = 1;
     [SerializeField] private float slowMotionSoundPitchRate = 3f;
 
@@ -15,13 +15,12 @@ public class SlowMotionHandler : MonoBehaviour
     private Coroutine decreaseTimeScale;
     private Coroutine increaseTimeScale;
 
-
     private void OnEnable()
     {
         controller.onSlowMotion_started.AddListener(StartSlowMotion);
         controller.onSlowMotion_canceled.AddListener(StopSlowMotion);
 
-        if (controller.SlowMotion_OnAim == true) // only if settings allow it
+        if (controller.SlowMotion_OnAim == true)
         {
             controller.onAimInvoked_started.AddListener(StartSlowMotion);
             controller.onAimInvoked_canceled.AddListener(StopSlowMotion);
@@ -33,7 +32,7 @@ public class SlowMotionHandler : MonoBehaviour
         controller.onSlowMotion_started.RemoveListener(StartSlowMotion);
         controller.onSlowMotion_canceled.RemoveListener(StopSlowMotion);
 
-        if (controller.SlowMotion_OnAim == true) // only if settings allow it
+        if (controller.SlowMotion_OnAim == true)
         {
             controller.onAimInvoked_started.RemoveListener(StartSlowMotion);
             controller.onAimInvoked_canceled.RemoveListener(StopSlowMotion);
@@ -62,7 +61,7 @@ public class SlowMotionHandler : MonoBehaviour
         while (Time.timeScale > minTimeScale)
         {
             Time.timeScale = Mathf.Lerp(maxTimeScale, minTimeScale, duration);
-            audio.sourceShooting.pitch = Mathf.Lerp(maxTimeScale, minTimeScale, duration) * slowMotionSoundPitchRate;
+            AudioHandler.Instance.sourceShooting.pitch = Mathf.Lerp(maxTimeScale, minTimeScale, duration) * slowMotionSoundPitchRate;
         }
         yield return new WaitForEndOfFrame();
     }
@@ -71,7 +70,7 @@ public class SlowMotionHandler : MonoBehaviour
         while (Time.timeScale < maxTimeScale)
         {
             Time.timeScale = Mathf.Lerp(minTimeScale, maxTimeScale, duration);
-            audio.sourceShooting.pitch = Mathf.Lerp(minTimeScale,maxTimeScale, duration);
+            AudioHandler.Instance.sourceShooting.pitch = Mathf.Lerp(minTimeScale,maxTimeScale, duration);
         }
         yield return new WaitForEndOfFrame();
     }

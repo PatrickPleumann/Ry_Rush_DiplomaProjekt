@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemySpawnLogic : MonoBehaviour
 {
-    public Queue<GameObject> allSpawnpoints = new();
+    public Queue<GameObject> AllSpawnpoints = new();
     private void Start()
     {
         InitSpawnpointPool();
@@ -12,7 +12,7 @@ public class EnemySpawnLogic : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            allSpawnpoints.Enqueue(transform.GetChild(i).gameObject);
+            AllSpawnpoints.Enqueue(transform.GetChild(i).gameObject);
         }
     }
 }

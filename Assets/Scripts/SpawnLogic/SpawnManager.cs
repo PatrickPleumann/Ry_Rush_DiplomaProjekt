@@ -1,39 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing.Design;
-using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class SpawnManager : MonoBehaviour
 {
     /// <summary>
-    /// Whole class takes care of spawning and respawning enemies at the begin and throughout the session
+    /// Whole class takes care of spawning and respawning enemies at game start and throughout the session
     /// </summary>
     [Header("References")]
     [SerializeField] private CentralizedValues values;
     [SerializeField] private ObjectPoolBehaviour enemyObjPool;
     [SerializeField] private ObjectPoolBehaviour vfxObjPool;
-    [SerializeField] private Transform playerTransform;
     [SerializeField] private EnemySpawnLogic spawns;
+    [SerializeField] private Transform playerTransform;
 
     [Header("Adjustable Values")]
-    [SerializeField][Range(15f, 25f)] private float minSpawnDistanceToPlayer;
+    [SerializeField][Range(10f, 25f)] private float minSpawnDistanceToPlayer;
     [SerializeField][Range(30f, 50f)] private float maxSpawnDistanceToPlayer;
+    [SerializeField] private float enqueueVFXObjTime = 2;
     [SerializeField] private float timeBetweenVFXAndEnemySpawn = 1;
-    [SerializeField] private int EnemyCountOnGameStart;
+    [SerializeField] private int enemyCountOnGameStart;
 
     [SerializeField] private float slowMotionBasedDelay; // this value can be used as a multiplier for the time delay on spawn
 
     [Header("Nice to know values")]
     [SerializeField] private float min;
     [SerializeField] private float max;
-    [SerializeField] private Vector3 sqrMagnitude;
+    [SerializeField] private Vector3 spawnPointDistanceToPlayer;
 
-    private void OnDisable()
+    private CancellationTokenSource cts;
+
+    private void Awake()
     {
-        values.EnemyCount_onValueChanged.RemoveListener(ValidateRespawnAction);
+        cts = new();
     }
 
     private void Start()
@@ -42,19 +41,25 @@ public class SpawnManager : MonoBehaviour
         max = maxSpawnDistanceToPlayer * maxSpawnDistanceToPlayer;
 
         values.EnemysAliveCount = 0;
+
         SpawnEnemysOnGameStart();
 
-        values.EnemyCount_onValueChanged.AddListener(ValidateRespawnAction);
+        values.EnemyCount_onValueChanged.AddListener(ValidateRespawn);
+    }
+    private void OnDisable()
+    {
+        values.EnemyCount_onValueChanged.RemoveListener(ValidateRespawn);
     }
 
     private void SpawnEnemysOnGameStart()
     {
-        for (int i = 0; i < EnemyCountOnGameStart; i++)
+        for (int i = 0; i < enemyCountOnGameStart; i++)
         {
             GameObject tempSpawn;
             GameObject tempEnemy;
-            if (spawns.allSpawnpoints != null)
-                tempSpawn = spawns.allSpawnpoints.Dequeue();
+
+            if (spawns.AllSpawnpoints != null)
+                tempSpawn = spawns.AllSpawnpoints.Dequeue();
 
             else break;
 
@@ -65,68 +70,70 @@ public class SpawnManager : MonoBehaviour
 
             tempEnemy.transform.position = tempSpawn.transform.position;
             tempEnemy.SetActive(true);
-            spawns.allSpawnpoints.Enqueue(tempSpawn);
+            spawns.AllSpawnpoints.Enqueue(tempSpawn);
 
             values.EnemysAliveCount = values.EnemysAliveCount + 1; // Spawn Enemy on value changed subscribes after this method is finished
         }
     }
 
-    private void ValidateRespawnAction(int _enemyCount)
+    private async void ValidateRespawn(int _enemyCount)
     {
-        if (_enemyCount >= EnemyCountOnGameStart)
+        if (_enemyCount >= enemyCountOnGameStart)
             return;
 
-        for (int i = 0; i < spawns.allSpawnpoints.Count; i++)
+        for (int i = 0; i < spawns.AllSpawnpoints.Count; i++)
         {
-            var spawnpoint = spawns.allSpawnpoints.Dequeue();
+            var spawnpoint = spawns.AllSpawnpoints.Dequeue();
             if (CheckSpawnDistanceToPlayer(spawnpoint))
             {
-                StartCoroutine(OnValidate_RespawnEnemy(spawnpoint));
-                Debug.Log("Respawn in progress");
+                await OnValidateRespawnEnemy(spawnpoint, cts.Token);
                 break;
             }
             else
             {
-                spawns.allSpawnpoints.Enqueue(spawnpoint);
+                spawns.AllSpawnpoints.Enqueue(spawnpoint);
                 continue;
             }
         }
     }
 
-    private IEnumerator OnValidate_RespawnEnemy(GameObject _spawn)
+    private async UniTask OnValidateRespawnEnemy(GameObject _spawn, CancellationToken token)
     {
-        GameObject _vfx = OnValidate_GetVFXPrefab();
-        GameObject _enemy = OnValidate_GetEnemyPrefab();
+        token.ThrowIfCancellationRequested();
+
+        GameObject _vfx = OnValidateGetVFXPrefab();
+        GameObject _enemy = OnValidateGetEnemyPrefab();
 
         if (_vfx == null || _enemy == null)
         {
-            spawns.allSpawnpoints.Enqueue(_spawn);
-            yield break;
+            spawns.AllSpawnpoints.Enqueue(_spawn);
+            cts.Cancel();
         }
 
         AudioHandler.Instance.PlayActionAmbience_2_Sounds
             (AudioHandler.Instance.enemySpawnSounds[Random.Range(0, AudioHandler.Instance.enemySpawnSounds.Length)]);
 
-        _vfx.TryGetComponent(out ParticleSystem vfx_Effect);
+        _vfx.TryGetComponent(out ParticleSystem vfxEffect);
         _vfx.transform.position = _spawn.transform.position;
         _vfx.SetActive(true);
-        vfx_Effect.Play();
 
-        yield return new WaitForSeconds(timeBetweenVFXAndEnemySpawn);
+        vfxEffect.Play();
+
+        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn * 1000));
 
         _enemy.transform.position = _spawn.transform.position;
         _enemy.SetActive(true);
 
-        spawns.allSpawnpoints.Enqueue(_spawn);
+        spawns.AllSpawnpoints.Enqueue(_spawn);
 
-        yield return new WaitForSeconds(1);
+        await UniTask.Delay((int)(enqueueVFXObjTime * 1000));
         vfxObjPool.EnqueueObject(_vfx);
 
-        values.EnemysAliveCount = values.EnemysAliveCount + 1; //TODO: dangerous
-        yield return new WaitForEndOfFrame();
+        values.EnemysAliveCount = values.EnemysAliveCount + 1;
+        await UniTask.WaitForEndOfFrame();
     }
 
-    private GameObject OnValidate_GetVFXPrefab()
+    private GameObject OnValidateGetVFXPrefab()
     {
         if (vfxObjPool.objectPool.Count > 0)
             return vfxObjPool.DeQueueObject();
@@ -135,7 +142,7 @@ public class SpawnManager : MonoBehaviour
         return null;
     }
 
-    private GameObject OnValidate_GetEnemyPrefab()
+    private GameObject OnValidateGetEnemyPrefab()
     {
         if (enemyObjPool.objectPool.Count > 0)
             return enemyObjPool.DeQueueObject();
@@ -146,15 +153,14 @@ public class SpawnManager : MonoBehaviour
 
     private bool CheckSpawnDistanceToPlayer(GameObject _spawnPoint) // change this to near player
     {
-        sqrMagnitude = _spawnPoint.transform.position - playerTransform.transform.position;
+        spawnPointDistanceToPlayer = _spawnPoint.transform.position - playerTransform.transform.position;
 
-        if (Vector3.Dot(sqrMagnitude, playerTransform.forward) < 0)
+        if (Vector3.Dot(spawnPointDistanceToPlayer.normalized, playerTransform.forward) < 0)
             return false;
 
-        if (sqrMagnitude.sqrMagnitude > min && sqrMagnitude.sqrMagnitude < max)
-        {
+        if (spawnPointDistanceToPlayer.sqrMagnitude > min && spawnPointDistanceToPlayer.sqrMagnitude < max)
             return true;    
-        }
+
         return false;
     }
 }

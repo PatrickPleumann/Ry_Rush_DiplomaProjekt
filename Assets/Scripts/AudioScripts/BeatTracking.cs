@@ -55,9 +55,9 @@ public class BeatTracking : MonoBehaviour
     public int currentSamples = 0;
     public int currentTimeSamplesMin = 0;
     public int currentTimeSamplesMax = 0;
-    public bool isOnBeat = false;
-    public int onBeatOffset;
-    public int beatCounter = 1;
+    public bool IsOnBeat = false;
+    public int OnBeatOffset;
+    public int BeatCounter = 1;
 
     [Header("Beattracking Values for UI Visualization")]
     public int currentSamples_UI = 0; // into CV_SO
@@ -86,8 +86,8 @@ public class BeatTracking : MonoBehaviour
 
         values.AllowInput = true;
 
-        onBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
-        samplesPerBeat_UI = samplesPerBeat + onBeatOffset;
+        OnBeatOffset = (int)(samplesPerBeat * beatOffsetMultiplier) * beatMultiplier;
+        samplesPerBeat_UI = samplesPerBeat + OnBeatOffset;
     }
 
     private void OnEnable()
@@ -116,14 +116,14 @@ public class BeatTracking : MonoBehaviour
         values.TimeBetweenBeats = Utility.FloorFloatToTwoDigits(60 / songData.BPM);
         currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
-        currentSamples_UI += onBeatOffset;
+        currentSamples_UI += OnBeatOffset;
 
         StartSong();
     }
     private void Update()
     {
         if (songStarted == true)
-            isOnBeat = CheckForNewBeat();
+            IsOnBeat = CheckForNewBeat();
     }
 
     private async void StartSong()
@@ -144,12 +144,12 @@ public class BeatTracking : MonoBehaviour
     }
     private async UniTask DecreaseSourceVolumeAsync()
     {
-        while (source.volume > 0.001f) // feels very good, so song fades out very long until it completely disappears
+        while (source == true && source.volume > 0.001f) // feels very good, so song fades out very long until it completely disappears
         {
             source.volume -= Time.deltaTime;
             await UniTask.Delay((int)(Time.deltaTime * 1000 * (1 / source.volume)), true);
         }
-        source.volume = 0f;
+        source.volume = 0f; //some cancel token should terminate this method if source is null
     }
 
     /// <summary>
@@ -183,10 +183,10 @@ public class BeatTracking : MonoBehaviour
         if ((currentSamples_UI / samplesPerBeat_UI) >= 1) // for testing // maybe a second logic for a second visualizer 
             currentSamples_UI = currentSamples;
 
-        if ((currentSamples - samplesPerBeat) <= 0 && (currentSamples - samplesPerBeat) > (-onBeatOffset))
+        if ((currentSamples - samplesPerBeat) <= 0 && (currentSamples - samplesPerBeat) > (-OnBeatOffset))
             return true;
 
-        if (currentSamples > 0 && (currentSamples <= onBeatOffset))
+        if (currentSamples > 0 && (currentSamples <= OnBeatOffset))
             return true;
 
         return false;
@@ -198,7 +198,7 @@ public class BeatTracking : MonoBehaviour
     /// <returns></returns>
     public bool Return_IsOnBeat()
     {
-        return isOnBeat; // into CV_SO 
+        return IsOnBeat; // into CV_SO 
     }
 
     private void AssignAudioFile(string _fileName)

@@ -122,4 +122,12 @@ public class AudioHandler : MonoBehaviour
     {
         Instance = null;
     }
+    
+    /// <summary>
+    /// Slow Motion driven pitch down for all relevant audio sources. The song audio source will stay unaffected.
+    /// </summary>
+    public void PitchDownAllRelevantAudioSources()
+    {
+
+    }
 }

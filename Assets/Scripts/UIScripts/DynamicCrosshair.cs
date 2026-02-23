@@ -40,7 +40,7 @@ public class DynamicCrosshair : MonoBehaviour
 
     private void LateUpdate()
     {
-        ChangeColor(beatTracking.isOnBeat);
+        ChangeColor(beatTracking.IsOnBeat);
         BeatVisualization();
     }
 

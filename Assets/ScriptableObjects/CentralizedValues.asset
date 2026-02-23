@@ -38,16 +38,16 @@ MonoBehaviour:
   CurrentAmmo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  ShotsFired: 1
-  ShotsHit: 0
-  Kills: 0
+  ShotsFired: 334
+  ShotsHit: 240
+  Kills: 22
   OnBeatActions: 1
-  currentScore_Value: 0
+  currentScore_Value: 1235
   CurrentScore_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   playerMaxHealth: 100
-  playerCurrentHealth: 20
+  playerCurrentHealth: 90
   PlayerCurrentHealth_onValueChanged:
     m_PersistentCalls:
       m_Calls: []
