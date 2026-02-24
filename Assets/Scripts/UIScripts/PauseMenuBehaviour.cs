@@ -18,8 +18,8 @@ public class PauseMenuBehaviour : MonoBehaviour
         mainMenu_Button.onClick.AddListener(OnMainMenuButton_Clicked);
         controller.onEsc_started.AddListener(EscButton_Clicked);
 
-        values.onSessionEnds.AddListener(UnAssign_ESCButton);
-        values.onPlayerDeath.AddListener(UnAssign_ESCButton);
+        values.OnSessionEnds.AddListener(UnAssign_ESCButton);
+        values.OnPlayerDeath.AddListener(UnAssign_ESCButton);
     }
     private void OnDisable()
     {
@@ -27,8 +27,8 @@ public class PauseMenuBehaviour : MonoBehaviour
         mainMenu_Button.onClick.RemoveListener(OnMainMenuButton_Clicked);
         controller.onEsc_started.RemoveListener(EscButton_Clicked);
 
-        values.onSessionEnds.RemoveListener(UnAssign_ESCButton);
-        values.onPlayerDeath.RemoveListener(UnAssign_ESCButton);
+        values.OnSessionEnds.RemoveListener(UnAssign_ESCButton);
+        values.OnPlayerDeath.RemoveListener(UnAssign_ESCButton);
     }
 
     private void UnAssign_ESCButton()

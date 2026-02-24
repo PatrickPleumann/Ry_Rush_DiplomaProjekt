@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,15 +17,12 @@ public class UI_HighscoreBoard : MonoBehaviour
     [SerializeField] public TMP_Text PointsPerKill;
     [SerializeField] public TMP_Text PointsPerHit;
     [SerializeField] public TMP_Text Kills;
-    [SerializeField] public TMP_Text OnBeatActions; // needs UI
+    [SerializeField] public TMP_Text OnBeatActions;
     [SerializeField] public TMP_Text YourScore;
 
-    
-    //[SerializeField][Range(1f, 2f)] private float timeToTillShowScore; 
-    //[SerializeField][Range(0.1f, 0.5f)] private float timeBetweenScoreShowingUp;    // current Scoreboard logic uses time per beat for scores popping up
-    //[SerializeField][Range(0.2f, 1f)] private float timeBeforeEndScorePopsUp; 
-
     [SerializeField] public Button backButton;
+
+    private CancellationTokenSource cts = new();
 
     private void OnEnable()
     {
@@ -35,54 +34,94 @@ public class UI_HighscoreBoard : MonoBehaviour
         backButton.onClick.RemoveListener(OnBackButton);
     }
 
-
-    private void Start()
+    private async void Start()
     {
         var _timeBetween = values.TimeBetweenBeats;
         Debug.Log("Time between beats: " + _timeBetween);
-        StartCoroutine(ShowHighscoreScreen(_timeBetween));
+        await ShowHighscoreScreen(_timeBetween, cts.Token);
     }
 
-
-    private IEnumerator ShowHighscoreScreen(float _timeBetween)
+    private async UniTask ShowHighscoreScreen(float _timeBetween, CancellationToken _token)
     {
-        //increase volume here to roughly math song volume
-        yield return new WaitForSeconds(_timeBetween * 2);
+        _token.ThrowIfCancellationRequested();
+
+        await UniTask.Delay((int)(_timeBetween * 2 * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsFired.text = Get_ShotsFired();
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsHit.text = Get_ShotsHit();
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         Accuracy.text = Get_Accuracy();
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         PointsPerKill.text = Get_PointsPerKill();
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         PointsPerHit.text = Get_PointsPerHit();
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         Kills.text = Get_Kills();
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         OnBeatActions.text = Get_OnBeatActions();
 
         Cursor.lockState = CursorLockMode.None;
 
-        yield return new WaitForSeconds(_timeBetween);
+        await UniTask.Delay((int)(_timeBetween * 1000), false);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit2);
         YourScore.text = Get_YourScore();
 
-        yield return new WaitForEndOfFrame();
+        await UniTask.WaitForEndOfFrame();
     }
+
+    //private IEnumerator ShowHighscoreScreen(float _timeBetween)
+    //{
+    //    //increase volume here to roughly math song volume
+    //    yield return new WaitForSeconds(_timeBetween * 2);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    ShotsFired.text = Get_ShotsFired();
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    ShotsHit.text = Get_ShotsHit();
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    Accuracy.text = Get_Accuracy();
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    PointsPerKill.text = Get_PointsPerKill();
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    PointsPerHit.text = Get_PointsPerHit();
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    Kills.text = Get_Kills();
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
+    //    OnBeatActions.text = Get_OnBeatActions();
+
+    //    Cursor.lockState = CursorLockMode.None;
+
+    //    yield return new WaitForSeconds(_timeBetween);
+    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit2);
+    //    YourScore.text = Get_YourScore();
+
+    //    yield return new WaitForEndOfFrame();
+    //}
+
     private void OnBackButton()
     {
         values.SetDefaultValues();
@@ -90,7 +129,6 @@ public class UI_HighscoreBoard : MonoBehaviour
         SceneManager.UnloadSceneAsync(temp);
         SceneManager.LoadSceneAsync(0);
     }
-
 
     #region Get Scoreboard values methods
     private string Get_ShotsFired()
@@ -135,4 +173,10 @@ public class UI_HighscoreBoard : MonoBehaviour
         return values.CurrentScore_Value.ToString();
     }
     #endregion
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
+    }
 }

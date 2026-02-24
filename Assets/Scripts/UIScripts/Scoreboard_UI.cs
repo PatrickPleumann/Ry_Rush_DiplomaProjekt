@@ -32,14 +32,14 @@ public class Scoreboard_UI : MonoBehaviour
     }
     private void ComboCounter_TextShift(int _value)
     {
-        if (comboCounterOvershoot.activeSelf == false && _value >= values.currentCombo_MaxValue && values.CurrentComboOvershoot_Value > 0)
+        if (comboCounterOvershoot.activeSelf == false && _value >= values.CurrentComboMaxValue && values.CurrentComboOvershoot_Value > 0)
         {
             comboCounterNormal.SetActive(false);
             comboCounterOvershoot.SetActive(true);
             comboCounter_Overshoot.text = comboCounter_Text + _value;
         }
 
-        else if (values.CurrentCombo_Value < values.currentCombo_MaxValue)
+        else if (values.CurrentCombo_Value < values.CurrentComboMaxValue)
         {
             comboCounterOvershoot.SetActive(false);
             comboCounterNormal.SetActive(true);

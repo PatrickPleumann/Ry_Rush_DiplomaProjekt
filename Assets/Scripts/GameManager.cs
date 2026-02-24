@@ -22,12 +22,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        values.onSessionEnds.AddListener(OnSessionEnds);
+        values.OnSessionEnds.AddListener(OnSessionEnds);
     }
 
     private void OnDisable()
     {
-        values.onSessionEnds.AddListener(OnSessionEnds);
+        values.OnSessionEnds.AddListener(OnSessionEnds);
     }
     private void OnDestroy()
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class PlayerDash : MonoBehaviour
     private Rigidbody rb_player;
     private Vector3 dashForceVector = Vector3.zero;
 
-
+    private CancellationTokenSource cts = new();
     private void OnEnable()
     {
         controller.onDashInvoked_started.AddListener(Dash);
@@ -35,7 +36,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (canDash == true)
         {
-            values.onDashExecuted.Invoke();
+            values.OnDashExecuted.Invoke();
 
             AudioHandler.Instance.PlayOneShot(
                 AudioHandler.Instance.playerDash[Random.Range(0, AudioHandler.Instance.playerDash.Length)]);
@@ -57,17 +58,24 @@ public class PlayerDash : MonoBehaviour
 
             rb_player.AddForce(dashForceVector, ForceMode.Impulse);
 
-            await ResetDash(disallowMovementForSeconds, dashCooldown);
+            await ResetDash(disallowMovementForSeconds, dashCooldown, cts.Token);
         }
     }
 
 
-    private async UniTask ResetDash(float _allowMovementTimer, float _dashCooldown)
+    private async UniTask ResetDash(float _allowMovementTimer, float _dashCooldown, CancellationToken _token)
     {
+        _token.ThrowIfCancellationRequested();
         await UniTask.Delay((int)(_allowMovementTimer * 1000));
         controller.AllowMovement = true;
         await UniTask.Delay((int)((_dashCooldown - _allowMovementTimer) * 1000));
         canDash = true;
         collisionCheck.exitingSlope = false;
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }

@@ -1,18 +1,21 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AudioHandler : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private CentralizedValues values;
     [SerializeField] private PlayerController controller;
+    [SerializeField] private SettingsData data;
 
     [SerializeField] public AudioSource sourceShooting;
     [SerializeField] private AudioSource sourcePlayerMovement;
-    [SerializeField] private AudioSource sourceActionAmbience_1;
-    [SerializeField] private AudioSource sourceActionAmbience_2; // 
-    [SerializeField] private AudioSource sourceAmbience_1; // background sound
+    [SerializeField] private AudioSource sourceActionAmbience1;
+    [SerializeField] private AudioSource sourceActionAmbience2;
+    [SerializeField] private AudioSource sourceAmbience_1;
 
-    [SerializeField] private AudioSource onShotAudioSource; // to much effort now to figure out which audiosource is best for it
+    [SerializeField] private AudioSource oneShotAudioSource; // to much effort now to figure out which audiosource is best for it
 
 
     [Header("Audio Sources Volumes")]
@@ -31,11 +34,12 @@ public class AudioHandler : MonoBehaviour
 
 
     [Header("Movement Audio")]
-    [SerializeField] public AudioClip playerWalk_Long;
+    [SerializeField] public AudioClip[] playerDash;
     [SerializeField] public AudioClip[] playerJump;
+
+    [SerializeField] public AudioClip playerWalk_Long;
     [SerializeField] public AudioClip playerLanded;
     [SerializeField] public AudioClip playerWallrun;
-    [SerializeField] public AudioClip[] playerDash;
 
     [Header("Hitmarker Audio")]
     [SerializeField] public AudioClip hitmarker_1;
@@ -57,7 +61,7 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip[] healthPickUp_Sound;
     [SerializeField] public AudioClip[] playerDamaged_Sound;
     [SerializeField] public AudioClip[] playerDead_Sounds;
- 
+
     public static AudioHandler Instance;
 
     private void Awake()
@@ -68,13 +72,31 @@ public class AudioHandler : MonoBehaviour
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        values.OnSlowMotionPitchSource.AddListener(ApplyPitchToAllRelevantAudioSources);
+    }
+
+    private void OnDisable()
+    {
+        values.OnSlowMotionPitchSource.RemoveListener(ApplyPitchToAllRelevantAudioSources);
+    }
+
     private void Start()
     {
-        //TODO: we still need some settings for this sources
-        sourceShooting.volume = sourceShooting_Volume;
-        sourcePlayerMovement.volume = sourcePlayerMovement_Volume;
-        sourceActionAmbience_1.volume = sourceActionAmbience_Volume;
-        onShotAudioSource.volume = 0.2f;
+        sourceShooting.volume = data.WeaponSFXVolume;
+
+        sourceActionAmbience1.volume = data.AmbienceVolume;
+        sourceActionAmbience2.volume = data.AmbienceVolume;
+        oneShotAudioSource.volume = data.AmbienceVolume;
+
+        sourcePlayerMovement.volume = data.PlayerSFXVolume;
+
+        Debug.Log("Is: " + sourceShooting.volume + " ,has to be: " + data.WeaponSFXVolume);
+        Debug.Log("Is: " + sourceActionAmbience1.volume + " ,has to be: " + data.AmbienceVolume);
+        Debug.Log("Is: " + sourceActionAmbience2.volume + " ,has to be: " + data.AmbienceVolume);
+        Debug.Log("Is: " + oneShotAudioSource.volume + " ,has to be: " + data.AmbienceVolume);
+        Debug.Log("Is: " + sourcePlayerMovement.volume + " ,has to be: " + data.PlayerSFXVolume);
     }
 
     //only for shooting gun related sounds because sounds interrupt each other
@@ -93,41 +115,44 @@ public class AudioHandler : MonoBehaviour
             sourcePlayerMovement.Play();
         }
 
-        else  sourcePlayerMovement.Stop();
+        else sourcePlayerMovement.Stop();
     }
 
     public void PlaySound_sourceActionAmbience(AudioClip _clip)
     {
-        sourceActionAmbience_1.clip = _clip;
-        sourceActionAmbience_1.Play();
+        sourceActionAmbience1.clip = _clip;
+        sourceActionAmbience1.Play();
     }
     public void PlayScoreboardSounds(AudioClip _clip)
     {
-        sourceActionAmbience_1.clip = _clip;
-        sourceActionAmbience_1.Play();
+        sourceActionAmbience1.clip = _clip;
+        sourceActionAmbience1.Play();
     }
 
     public void PlayActionAmbience_2_Sounds(AudioClip _clip)
     {
-        sourceActionAmbience_2.clip = _clip;
-        sourceActionAmbience_2.Play();
+        sourceActionAmbience2.clip = _clip;
+        sourceActionAmbience2.Play();
     }
 
     public void PlayOneShot(AudioClip _clip)
     {
-        onShotAudioSource.PlayOneShot(_clip, onShotAudioSource.volume);
+        oneShotAudioSource.PlayOneShot(_clip, oneShotAudioSource.volume);
     }
 
-    private void OnDestroy()
-    {
-        Instance = null;
-    }
-    
     /// <summary>
     /// Slow Motion driven pitch down for all relevant audio sources. The song audio source will stay unaffected.
     /// </summary>
-    public void PitchDownAllRelevantAudioSources()
+    private void ApplyPitchToAllRelevantAudioSources(float _currentPitchValue)
     {
-
+        sourceShooting.pitch = _currentPitchValue;
+        sourcePlayerMovement.pitch = _currentPitchValue;
+        sourceActionAmbience1.pitch = _currentPitchValue;
+        sourceActionAmbience2.pitch = _currentPitchValue;
+        sourceAmbience_1.pitch = _currentPitchValue;
+    }
+    private void OnDestroy()
+    {
+        Instance = null;
     }
 }

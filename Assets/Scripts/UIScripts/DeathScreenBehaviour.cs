@@ -13,16 +13,17 @@ public class DeathScreenBehaviour : MonoBehaviour
     [SerializeField] private GameObject PlayerIngameUI;
     [SerializeField] private GameObject deathScreen;
 
+    private CancellationTokenSource cts = new();
     private void Awake()
     {
-        values.onPlayerDeath.AddListener(InitDeathScreen);
+        values.OnPlayerDeath.AddListener(InitDeathScreen);
         backToMainMenu_Button.onClick.AddListener(ReturnToMainMenu);
     }
 
     private void ReturnToMainMenu()
     {
 
-        values.onPlayerDeath.RemoveListener(InitDeathScreen);
+        values.OnPlayerDeath.RemoveListener(InitDeathScreen);
         backToMainMenu_Button.onClick.RemoveListener(ReturnToMainMenu);
 
         var temp = SceneManager.GetActiveScene();
@@ -37,16 +38,23 @@ public class DeathScreenBehaviour : MonoBehaviour
         PlayerIngameUI.SetActive(false);
         deathScreen.SetActive(true);
 
-        await FadeInDeathScreen();
+        await FadeInDeathScreen(cts.Token);
     }
-    private async UniTask FadeInDeathScreen()
+    private async UniTask FadeInDeathScreen(CancellationToken _token)
     {
         while(deathScreen_canvasGrp.alpha < 1)
         {
+            _token.ThrowIfCancellationRequested();
             await UniTask.Delay((int)(Time.deltaTime * 1000), true);
             deathScreen_canvasGrp.alpha += Time.deltaTime;
         }
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }
  

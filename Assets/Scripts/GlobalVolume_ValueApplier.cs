@@ -25,11 +25,11 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
 
     private void OnEnable()
     {
-        values.onDashExecuted.AddListener(ApplyLensDistortion);
+        values.OnDashExecuted.AddListener(ApplyLensDistortion);
     }
     private void OnDisable()
     {
-        values.onDashExecuted.RemoveListener(ApplyLensDistortion);
+        values.OnDashExecuted.RemoveListener(ApplyLensDistortion);
     }
     private void Start()
     {

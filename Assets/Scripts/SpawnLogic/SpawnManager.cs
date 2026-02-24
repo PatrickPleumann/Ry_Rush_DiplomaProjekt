@@ -44,11 +44,11 @@ public class SpawnManager : MonoBehaviour
 
         SpawnEnemysOnGameStart();
 
-        values.EnemyCount_onValueChanged.AddListener(ValidateRespawn);
+        values.EnemyCount_OnValueChanged.AddListener(ValidateRespawn);
     }
     private void OnDisable()
     {
-        values.EnemyCount_onValueChanged.RemoveListener(ValidateRespawn);
+        values.EnemyCount_OnValueChanged.RemoveListener(ValidateRespawn);
     }
 
     private void SpawnEnemysOnGameStart()

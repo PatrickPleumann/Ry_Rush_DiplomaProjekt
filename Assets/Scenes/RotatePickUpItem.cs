@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class RotatePickUpItem : MonoBehaviour
 {
+    [SerializeField] private CentralizedValues values;
     private Vector3 rotationVec = Vector3.down;
-    CancellationTokenSource cts;
+    CancellationTokenSource cts = new();
     private void Start()
     {
-        cts = new();
-
         StartRotation();
     }
 
@@ -21,18 +20,14 @@ public class RotatePickUpItem : MonoBehaviour
     }
     private async UniTask RotateObjectAsync(CancellationToken token)
     {
-        
-        while (!token.IsCancellationRequested)
+        while (values.SessionIsOver == false)
         {
-            await UniTask.WaitForEndOfFrame();
             token.ThrowIfCancellationRequested();
+            await UniTask.WaitForEndOfFrame();
             gameObject.transform.Rotate(rotationVec, 1f);
         }
-    }
-
-    private void OnDestroy()
-    {
         cts.Cancel();
+        cts.Dispose();
     }
 }
 

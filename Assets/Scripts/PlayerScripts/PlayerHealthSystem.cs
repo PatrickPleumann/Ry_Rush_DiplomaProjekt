@@ -50,8 +50,9 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private async void PlayerDies()
     {
+        values.SessionIsOver = true;
         values.PlayerIsDead = true;
-        values.onPlayerDeath.Invoke();
+        values.OnPlayerDeath.Invoke();
         Debug.Log("PLAYER DEAD");
         AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.playerDead_Sounds[Random.Range(0, AudioHandler.Instance.playerDead_Sounds.Length)]);
         await DecreaseTimeOnPlayerDead(decreaseTimeScaleOnPlayerDeathMultiplier);
@@ -63,7 +64,7 @@ public class PlayerHealthSystem : MonoBehaviour
     /// <returns></returns>
     public bool OnValidate_PickUpHealthItem()
     {
-        return values.PlayerCurrentHealth < values.playerMaxHealth;
+        return values.PlayerCurrentHealth < values.PlayerMaxHealth;
     }
 
     private async UniTask DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier)

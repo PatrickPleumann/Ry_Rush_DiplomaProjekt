@@ -26,12 +26,12 @@ public class DynamicCrosshair : MonoBehaviour
 
     private void OnEnable()
     {
-        values.onEnemyHit.AddListener(ShowHitMarker);
+        values.OnEnemyHit.AddListener(ShowHitMarker);
     }
 
     private void OnDisable()
     {
-        values.onEnemyHit.RemoveListener(ShowHitMarker);
+        values.OnEnemyHit.RemoveListener(ShowHitMarker);
     }
     private void Start()
     {

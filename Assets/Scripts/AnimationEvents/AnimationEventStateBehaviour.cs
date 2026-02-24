@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 public class AnimationEventStateBehaviour : StateMachineBehaviour
@@ -8,6 +9,8 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour
 
     private bool hasTriggered;
     private float currentTime;
+
+    CancellationTokenSource cts = new();
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -22,7 +25,7 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour
         {
             NotifyReceiver(animator);
             hasTriggered = true;
-            await ResetTimer(stateInfo.length);
+            await ResetTimer(stateInfo.length, cts.Token);
         }
     }
 
@@ -36,9 +39,16 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour
         }
     }
 
-    private async UniTask ResetTimer(float _timeInSeconds)
+    private async UniTask ResetTimer(float _timeInSeconds, CancellationToken _token)
     {
+        _token.ThrowIfCancellationRequested();
         await UniTask.Delay((int)(_timeInSeconds * 1000));
         hasTriggered = false;
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }

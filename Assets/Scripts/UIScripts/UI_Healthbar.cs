@@ -9,20 +9,20 @@ public class UI_Healthbar : MonoBehaviour
 
     private void Start()
     {
-        if (values.playerMaxHealth > 0)
-            healthValueIntoNormalizedFillAmount = healthbarFill.localScale.x / values.playerMaxHealth;
+        if (values.PlayerMaxHealth > 0)
+            healthValueIntoNormalizedFillAmount = healthbarFill.localScale.x / values.PlayerMaxHealth;
 
         UpdateHealthbarUI(values.PlayerCurrentHealth);
     }
 
     private void OnEnable()
     {
-        values.PlayerCurrentHealth_onValueChanged.AddListener(UpdateHealthbarUI);
+        values.PlayerCurrentHealth_OnValueChanged.AddListener(UpdateHealthbarUI);
     }
 
     private void OnDisable()
     {
-        values.PlayerCurrentHealth_onValueChanged.RemoveListener(UpdateHealthbarUI);
+        values.PlayerCurrentHealth_OnValueChanged.RemoveListener(UpdateHealthbarUI);
     }
 
     private void UpdateHealthbarUI(float _playerCurrentHealth)

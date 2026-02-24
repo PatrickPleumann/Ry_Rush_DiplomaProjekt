@@ -1,4 +1,5 @@
 using System.IO;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,32 +10,41 @@ public class SettingsManager : MonoBehaviour
 
     [SerializeField] private SettingsData settingsData;
 
-    [SerializeField] private Slider musicVolume;
-    [SerializeField] private Slider playerSFX;
-    [SerializeField] private Slider weaponSFX;
+    [SerializeField] private Slider playerSFXVolume;
+    [SerializeField] private Slider weaponSFXVolume;
+    [SerializeField] private Slider ambienceSFXVolume;
+
     [SerializeField] private Toggle showFPS;
+    [SerializeField] private Toggle slowMotionOnAim;
 
     private void Awake()
     {
         SettingsJsonPath = Application.persistentDataPath + "/" + settingsFileName;
     }
+
     private void OnEnable()
     {
         LoadDataFromJson();
 
-        musicVolume.onValueChanged.AddListener(MusicVolume_ValueChanged);
-        playerSFX.onValueChanged.AddListener(PlayerSFXVolume_ValueChanged);
-        weaponSFX.onValueChanged.AddListener(WeaponSFXVolume_ValueChanged);
-        showFPS.onValueChanged.AddListener(ShowFPS_ValueChanged);
+        playerSFXVolume.onValueChanged.AddListener(PlayerSFXVolumeApplyValue);
+        weaponSFXVolume.onValueChanged.AddListener(WeaponSFXVolumeApplyValue);
+        ambienceSFXVolume.onValueChanged.AddListener(AmbienceSFXVolumeApplyValue);
+        showFPS.onValueChanged.AddListener(ShowFPSApplyValue);
+        slowMotionOnAim.onValueChanged.AddListener(SlowMotionOnAimApplyValue);
 
         SetAllSettings();
     }
+
     public void SetAllSettings()
     {
-        SetMusicVolume(settingsData.MusicVolume);
-        SetPlayerSFXVolume(settingsData.PlayerSFXVolume);
-        SetWeaponSFXVolume(settingsData.WeaponSFXVolume);
-        SetShowFPSToggle(settingsData.ShowFPS);
+        if (settingsData != null)
+        {
+            SetPlayerSFXVolume(settingsData.PlayerSFXVolume);
+            SetWeaponSFXVolume(settingsData.WeaponSFXVolume);
+            SetAmbienceSFXVolume(settingsData.AmbienceVolume);
+            SetShowFPSToggle(settingsData.ShowFPS);
+            SetSlowMotionOnAimToggle(settingsData.SlowMotionOnAim);
+        }
     }
     public void LoadDataFromJson()
     {
@@ -55,47 +65,55 @@ public class SettingsManager : MonoBehaviour
         File.WriteAllText(path, json);
     }
 
-
-
     #region Set Values in visible menu
-    private void SetMusicVolume(float _value)
-    {
-        musicVolume.value = _value;
-    }
+
     private void SetPlayerSFXVolume(float _value)
     {
-        playerSFX.value = _value;
+        playerSFXVolume.value = _value;
     }
-
     private void SetWeaponSFXVolume(float _value)
     {
-        weaponSFX.value = _value;
+        weaponSFXVolume.value = _value;
     }
-
+    private void SetAmbienceSFXVolume(float _value)
+    {
+        ambienceSFXVolume.value = _value;
+    }
     private void SetShowFPSToggle(bool _value)
     {
         showFPS.isOn = _value;
     }
+    private void SetSlowMotionOnAimToggle(bool _value)
+    {
+        slowMotionOnAim.isOn = _value;
+    }
+
     #endregion
 
     #region On Value Changed Methods
-    private void MusicVolume_ValueChanged(float _value)
-    {
-        settingsData.MusicVolume = _value;
-    }
 
-    private void PlayerSFXVolume_ValueChanged(float _value)
+    private void PlayerSFXVolumeApplyValue(float _value)
     {
         settingsData.PlayerSFXVolume = _value;
     }
-    private void WeaponSFXVolume_ValueChanged(float _value)
+    private void WeaponSFXVolumeApplyValue(float _value)
     {
         settingsData.WeaponSFXVolume = _value;
     }
+    private void AmbienceSFXVolumeApplyValue(float _value)
+    {
+        settingsData.AmbienceVolume = _value;
+    }
 
-    private void ShowFPS_ValueChanged(bool _value)
+    private void ShowFPSApplyValue(bool _value)
     {
         settingsData.ShowFPS = _value;
     }
+
+    private void SlowMotionOnAimApplyValue(bool _value)
+    {
+        settingsData.SlowMotionOnAim = _value;
+    }
+
     #endregion
 }

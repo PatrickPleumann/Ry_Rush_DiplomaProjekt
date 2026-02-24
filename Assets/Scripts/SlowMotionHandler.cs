@@ -4,7 +4,9 @@ using UnityEngine.InputSystem;
 
 public class SlowMotionHandler : MonoBehaviour
 {
+    [SerializeField] private CentralizedValues values;
     [SerializeField] private PlayerController controller;
+    [SerializeField] private SettingsData data;
 
     [SerializeField] private float duration = 1;
     [SerializeField] private float slowMotionSoundPitchRate = 3f;
@@ -14,13 +16,16 @@ public class SlowMotionHandler : MonoBehaviour
 
     private Coroutine decreaseTimeScale;
     private Coroutine increaseTimeScale;
+    private float currentPitch;
 
     private void OnEnable()
     {
         controller.onSlowMotion_started.AddListener(StartSlowMotion);
         controller.onSlowMotion_canceled.AddListener(StopSlowMotion);
 
-        if (controller.SlowMotion_OnAim == true)
+        values.DisAllowSlowMotion.AddListener(StopSlowMotion);
+
+        if (data.SlowMotionOnAim == true)
         {
             controller.onAimInvoked_started.AddListener(StartSlowMotion);
             controller.onAimInvoked_canceled.AddListener(StopSlowMotion);
@@ -32,7 +37,9 @@ public class SlowMotionHandler : MonoBehaviour
         controller.onSlowMotion_started.RemoveListener(StartSlowMotion);
         controller.onSlowMotion_canceled.RemoveListener(StopSlowMotion);
 
-        if (controller.SlowMotion_OnAim == true)
+        values.DisAllowSlowMotion.RemoveListener(StopSlowMotion);
+
+        if (data.SlowMotionOnAim == true)
         {
             controller.onAimInvoked_started.RemoveListener(StartSlowMotion);
             controller.onAimInvoked_canceled.RemoveListener(StopSlowMotion);
@@ -41,18 +48,20 @@ public class SlowMotionHandler : MonoBehaviour
 
     private void StartSlowMotion()
     {
-        if (increaseTimeScale != null)  //TODO: nullcheck maybe dangerous, but isUnityNull() does not work
+        if (increaseTimeScale != null)
         {
             StopCoroutine(increaseTimeScale);
         }
+        increaseTimeScale = null;
         decreaseTimeScale = StartCoroutine(DecreaseTimeScale());
     }
 
     private void StopSlowMotion()
     {
-        if (decreaseTimeScale != null) //TODO: nullcheck maybe dangerous, but isUnityNull() does not work
+        if (decreaseTimeScale != null)
             StopCoroutine(decreaseTimeScale);
 
+        decreaseTimeScale = null;
         increaseTimeScale = StartCoroutine(ReIncreaseTimeScale());
     }
 
@@ -61,7 +70,8 @@ public class SlowMotionHandler : MonoBehaviour
         while (Time.timeScale > minTimeScale)
         {
             Time.timeScale = Mathf.Lerp(maxTimeScale, minTimeScale, duration);
-            AudioHandler.Instance.sourceShooting.pitch = Mathf.Lerp(maxTimeScale, minTimeScale, duration) * slowMotionSoundPitchRate;
+            currentPitch = Mathf.Lerp(maxTimeScale, minTimeScale, duration) * slowMotionSoundPitchRate;
+            values.OnSlowMotionPitchSource.Invoke(currentPitch);
         }
         yield return new WaitForEndOfFrame();
     }
@@ -70,7 +80,8 @@ public class SlowMotionHandler : MonoBehaviour
         while (Time.timeScale < maxTimeScale)
         {
             Time.timeScale = Mathf.Lerp(minTimeScale, maxTimeScale, duration);
-            AudioHandler.Instance.sourceShooting.pitch = Mathf.Lerp(minTimeScale,maxTimeScale, duration);
+            currentPitch = Mathf.Lerp(minTimeScale,maxTimeScale, duration);
+            values.OnSlowMotionPitchSource.Invoke(currentPitch);
         }
         yield return new WaitForEndOfFrame();
     }

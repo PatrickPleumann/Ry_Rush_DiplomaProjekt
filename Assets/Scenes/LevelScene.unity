@@ -7561,7 +7561,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5a862561b943044908ec66b827bad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlowMotionHandler
+  values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
   controller: {fileID: 358316735}
+  data: {fileID: 11400000, guid: cd85a481f63e17d47be147091cc6eca8, type: 2}
   duration: 1
   slowMotionSoundPitchRate: 2.5
   minTimeScale: 0.3
@@ -45063,81 +45065,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!1 &481079942
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 481079943}
-  - component: {fileID: 481079945}
-  - component: {fileID: 481079944}
-  m_Layer: 5
-  m_Name: Crosshair
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &481079943
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481079942}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1601040972}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &481079944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481079942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.7058824, g: 0.7058824, b: 0.3372549, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ee137293631b9e46b1a401b72b130a4, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &481079945
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481079942}
-  m_CullTransparentMesh: 1
 --- !u!1001 &481096294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153239,7 +153166,6 @@ RectTransform:
   m_Children:
   - {fileID: 1955984073}
   - {fileID: 1242971779}
-  - {fileID: 481079943}
   - {fileID: 1706564863}
   - {fileID: 1134689736}
   - {fileID: 1725023519}
@@ -164850,13 +164776,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dc9d376d6d48c4cad80cdfdc0bf345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioHandler
+  values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
   controller: {fileID: 358316735}
+  data: {fileID: 11400000, guid: cd85a481f63e17d47be147091cc6eca8, type: 2}
   sourceShooting: {fileID: 1719669134}
   sourcePlayerMovement: {fileID: 1719669137}
-  sourceActionAmbience_1: {fileID: 1719669138}
-  sourceActionAmbience_2: {fileID: 1719669139}
+  sourceActionAmbience1: {fileID: 1719669138}
+  sourceActionAmbience2: {fileID: 1719669139}
   sourceAmbience_1: {fileID: 1719669140}
-  onShotAudioSource: {fileID: 1719669141}
+  oneShotAudioSource: {fileID: 1719669141}
   sourceShooting_Volume: 0.1
   sourcePlayerMovement_Volume: 0.05
   sourceActionAmbience_Volume: 0.2
@@ -164867,7 +164795,10 @@ MonoBehaviour:
   gunMagIn: {fileID: 8300000, guid: 4315b4bb797c08d4aa4f2f9a5483bb5e, type: 3}
   gunRecieverClick: {fileID: 8300000, guid: 928a1c9feb32a6345998bf0c58b502bb, type: 3}
   noAmmoClick: {fileID: 8300000, guid: c6339c6bc7f5c3e4dac2c5895cc17797, type: 3}
-  playerWalk_Long: {fileID: 8300000, guid: bd10f49a77a8a844caf33841686aaadd, type: 3}
+  playerDash:
+  - {fileID: 8300000, guid: 8538f05e876db204dba6621563c5437f, type: 3}
+  - {fileID: 8300000, guid: c63ce248743c8664198c6d98a2fab602, type: 3}
+  - {fileID: 8300000, guid: ba8c6e3911970714fa9e73225a36ef19, type: 3}
   playerJump:
   - {fileID: 8300000, guid: 4bc26d9f977f02245afcfbac97cff164, type: 3}
   - {fileID: 8300000, guid: d7c6eedfdca7a9e4682fc60efd356bb4, type: 3}
@@ -164879,12 +164810,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e294e28275fd4844e892e7751143587a, type: 3}
   - {fileID: 8300000, guid: 3cc1384ce52336147af916b545c8422c, type: 3}
   - {fileID: 8300000, guid: ea762253a82ee064e959237ef070abb8, type: 3}
+  playerWalk_Long: {fileID: 8300000, guid: bd10f49a77a8a844caf33841686aaadd, type: 3}
   playerLanded: {fileID: 0}
   playerWallrun: {fileID: 8300000, guid: f734e2c3b1f804c47ac30bcfa875965f, type: 3}
-  playerDash:
-  - {fileID: 8300000, guid: 8538f05e876db204dba6621563c5437f, type: 3}
-  - {fileID: 8300000, guid: c63ce248743c8664198c6d98a2fab602, type: 3}
-  - {fileID: 8300000, guid: ba8c6e3911970714fa9e73225a36ef19, type: 3}
   hitmarker_1: {fileID: 8300000, guid: c4f5b83d21a90f94ea0b26797b434e47, type: 3}
   hitmarker_2: {fileID: 8300000, guid: cff52624e325f1444a11243f93f85bee, type: 3}
   hitmarker_3: {fileID: 8300000, guid: 15ed9d62ba9716f4c80c695892c27123, type: 3}

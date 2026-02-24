@@ -4,7 +4,6 @@ using UnityEngine;
 public class SettingsData : ScriptableObject, ISetDefaultValues
 {
     [Header("Sound Volumes")]
-    public float MusicVolume;
     public float PlayerSFXVolume;
     public float WeaponSFXVolume;
     public float AmbienceVolume;
@@ -15,11 +14,11 @@ public class SettingsData : ScriptableObject, ISetDefaultValues
 
     public void SetDefaultValues()
     {
-        MusicVolume = 0.2f;
         PlayerSFXVolume = 0.2f;
         WeaponSFXVolume = 0.2f;
         AmbienceVolume = 0.2f;
-    }
-    //check settingsmanager for how to handle the values
 
+        ShowFPS = false;
+        SlowMotionOnAim = false;
+    }
 }

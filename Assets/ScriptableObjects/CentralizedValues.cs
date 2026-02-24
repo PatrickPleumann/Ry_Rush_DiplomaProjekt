@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,10 +27,11 @@ public class CentralizedValues : ScriptableObject
         enemysAliveCount = 0;
 
         PlayerCurrentHealth = 100;
-        playerMaxHealth = 100;
+        PlayerMaxHealth = 100;
 
         GameIsPaused = false;
         PlayerIsDead = false;
+        SessionIsOver = false;
     }
 
     /// <summary>
@@ -85,18 +87,18 @@ public class CentralizedValues : ScriptableObject
     [Space]
 
     [Header("Ingame UI")]
-    [SerializeField] public int currentCombo_MaxValue;
-    [SerializeField] private int currentCombo_Value;
+    [SerializeField] public int CurrentComboMaxValue;
+    [SerializeField] private int currentComboValue;
     [HideInInspector] public UnityEvent<int> CurrentCombo_OnValueChanged;
     public int CurrentCombo_Value
     {
-        get => currentCombo_Value; // muhahaha
+        get => currentComboValue; // muhahaha
         set
         {
-            if (currentCombo_Value != value && value <= currentCombo_MaxValue && value > 0 && CurrentComboOvershoot_Value <= 0)
-                currentCombo_Value = value;
+            if (currentComboValue != value && value <= CurrentComboMaxValue && value > 0 && CurrentComboOvershoot_Value <= 0)
+                currentComboValue = value;
 
-            else if (currentCombo_Value == currentCombo_MaxValue && CurrentComboOvershoot_Value < ComboMaxOvershoot)
+            else if (currentComboValue == CurrentComboMaxValue && CurrentComboOvershoot_Value < ComboMaxOvershoot)
                 CurrentComboOvershoot_Value = CurrentComboOvershoot_Value + 1;
 
             CurrentCombo_OnValueChanged.Invoke(CurrentCombo_Value);
@@ -162,9 +164,10 @@ public class CentralizedValues : ScriptableObject
     [Space]
 
     [Header("Ingame Values")]
-    [SerializeField] public float playerMaxHealth;
+    
+    [SerializeField] public float PlayerMaxHealth;
     [SerializeField] private float playerCurrentHealth;
-    [HideInInspector] public UnityEvent<float> PlayerCurrentHealth_onValueChanged;
+    [HideInInspector] public UnityEvent<float> PlayerCurrentHealth_OnValueChanged;
     public float PlayerCurrentHealth
     {
         get => playerCurrentHealth;
@@ -172,20 +175,20 @@ public class CentralizedValues : ScriptableObject
         {
             if (playerCurrentHealth != value)
             {
-                if (value > playerMaxHealth)
-                    playerCurrentHealth = playerMaxHealth;
+                if (value > PlayerMaxHealth)
+                    playerCurrentHealth = PlayerMaxHealth;
 
                 else
                     playerCurrentHealth = value;
 
                 Debug.Log("Wurde überschrieben");
-                PlayerCurrentHealth_onValueChanged.Invoke(playerCurrentHealth);
+                PlayerCurrentHealth_OnValueChanged.Invoke(playerCurrentHealth);
             }
         }
     }
 
     [SerializeField] private int enemysAliveCount;
-    [HideInInspector] public UnityEvent<int> EnemyCount_onValueChanged;
+    [HideInInspector] public UnityEvent<int> EnemyCount_OnValueChanged;
     public int EnemysAliveCount
     {
         get => enemysAliveCount;
@@ -194,13 +197,13 @@ public class CentralizedValues : ScriptableObject
             if (enemysAliveCount != value)
             {
                 enemysAliveCount = value;
-                EnemyCount_onValueChanged.Invoke(enemysAliveCount);
+                EnemyCount_OnValueChanged.Invoke(enemysAliveCount);
             }
         }
     }
 
     [SerializeField] private bool gameIsPaused;
-    [HideInInspector] public UnityEvent<bool> GameIsPaused_onValueChangend;
+    [HideInInspector] public UnityEvent<bool> GameIsPaused_OnValueChangend;
     public bool GameIsPaused
     {
         get => gameIsPaused;
@@ -209,13 +212,13 @@ public class CentralizedValues : ScriptableObject
             if (gameIsPaused != value)
             {
                 gameIsPaused = value;
-                GameIsPaused_onValueChangend.Invoke(gameIsPaused);
+                GameIsPaused_OnValueChangend.Invoke(gameIsPaused);
             }
         }
     }
 
     [SerializeField] private bool playerIsDead = false;
-    [HideInInspector] public UnityEvent<bool> PlayerIsDead_onValueChanged;
+    [HideInInspector] public UnityEvent<bool> PlayerIsDead_OnValueChanged;
     public bool PlayerIsDead
     {
         get => playerIsDead;
@@ -224,16 +227,23 @@ public class CentralizedValues : ScriptableObject
             if (playerIsDead != value)
             {
                 playerIsDead = value;
-                PlayerIsDead_onValueChanged.Invoke(playerIsDead);
+                PlayerIsDead_OnValueChanged.Invoke(playerIsDead);
             }
         }
     }
 
     [Space]
 
-    [Header("Game Manager")]
-    [HideInInspector] public UnityEvent onSessionEnds;
-    [HideInInspector] public UnityEvent onDashExecuted;
-    [HideInInspector] public UnityEvent onEnemyHit;
-    [HideInInspector] public UnityEvent onPlayerDeath;
+    [Header("Slow Motion Values")]
+
+    [Space]
+
+    public bool SessionIsOver = false;
+    [HideInInspector] public UnityEvent DisAllowSlowMotion;
+    [HideInInspector] public UnityEvent OnSessionEnds;
+    [HideInInspector] public UnityEvent OnDashExecuted; // not in use, for post processing effects while dashing
+    [HideInInspector] public UnityEvent OnEnemyHit;
+    [HideInInspector] public UnityEvent OnPlayerDeath;
+    [HideInInspector] public UnityEvent OnSlowMotionActivated;
+    [HideInInspector] public UnityEvent<float> OnSlowMotionPitchSource;
 }

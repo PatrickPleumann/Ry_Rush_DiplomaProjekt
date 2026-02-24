@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     [Header("Centralized Values")]
     [SerializeField] public Transform Orientation;
     [SerializeField] private float shootingCooldownTimer;
-    [SerializeField] public bool SlowMotion_OnAim;
 
     [HideInInspector] public Vector3 moveInput; // into CV_SO
     [HideInInspector] public Vector3 moveDirection;

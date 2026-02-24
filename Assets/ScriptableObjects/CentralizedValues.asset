@@ -18,19 +18,19 @@ MonoBehaviour:
       m_Calls: []
   LookInput_Value: {x: 0, y: 0}
   AllowInput: 0
-  TimeBetweenBeats: 0.58
+  TimeBetweenBeats: 0.65999997
   currentSamples_UI: 0
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   LastActionOnBeat_Bool: 0
-  currentCombo_MaxValue: 5
-  currentCombo_Value: 1
+  CurrentComboMaxValue: 5
+  currentComboValue: 0
   CurrentCombo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   ComboMaxOvershoot: 4
-  currentComboOvershoot: 0
+  currentComboOvershoot: 4
   ComboOvershoot_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -38,40 +38,46 @@ MonoBehaviour:
   CurrentAmmo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  ShotsFired: 334
-  ShotsHit: 240
-  Kills: 22
-  OnBeatActions: 1
-  currentScore_Value: 1235
+  ShotsFired: 11
+  ShotsHit: 8
+  Kills: 0
+  OnBeatActions: 14
+  currentScore_Value: 0
   CurrentScore_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  playerMaxHealth: 100
-  playerCurrentHealth: 90
-  PlayerCurrentHealth_onValueChanged:
+  PlayerMaxHealth: 100
+  playerCurrentHealth: 100
+  PlayerCurrentHealth_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   enemysAliveCount: 20
-  EnemyCount_onValueChanged:
+  EnemyCount_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   gameIsPaused: 0
-  GameIsPaused_onValueChangend:
+  GameIsPaused_OnValueChangend:
     m_PersistentCalls:
       m_Calls: []
   playerIsDead: 0
-  PlayerIsDead_onValueChanged:
+  PlayerIsDead_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  onSessionEnds:
+  OnSessionEnds:
     m_PersistentCalls:
       m_Calls: []
-  onDashExecuted:
+  OnDashExecuted:
     m_PersistentCalls:
       m_Calls: []
-  onEnemyHit:
+  OnEnemyHit:
     m_PersistentCalls:
       m_Calls: []
-  onPlayerDeath:
+  OnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSlowMotionActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSlowMotionPitchSource:
     m_PersistentCalls:
       m_Calls: []

@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
-using System.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -26,7 +26,10 @@ public class BeatTracking : MonoBehaviour
 
     [SerializeField] private int estimatedBeatsPerTrack = 11; // dirty magic number just for additional saftey, gets overwritten anyway
     [SerializeField] private int remainingBeatsBeforeGameEnds = 10; //hard coded but depends on the fadeout of the song when it ends
+    [SerializeField] private int remainingBeatsBeforeDisAllowSlowMotion = 24;
     [SerializeField] private int currentBeatsInTrack = 0;
+
+    CancellationTokenSource cts = new();
 
     [Header("Properties")]
     public int CurrentBeatsInTrack
@@ -38,6 +41,10 @@ public class BeatTracking : MonoBehaviour
             if (currentBeatsInTrack != value)
             {
                 currentBeatsInTrack = value;
+
+                if (currentBeatsInTrack > (estimatedBeatsPerTrack - remainingBeatsBeforeDisAllowSlowMotion))
+                    values.DisAllowSlowMotion.Invoke();
+
                 if (currentBeatsInTrack > (estimatedBeatsPerTrack - remainingBeatsBeforeGameEnds))
                     OnSongEnded.Invoke();
             }
@@ -71,6 +78,8 @@ public class BeatTracking : MonoBehaviour
     private int beatMultiplier = 1;
     private string destPath;
 
+    
+
     private void Awake()
     {
         
@@ -94,13 +103,13 @@ public class BeatTracking : MonoBehaviour
     {
         OnSongLoaded += GetEstimatesBeatsPerTrack;
         OnSongEnded += SongEnds;
-        values.onPlayerDeath.AddListener(DecreaseSourceVolume);
+        values.OnPlayerDeath.AddListener(DecreaseSourceVolume);
     }
     private void OnDisable()
     {
         OnSongLoaded -= GetEstimatesBeatsPerTrack;
         OnSongEnded -= SongEnds;
-        values.onPlayerDeath.RemoveListener(DecreaseSourceVolume);
+        values.OnPlayerDeath.RemoveListener(DecreaseSourceVolume);
     }
     private void GetEstimatesBeatsPerTrack() // works
     {
@@ -128,11 +137,12 @@ public class BeatTracking : MonoBehaviour
 
     private async void StartSong()
     {
-       await  StartSongDelayedAsync(timeTillSongStarts);
+       await  StartSongDelayedAsync(timeTillSongStarts, cts.Token);
     }
 
-    private async UniTask StartSongDelayedAsync(float _timeTillSongStarts)
+    private async UniTask StartSongDelayedAsync(float _timeTillSongStarts, CancellationToken _token)
     {
+        _token.ThrowIfCancellationRequested();
         await UniTask.Delay((int)(_timeTillSongStarts * 1000));
         songStarted = true;
         source.Play();
@@ -140,16 +150,16 @@ public class BeatTracking : MonoBehaviour
 
     private async void DecreaseSourceVolume()
     {
-        await DecreaseSourceVolumeAsync();
+        await DecreaseSourceVolumeAsync(cts.Token);
     }
-    private async UniTask DecreaseSourceVolumeAsync()
+    private async UniTask DecreaseSourceVolumeAsync(CancellationToken _token)
     {
         while (source == true && source.volume > 0.001f) // feels very good, so song fades out very long until it completely disappears
         {
+            _token.ThrowIfCancellationRequested();
             source.volume -= Time.deltaTime;
             await UniTask.Delay((int)(Time.deltaTime * 1000 * (1 / source.volume)), true);
         }
-        source.volume = 0f; //some cancel token should terminate this method if source is null
     }
 
     /// <summary>
@@ -218,7 +228,7 @@ public class BeatTracking : MonoBehaviour
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("Could not load audio file");
 
-            else
+            else if (www.result == UnityWebRequest.Result.Success)
             {
                 source.clip = DownloadHandlerAudioClip.GetContent(www);
                 OnSongLoaded.Invoke();
@@ -228,9 +238,16 @@ public class BeatTracking : MonoBehaviour
 
     private void SongEnds()
     {
+        values.SessionIsOver = true;
         songStarted = false;
         values.AllowInput = false;
-        values.onSessionEnds.Invoke();
+        values.OnSessionEnds.Invoke();
         Debug.Log("GAME OVER");
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }
