@@ -213,10 +213,7 @@ public class ImportManager : MonoBehaviour
         }
 
         else
-        
-            
             Debug.Log("No file chosen");
-        
     }
 
 
@@ -268,7 +265,7 @@ public class ImportManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                 Debug.Log("Could not load audio file");
 
-            else
+            else if(www.result == UnityWebRequest.Result.Success)
             {
                 songPreview.clip = DownloadHandlerAudioClip.GetContent(www);
             }

@@ -1,12 +1,16 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+//using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering.Universal;
 
 public class GlobalVolume_ValueApplier : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private PostProcessVolume pp_volume;
+    //[SerializeField] private PostProcessVolume pp_volume;
     [SerializeField] private CentralizedValues values;
+    [SerializeField] private Volume vol;
 
 
     [Header("Volume Components & Volume Intensities")]
@@ -33,8 +37,13 @@ public class GlobalVolume_ValueApplier : MonoBehaviour
     }
     private void Start()
     {
-        pp_volume.profile.TryGetSettings(out vignette);
-        pp_volume.profile.TryGetSettings(out lensDistortion);
+        var temp = vol.profile.TryGet<Vignette>(out vignette);
+
+        vignette.intensity.value = 100;
+        
+
+        //pp_volume.profile.TryGetSettings(out vignette);
+        //pp_volume.profile.TryGetSettings(out lensDistortion);
     }
     private void ApplyBloodyVignette(float _intensity)
     {

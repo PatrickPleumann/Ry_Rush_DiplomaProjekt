@@ -42,13 +42,13 @@ public class DeathScreenBehaviour : MonoBehaviour
     }
     private async UniTask FadeInDeathScreen(CancellationToken _token)
     {
+        Cursor.lockState = CursorLockMode.None;
         while(deathScreen_canvasGrp.alpha < 1)
         {
             _token.ThrowIfCancellationRequested();
             await UniTask.Delay((int)(Time.deltaTime * 1000), true);
             deathScreen_canvasGrp.alpha += Time.deltaTime;
         }
-        Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnDestroy()
