@@ -31,6 +31,7 @@ public class BeatTracking : MonoBehaviour
 
     CancellationTokenSource cts = new();
 
+
     [Header("Properties")]
     public int CurrentBeatsInTrack
     {
@@ -50,6 +51,8 @@ public class BeatTracking : MonoBehaviour
             }
         }
     }
+
+
 
     [Header("Beat Tracking Values")]
 
@@ -162,6 +165,7 @@ public class BeatTracking : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Checks every frame if a new beat just happened.
     /// </summary>
@@ -189,6 +193,8 @@ public class BeatTracking : MonoBehaviour
             else
                 values.LastActionOnBeat_Bool = false;
         }
+
+        values.CurrentSamples = currentSamples;
 
         if ((currentSamples_UI / samplesPerBeat_UI) >= 1) // for testing // maybe a second logic for a second visualizer 
             currentSamples_UI = currentSamples;

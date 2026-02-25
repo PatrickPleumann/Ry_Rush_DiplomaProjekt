@@ -202040,6 +202040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
   values: {fileID: 11400000, guid: e7e3a6a8fad70b5439a4433353582474, type: 2}
+  data: {fileID: 11400000, guid: 1b085284cecaa4749923e2449ec44b28, type: 2}
   enemyObjPool: {fileID: 943676869}
   vfxObjPool: {fileID: 571853836}
   spawns: {fileID: 509207471}

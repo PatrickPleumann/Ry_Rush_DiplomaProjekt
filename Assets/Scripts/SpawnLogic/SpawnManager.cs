@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows.Forms;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -9,6 +11,7 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     [Header("References")]
     [SerializeField] private CentralizedValues values;
+    [SerializeField] private SongData data;
     [SerializeField] private ObjectPoolBehaviour enemyObjPool;
     [SerializeField] private ObjectPoolBehaviour vfxObjPool;
     [SerializeField] private EnemySpawnLogic spawns;
@@ -28,6 +31,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float max;
     [SerializeField] private Vector3 spawnPointDistanceToPlayer;
 
+
+    private float timeInSecondsPerSample;
+    private float timePerBeat;
+    private int currentSamplesInBeat;
+
     private CancellationTokenSource cts;
 
     private void Awake()
@@ -37,6 +45,9 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+        timePerBeat = (60f / data.BPM);
+        timeInSecondsPerSample = (1f / data.SamplesPerBeat);
+
         min = minSpawnDistanceToPlayer * minSpawnDistanceToPlayer;
         max = maxSpawnDistanceToPlayer * maxSpawnDistanceToPlayer;
 
@@ -50,6 +61,36 @@ public class SpawnManager : MonoBehaviour
     {
         values.EnemyCount_OnValueChanged.RemoveListener(ValidateRespawn);
     }
+
+
+    /// <summary>
+    /// Gets a very precise time in seconds till the next beat appears. It is used to synchronize on beat behaviour to enemies spawning for example.
+    /// Value is also floored to two digits after zero.
+    /// </summary>
+    /// <returns></returns>
+
+    private float GetTimeTillNextBeatInSecondsFloored()
+    {
+        var temp = (values.CurrentSamples * timeInSecondsPerSample);
+        return Utility.FloorFloatToTwoDigits(temp);
+    }
+
+    private float GetTimeTillNextBeatCanSpawnEnemy(float _currentTimeTillNextBeat)
+    {
+        if (_currentTimeTillNextBeat > timeBetweenVFXAndEnemySpawn)
+            return _currentTimeTillNextBeat;
+
+        else
+        {
+            var temp = _currentTimeTillNextBeat;
+
+            while (temp < timeBetweenVFXAndEnemySpawn)
+                temp += timePerBeat;
+
+            return (temp - timeBetweenVFXAndEnemySpawn);
+        }
+    }
+
 
     private void SpawnEnemysOnGameStart()
     {
@@ -100,6 +141,9 @@ public class SpawnManager : MonoBehaviour
     private async UniTask OnValidateRespawnEnemy(GameObject _spawn, CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
+
+        //var time = GetTimeTillNextBeatCanSpawnEnemy(GetTimeTillNextBeatInSecondsFloored());
+        //await UniTask.Delay((int)(time * 1000));
 
         GameObject _vfx = OnValidateGetVFXPrefab();
         GameObject _enemy = OnValidateGetEnemyPrefab();

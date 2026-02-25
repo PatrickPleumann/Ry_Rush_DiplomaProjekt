@@ -79,6 +79,21 @@ public class CentralizedValues : ScriptableObject
         }
     }
 
+    private int currentSamplesInBeat;
+    [HideInInspector] public UnityEvent<int> CurrentSamplesInBeat_OnValueChanged;
+    public int CurrentSamples
+    {
+        get => currentSamplesInBeat;
+        set
+        {
+            if (currentSamplesInBeat != value)
+            {
+                currentSamplesInBeat = value;
+                CurrentSamplesInBeat_OnValueChanged.Invoke(currentSamplesInBeat);
+            }
+        }
+    }
+
     [Space]
 
     [HideInInspector] public UnityAction decreaseCombo;
