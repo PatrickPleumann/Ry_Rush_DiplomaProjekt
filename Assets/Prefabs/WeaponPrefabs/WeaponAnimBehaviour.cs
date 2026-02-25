@@ -6,9 +6,12 @@ public class WeaponAnimBehaviour : MonoBehaviour
 {
     [SerializeField] private PlayerController controller;
     [SerializeField] private Animator animator;
-    private void Awake()
+    [SerializeField] private SongData data;
+
+    private void Start()
     {
-        float temp = Mathf.Floor((103f / 60f) * 100) * 0.01f; // reduced to two digits after
+        var temp = data.BPM / 60;
+        temp = Utility.FloorFloatToTwoDigits(temp);
         animator.speed *= temp;
     }
     private void OnEnable()
