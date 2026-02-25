@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73734d2c8b506a4093f2f7daa74aa8e, type: 3}
   m_Name: SettingsData
   m_EditorClassIdentifier: Assembly-CSharp::SettingsData
-  MusicVolume: 0.3
-  PlayerSFXVolume: 0.3
-  WeaponSFXVolume: 0.3
+  PlayerSFXVolume: 0.2
+  WeaponSFXVolume: 0.2
+  AmbienceVolume: 0.2
   ShowFPS: 1
+  SlowMotionOnAim: 0
