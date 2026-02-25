@@ -79,20 +79,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-7362147796346553461
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68f118d1adadc444084d196c82ce04a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
-  eventName: RecieverClick
-  TriggerTime: 0.9
 --- !u!114 &-7291901482784384263
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,9 +110,6 @@ AnimatorState:
   - {fileID: 6824169008129872445}
   - {fileID: 1527248834688781268}
   - {fileID: -7291901482784384263}
-  - {fileID: -3686115621466851966}
-  - {fileID: -2714892128961658259}
-  - {fileID: -7362147796346553461}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -135,7 +118,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 6c50d5200edc2e846a00df65301e7264, type: 3}
+  m_Motion: {fileID: 7400000, guid: d2513e5cc44222d48b4fe6c5d587221b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -205,20 +188,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: OnReloadEnd
   TriggerTime: 0.94
---- !u!114 &-3686115621466851966
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68f118d1adadc444084d196c82ce04a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
-  eventName: MagOut
-  TriggerTime: 0.33
 --- !u!114 &-2986479467054173921
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,20 +202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
   eventName: MagOut
   TriggerTime: 0.1
---- !u!114 &-2714892128961658259
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68f118d1adadc444084d196c82ce04a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimationEventStateBehaviour
-  eventName: MagIn
-  TriggerTime: 0.7
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0

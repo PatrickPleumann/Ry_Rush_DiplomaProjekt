@@ -142,8 +142,8 @@ public class SpawnManager : MonoBehaviour
     {
         token.ThrowIfCancellationRequested();
 
-        //var time = GetTimeTillNextBeatCanSpawnEnemy(GetTimeTillNextBeatInSecondsFloored());
-        //await UniTask.Delay((int)(time * 1000));
+        var time = GetTimeTillNextBeatCanSpawnEnemy(GetTimeTillNextBeatInSecondsFloored());
+        await UniTask.Delay((int)(time * 1000));
 
         GameObject _vfx = OnValidateGetVFXPrefab();
         GameObject _enemy = OnValidateGetEnemyPrefab();
