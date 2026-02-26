@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -114,6 +115,8 @@ public class BeatTracking : MonoBehaviour
         OnSongEnded -= SongEnds;
         values.OnPlayerDeath.RemoveListener(DecreaseSourceVolume);
     }
+
+    
     private void GetEstimatesBeatsPerTrack() // works
     {
 
@@ -125,6 +128,8 @@ public class BeatTracking : MonoBehaviour
     }
     private void Start()
     {
+        
+        //values.AllowInput = true;
         values.TimeBetweenBeats = Utility.FloorFloatToTwoDigits(60 / songData.BPM);
         currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
@@ -143,7 +148,8 @@ public class BeatTracking : MonoBehaviour
 
     private async void StartSong()
     {
-       await  StartSongDelayedAsync(timeTillSongStarts, cts.Token);
+        values.SetDefaultValues();
+        await  StartSongDelayedAsync(timeTillSongStarts, cts.Token);
     }
 
     private async UniTask StartSongDelayedAsync(float _timeTillSongStarts, CancellationToken _token)
@@ -160,7 +166,7 @@ public class BeatTracking : MonoBehaviour
     }
     private async UniTask DecreaseSourceVolumeAsync(CancellationToken _token)
     {
-        while (source == true && source.volume > 0.001f) // feels very good, so song fades out very long until it completely disappears
+        while (source != null && source.volume > 0.001f) // feels very good, so song fades out very long until it completely disappears
         {
             _token.ThrowIfCancellationRequested();
             source.volume -= Time.deltaTime;

@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private float percentageIntoRandomNumber;
 
+    private CancellationTokenSource cts = new();
     private void Start()
     {
         percentageIntoRandomNumber = Mathf.FloorToInt(100 / percentageToTakeDamage);
@@ -55,7 +57,7 @@ public class PlayerHealthSystem : MonoBehaviour
         values.OnPlayerDeath.Invoke();
         Debug.Log("PLAYER DEAD");
         AudioHandler.Instance.PlayOneShot(AudioHandler.Instance.playerDead_Sounds[Random.Range(0, AudioHandler.Instance.playerDead_Sounds.Length)]);
-        await DecreaseTimeOnPlayerDead(decreaseTimeScaleOnPlayerDeathMultiplier);
+        await DecreaseTimeOnPlayerDead(decreaseTimeScaleOnPlayerDeathMultiplier, cts.Token);
     }
 
     /// <summary>
@@ -67,13 +69,20 @@ public class PlayerHealthSystem : MonoBehaviour
         return values.PlayerCurrentHealth < values.PlayerMaxHealth;
     }
 
-    private async UniTask DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier)
+    private async UniTask DecreaseTimeOnPlayerDead(float _decreaseTimeScaleOnPlayerDeathMultiplier, CancellationToken token)
     {
         while (Time.timeScale > 0.01f)
         {
+            token.ThrowIfCancellationRequested();
             await UniTask.Delay((int)(_decreaseTimeScaleOnPlayerDeathMultiplier * 1000 * Time.deltaTime),true);
             Time.timeScale -= Time.deltaTime;
         }
         Time.timeScale = 0f;
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }

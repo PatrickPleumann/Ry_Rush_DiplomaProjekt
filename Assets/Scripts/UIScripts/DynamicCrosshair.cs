@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +25,7 @@ public class DynamicCrosshair : MonoBehaviour
     [SerializeField] private float timeTillHitmarkerVanishes = 1;
 
     private float valuePerSample;
+    private CancellationTokenSource cts = new();
 
     private void OnEnable()
     {
@@ -53,17 +56,18 @@ public class DynamicCrosshair : MonoBehaviour
             (rightOffset - (valuePerSample * beatTracking.currentSamples_UI), 0f, 0f);
     }
 
-    private void ShowHitMarker()
+    private async void ShowHitMarker()
     {
         hitmarker_canvasGrp.alpha = 1;
-        HitMarkerVanishes(timeTillHitmarkerVanishes);
+        await HitMarkerVanishes(timeTillHitmarkerVanishes, cts.Token);
     }
 
-    private async void HitMarkerVanishes(float _timeInSec)
-    { 
+    private async UniTask HitMarkerVanishes(float _timeInSec, CancellationToken token)
+    {
         while (hitmarker_canvasGrp.alpha > 0)
         {
-            await Task.Delay((int)(Time.deltaTime * 1000 * _timeInSec));
+            token.ThrowIfCancellationRequested();
+            await UniTask.Delay((int)(Time.deltaTime * 1000 * _timeInSec), true);
             hitmarker_canvasGrp.alpha -= Time.deltaTime;
         }
     }
@@ -80,5 +84,11 @@ public class DynamicCrosshair : MonoBehaviour
             leftVisualizer.color = offBeatColor;
             rightVisualizer.color = offBeatColor;
         }
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }

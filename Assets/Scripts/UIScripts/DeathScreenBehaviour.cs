@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using System;
 
 public class DeathScreenBehaviour : MonoBehaviour
 {
@@ -22,13 +21,12 @@ public class DeathScreenBehaviour : MonoBehaviour
 
     private void ReturnToMainMenu()
     {
-
         values.OnPlayerDeath.RemoveListener(InitDeathScreen);
         backToMainMenu_Button.onClick.RemoveListener(ReturnToMainMenu);
 
+        Time.timeScale = 1f;
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
-        Time.timeScale = 1;
         SceneManager.LoadSceneAsync(0);
     }
 
@@ -42,10 +40,10 @@ public class DeathScreenBehaviour : MonoBehaviour
     }
     private async UniTask FadeInDeathScreen(CancellationToken _token)
     {
+        _token.ThrowIfCancellationRequested();
         Cursor.lockState = CursorLockMode.None;
-        while(deathScreen_canvasGrp.alpha < 1)
+        while (deathScreen_canvasGrp.alpha < 1 && deathScreen_canvasGrp == true)
         {
-            _token.ThrowIfCancellationRequested();
             await UniTask.Delay((int)(Time.deltaTime * 1000), true);
             deathScreen_canvasGrp.alpha += Time.deltaTime;
         }
@@ -57,4 +55,3 @@ public class DeathScreenBehaviour : MonoBehaviour
         cts.Dispose();
     }
 }
- 

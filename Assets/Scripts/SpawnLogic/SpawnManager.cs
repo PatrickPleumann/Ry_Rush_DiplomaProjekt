@@ -94,11 +94,16 @@ public class SpawnManager : MonoBehaviour
         else
         {
             var temp = _currentTimeTillNextBeat;
+            if (timePerBeat > 0)
+            {
+                while (temp < timeBetweenVFXAndEnemySpawn)
+                    temp += timePerBeat;
 
-            while (temp < timeBetweenVFXAndEnemySpawn)
-                temp += timePerBeat;
+                return (temp - timeBetweenVFXAndEnemySpawn);
+            }
+            else
+                return 0f;
 
-            return (temp - timeBetweenVFXAndEnemySpawn);
         }
     }
 
@@ -219,5 +224,11 @@ public class SpawnManager : MonoBehaviour
             return true;    
 
         return false;
+    }
+
+    private void OnDestroy()
+    {
+        cts.Cancel();
+        cts.Dispose();
     }
 }

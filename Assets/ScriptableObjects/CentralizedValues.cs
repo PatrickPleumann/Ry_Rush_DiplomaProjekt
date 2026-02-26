@@ -10,6 +10,7 @@ public class CentralizedValues : ScriptableObject
 
     public void SetDefaultValues()
     {
+        Time.timeScale = 1f;
         CurrentCombo_Value = 1;
         CurrentComboOvershoot_Value = 0;
         CurrentScore_Value = 0;

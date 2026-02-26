@@ -195,27 +195,27 @@ public class EnemyController : MonoBehaviour, ISetDefaultValues
                 item.isKinematic = true;
         }
     }
+
     private async UniTask DeathTimer()
     {
-        
         await UniTask.Delay((int)(despawnTimer * 1000));
 
-        if (Pool != null)
+        if (Pool != null && gameObject != false)
         {
             SetDefaultValues();
             Pool.EnqueueObject(gameObject);
         }
 
-        else
+        else if (gameObject != null)
             Destroy(gameObject);
     }
+
     public void SetDefaultValues() // resets all important values for a fresh respawn
     {
         SetInactiveRagdollRigibodies();
         Animator.enabled = true;
         enemyIsDead = false;
         hitsTillDeath = 0;
-
 
         if (controller != null)
             ResetStateMachine();

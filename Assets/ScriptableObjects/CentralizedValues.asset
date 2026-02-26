@@ -18,19 +18,22 @@ MonoBehaviour:
       m_Calls: []
   LookInput_Value: {x: 0, y: 0}
   AllowInput: 0
-  TimeBetweenBeats: 0.65999997
+  TimeBetweenBeats: 0.58
   currentSamples_UI: 0
   CurrentSamples_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  CurrentSamplesInBeat_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
   LastActionOnBeat_Bool: 0
   CurrentComboMaxValue: 5
-  currentComboValue: 0
+  currentComboValue: 1
   CurrentCombo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   ComboMaxOvershoot: 4
-  currentComboOvershoot: 4
+  currentComboOvershoot: 0
   ComboOvershoot_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -38,10 +41,10 @@ MonoBehaviour:
   CurrentAmmo_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  ShotsFired: 11
-  ShotsHit: 8
+  ShotsFired: 1
+  ShotsHit: 0
   Kills: 0
-  OnBeatActions: 14
+  OnBeatActions: 0
   currentScore_Value: 0
   CurrentScore_OnValueChanged:
     m_PersistentCalls:
@@ -61,6 +64,11 @@ MonoBehaviour:
       m_Calls: []
   playerIsDead: 0
   PlayerIsDead_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  SessionIsOver: 0
+  IsOnBeat: 0
+  DisAllowSlowMotion:
     m_PersistentCalls:
       m_Calls: []
   OnSessionEnds:
