@@ -32,6 +32,8 @@ public class CentralizedValues : ScriptableObject
         GameIsPaused = false;
         PlayerIsDead = false;
         SessionIsOver = false;
+
+        IsOnBeat = false;
     }
 
     /// <summary>
@@ -249,11 +251,10 @@ public class CentralizedValues : ScriptableObject
 
     [Space]
 
-    [Header("Slow Motion Values")]
-
     [Space]
-
     public bool SessionIsOver = false;
+    public bool IsOnBeat = false;
+
     [HideInInspector] public UnityEvent DisAllowSlowMotion;
     [HideInInspector] public UnityEvent OnSessionEnds;
     [HideInInspector] public UnityEvent OnDashExecuted; // not in use, for post processing effects while dashing

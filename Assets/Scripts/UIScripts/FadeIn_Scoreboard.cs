@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
 
@@ -9,14 +10,19 @@ public class FadeIn_Scoreboard : MonoBehaviour
     private void Awake()
     {
         grp = GetComponent<CanvasGroup>();
-    }
-    private void Start()
-    {
         grp.alpha = 0;
-        StartCoroutine(FadeInGrp());
+    }
+    private void OnEnable()
+    {
+        StartFadeIn();
     }
 
-    private IEnumerator FadeInGrp()
+    private async void StartFadeIn()
+    {
+       await FadeInGrp();
+    }
+
+    private async UniTask FadeInGrp()
     {
         float temp = 0.5f;
         if (values.TimeBetweenBeats > 0)
@@ -24,9 +30,9 @@ public class FadeIn_Scoreboard : MonoBehaviour
         
         while (grp.alpha < 1)
         {
-            yield return new WaitForSeconds(Time.deltaTime * temp);
+            await UniTask.Delay((int)(Time.deltaTime * temp * 1000));
             grp.alpha += Time.deltaTime;
         }
-        yield return new WaitForEndOfFrame();
+        await UniTask.WaitForEndOfFrame();
     }
 }

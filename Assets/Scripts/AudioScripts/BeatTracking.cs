@@ -135,7 +135,10 @@ public class BeatTracking : MonoBehaviour
     private void Update()
     {
         if (songStarted == true)
+        {
             IsOnBeat = CheckForNewBeat();
+            values.IsOnBeat = IsOnBeat;
+        }
     }
 
     private async void StartSong()

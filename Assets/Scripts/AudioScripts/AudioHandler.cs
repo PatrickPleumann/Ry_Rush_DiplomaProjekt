@@ -27,6 +27,7 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] public AudioClip playerAim;
     [SerializeField] public AudioClip playerShoot;
     [SerializeField] public AudioClip playerShootCharged;
+    [SerializeField] public AudioClip MagEmptySound;
     [SerializeField] public AudioClip gunMagOut;
     [SerializeField] public AudioClip gunMagIn;
     [SerializeField] public AudioClip gunRecieverClick;

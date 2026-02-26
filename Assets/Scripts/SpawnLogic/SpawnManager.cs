@@ -16,6 +16,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private ObjectPoolBehaviour vfxObjPool;
     [SerializeField] private EnemySpawnLogic spawns;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject allEnemies;
+
 
     [Header("Adjustable Values")]
     [SerializeField][Range(10f, 25f)] private float minSpawnDistanceToPlayer;
@@ -56,10 +58,18 @@ public class SpawnManager : MonoBehaviour
         SpawnEnemysOnGameStart();
 
         values.EnemyCount_OnValueChanged.AddListener(ValidateRespawn);
+        values.OnSessionEnds.AddListener(DespawnAllEnemies);
     }
+
+    private void DespawnAllEnemies()
+    {
+        allEnemies.SetActive(false);
+    }
+
     private void OnDisable()
     {
         values.EnemyCount_OnValueChanged.RemoveListener(ValidateRespawn);
+        values.OnSessionEnds.RemoveListener(DespawnAllEnemies);
     }
 
 
