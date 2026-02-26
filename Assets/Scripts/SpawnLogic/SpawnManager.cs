@@ -23,7 +23,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField][Range(10f, 25f)] private float minSpawnDistanceToPlayer;
     [SerializeField][Range(30f, 50f)] private float maxSpawnDistanceToPlayer;
     [SerializeField] private float enqueueVFXObjTime = 2;
-    [SerializeField] private float timeBetweenVFXAndEnemySpawn = 1;
+    [SerializeField] private float timeBetweenVFXAndEnemySpawn = 0.8f;
+    [SerializeField] private float timeTillSoundHits = 0.5f;
     [SerializeField] private int enemyCountOnGameStart;
 
     [SerializeField] private float slowMotionBasedDelay; // this value can be used as a multiplier for the time delay on spawn
@@ -153,7 +154,7 @@ public class SpawnManager : MonoBehaviour
         token.ThrowIfCancellationRequested();
 
         var time = GetTimeTillNextBeatCanSpawnEnemy(GetTimeTillNextBeatInSecondsFloored());
-        await UniTask.Delay((int)(time * 1000));
+        await UniTask.Delay((int)(time * 1000), true);
 
         GameObject _vfx = OnValidateGetVFXPrefab();
         GameObject _enemy = OnValidateGetEnemyPrefab();
@@ -164,6 +165,8 @@ public class SpawnManager : MonoBehaviour
             cts.Cancel();
         }
 
+        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn - timeTillSoundHits), true);
+
         AudioHandler.Instance.PlayActionAmbience_2_Sounds
             (AudioHandler.Instance.enemySpawnSounds[Random.Range(0, AudioHandler.Instance.enemySpawnSounds.Length)]);
 
@@ -173,17 +176,17 @@ public class SpawnManager : MonoBehaviour
 
         vfxEffect.Play();
 
-        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn * 1000));
+        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn * 1000), true);
 
         _enemy.transform.position = _spawn.transform.position;
         _enemy.SetActive(true);
 
         spawns.AllSpawnpoints.Enqueue(_spawn);
+        values.EnemysAliveCount = values.EnemysAliveCount + 1;
 
         await UniTask.Delay((int)(enqueueVFXObjTime * 1000));
         vfxObjPool.EnqueueObject(_vfx);
 
-        values.EnemysAliveCount = values.EnemysAliveCount + 1;
         await UniTask.WaitForEndOfFrame();
     }
 

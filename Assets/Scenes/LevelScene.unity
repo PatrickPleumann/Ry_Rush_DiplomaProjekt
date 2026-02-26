@@ -165283,15 +165283,15 @@ MonoBehaviour:
   scoreboard_Hit: {fileID: 8300000, guid: 15ed9d62ba9716f4c80c695892c27123, type: 3}
   scoreboard_Hit2: {fileID: 8300000, guid: 50b5acb41da38454ea4094a6ba7669e8, type: 3}
   enemySpawnSounds:
-  - {fileID: 8300000, guid: d53aef2e30d9c94499b6f31c1992e97c, type: 3}
-  - {fileID: 8300000, guid: 18e2faac9f0e1224292d69bb1263fa26, type: 3}
-  - {fileID: 8300000, guid: 031f2632cfeab3341ac89533249d11bf, type: 3}
-  - {fileID: 8300000, guid: 02eb828809e811e419daf5961df12212, type: 3}
-  - {fileID: 8300000, guid: fa01bf76d203b4d42a6bbd22f94811be, type: 3}
-  - {fileID: 8300000, guid: f4f3d79abe855254189d77772bf732cf, type: 3}
-  - {fileID: 8300000, guid: 38a08786f66e5e54ea96e0a425552b53, type: 3}
-  - {fileID: 8300000, guid: a47ec859a0949de499b31c70da307328, type: 3}
-  - {fileID: 8300000, guid: 833b08cc1d889af40bb818db7b8749b8, type: 3}
+  - {fileID: 8300000, guid: 6df89007ae781b64199c3534db39abe4, type: 3}
+  - {fileID: 8300000, guid: 5c1f2b22ee6f5c84b91115c09b8be2c2, type: 3}
+  - {fileID: 8300000, guid: b5bbb9e09b0039b45a46c6a227703d96, type: 3}
+  - {fileID: 8300000, guid: 9cf11d456e472e54693a9b01df446ccb, type: 3}
+  - {fileID: 8300000, guid: 2a90a23f9c22ca9488ab6260918ee909, type: 3}
+  - {fileID: 8300000, guid: 10d4628e427350f4ca42547e6d7148a9, type: 3}
+  - {fileID: 8300000, guid: 873f0ec092b38994f99a283237c55304, type: 3}
+  - {fileID: 8300000, guid: 1104eb1c7f3d68248830c98adb097869, type: 3}
+  - {fileID: 8300000, guid: 7f522463b0eded541b6e0728fc24498c, type: 3}
   background_AmbienceSound: {fileID: 0}
   healthPickUp_Sound:
   - {fileID: 8300000, guid: edadb19c48f15e640ae561029abf0771, type: 3}
@@ -202448,6 +202448,7 @@ MonoBehaviour:
   maxSpawnDistanceToPlayer: 30
   enqueueVFXObjTime: 2
   timeBetweenVFXAndEnemySpawn: 0.8
+  timeTillSoundHits: 0.5
   enemyCountOnGameStart: 20
   slowMotionBasedDelay: 1
   min: 0
