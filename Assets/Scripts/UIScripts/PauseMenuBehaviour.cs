@@ -61,6 +61,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         Time.timeScale = 1f;
         values.SetDefaultValues();
         fadeOut_BG.SetActive(true);
+        values.SessionIsOver = true;
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
         SceneManager.LoadSceneAsync(0);

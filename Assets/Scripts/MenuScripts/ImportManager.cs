@@ -1,5 +1,4 @@
 using SFB;
-using System;
 using System.Collections;
 using System.IO;
 using TMPro;
@@ -112,7 +111,7 @@ public class ImportManager : MonoBehaviour
         songPreview.source_metronome.volume = _volume;
     }
 
-    private void FillSongData() //method has to be called earlier
+    private void FillSongData() 
     {
         data.songName = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
         data.BPM = bpm;
@@ -155,6 +154,7 @@ public class ImportManager : MonoBehaviour
 
         view.AsyncValue_GO.gameObject.SetActive(false);
         view.PlayPreview_Button.interactable = true;
+
         view.SampleOffset_Slider.minValue = 0;
         view.SampleOffset_Slider.maxValue = 1;
         view.SampleOffset_Slider.value = 0;

@@ -13,19 +13,21 @@ public class RotatePickUpItem : MonoBehaviour
     {
         StartRotation();
     }
-
     private async void StartRotation()
     {
         await RotateObjectAsync(cts.Token);
     }
     private async UniTask RotateObjectAsync(CancellationToken token)
     {
+        token.ThrowIfCancellationRequested();
         while (values.SessionIsOver == false)
         {
-            token.ThrowIfCancellationRequested();
-            await UniTask.WaitForEndOfFrame();
             gameObject.transform.Rotate(rotationVec, 1f);
+            await UniTask.WaitForEndOfFrame();
         }
+    }
+    private void OnDestroy()
+    {
         cts.Cancel();
         cts.Dispose();
     }
