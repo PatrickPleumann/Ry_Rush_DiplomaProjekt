@@ -67,7 +67,6 @@ public class ImportManager : MonoBehaviour
 
         view.ResetValues_Button.onClick.RemoveListener(ResetAllValues);
         view.Back_Button.onClick.RemoveListener(ResetAllValues);
-
     }
 
     private void OnEnable()
@@ -75,8 +74,13 @@ public class ImportManager : MonoBehaviour
         AddAllListener();
 
         ClearDropDown();
-        GetDataFromPersistentFolder();
+        GetSongsFromPersistentDataFolder();
 
+        DisplayDropdownAndSongNameLabel();
+    }
+
+    private void DisplayDropdownAndSongNameLabel()
+    {
         if (view.songs_DropdownMenu.options.Count > 0 && view.songs_DropdownMenu.value >= 0)
         {
             view.YourSong_Name.text = view.songs_DropdownMenu.options[0].text;
@@ -89,20 +93,21 @@ public class ImportManager : MonoBehaviour
         RemoveAllListeners();
     }
 
-
     private void SafeSongValuesIntoDictionary() 
     {
-        FillSongData();
-        songDataDictionary.SaveEntry(view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text, data);
-        songDataDictionary.SafeDictionaryAsJson();
-    }
+        data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
+        data.SongSpecificVolume = view.SongSpecificVolume_Slider.value;
 
+        songDataDictionary.SaveEntry(view.YourSong_Name.text, data);
+        songDataDictionary.SafeDictionaryAsJson();
+
+        data.EraseData();
+    }
 
     private void StartPreview()
     {
         view.PlayPreview_Button.interactable = false;
-        FillSongData();
-        songPreview.AssignSongDataValuesToPreview(data);
+        songPreview.AssignSongDataValuesToPreview(data, data.SongSpecificVolume);
     }
 
     private void ChangeVolume(float _volume)
@@ -111,18 +116,10 @@ public class ImportManager : MonoBehaviour
         songPreview.source_metronome.volume = _volume;
     }
 
-    private void FillSongData() 
-    {
-        data.songName = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
-        data.BPM = bpm;
-        data.SamplesPerBeat = GetSamplesPerBeat();
-        data.AsyncSamplesValue = (int)view.SampleOffset_Slider.value;
-        data.BeatMultiplier = 1;
-        data.SongSpecificVolume = view.SongSpecificVolume_Slider.value;
-    }
     private void ConfirmCurrentSong()
     {
-        var selectedSong = view.songs_DropdownMenu.options[view.songs_DropdownMenu.value].text;
+        data.songName = view.YourSong_Name.text;
+        var selectedSong = view.YourSong_Name.text;
         AssignAudioFile(selectedSong);
         dropdown.SetActive(false); // into reset values
         view.ConfirmSong_Button.interactable = false;
@@ -173,25 +170,25 @@ public class ImportManager : MonoBehaviour
     {
         if (float.TryParse(view.BPMInput_InputField.text, out float output) && output < 201 && output > 30)
         {
-            FillSongData();
             bpm = output;
+            data.BPM = output;
+
             samplesPerBeat = GetSamplesPerBeat();
+            data.SamplesPerBeat = samplesPerBeat;
+
             ArrangeAsyncSlider(samplesPerBeat);
+
             view.BPMInput_InputField.interactable = false; // into reset
             view.ConfirmBPM_Button.interactable = false;   // into reset
         }
 
         else
-        {
-            view.BPMInput_InputField.text = "Enter BMP here... 30 - 200";
-            Debug.Log("Invalid input for BPM input field");
-        }
+            view.BPMInput_InputField.text = "30 - 200 BPM only";
     }
 
     private void BrowseFilesForSong()
     {
         dropdown.SetActive(true);
-        //pauses mainthread, which is good
         var path = StandaloneFileBrowser.OpenFilePanel(view.Message, "", extensions, canChooseMultipleFiles);
         if (path.Length > 0)
             LoadFileIntoPersistentDataFolder(path[0]);
@@ -208,8 +205,7 @@ public class ImportManager : MonoBehaviour
             File.Copy(_path, destPath + Path.GetFileName(_path));
             Debug.Log("File successfully loaded into persistent data folder");
             view.YourSong_Name.text = Path.GetFileName(_path);
-            view.songs_DropdownMenu.captionText.text = view.YourSong_Name.text;
-            GetDataFromPersistentFolder();
+            GetSongsFromPersistentDataFolder();
         }
 
         else
@@ -217,7 +213,7 @@ public class ImportManager : MonoBehaviour
     }
 
 
-    private void GetDataFromPersistentFolder() //gets all files from persistent data path and adds a dropdown option for each.
+    private void GetSongsFromPersistentDataFolder()
     {
         var info = new DirectoryInfo(Application.persistentDataPath);
         var fileInfo = info.GetFiles("*.wav");
@@ -237,6 +233,7 @@ public class ImportManager : MonoBehaviour
     private void ArrangeAsyncSlider(float _samplesPerBeat)
     {
         view.AsyncValue_GO.gameObject.SetActive(true);
+        view.SongSpecificVolume_Slider.value = data.SongSpecificVolume;
         view.SampleOffset_Slider.minValue = -(_samplesPerBeat * 0.5f);
         view.SampleOffset_Slider.maxValue = (_samplesPerBeat * 0.5f);
         view.SampleOffset_Slider.wholeNumbers = true;

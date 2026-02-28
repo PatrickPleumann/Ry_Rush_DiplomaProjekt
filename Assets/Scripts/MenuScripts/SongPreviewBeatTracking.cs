@@ -42,8 +42,9 @@ public class SongPreviewBeatTracking : MonoBehaviour
         asyncValues_Preview = (int)_value;
     }
     //somewhere here  a button which assigns to beatMultiplier the value 2 (for half beat stuff)
-    public void AssignSongDataValuesToPreview(SongData _data)
+    public void AssignSongDataValuesToPreview(SongData _data, float _volume)
     {
+        source_song.volume = _volume;
         source_song.clip = clip;
 
         bpm_Preview = _data.BPM;
