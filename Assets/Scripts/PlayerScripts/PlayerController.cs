@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public UnityEvent onJumpInvoked_started;
 
-    [HideInInspector] public UnityEvent onDashInvoked_started;
+    [HideInInspector] public UnityEvent OnDashInvoked_started;
 
     [HideInInspector] public UnityEvent onSlowMotion_started;
     [HideInInspector] public UnityEvent onSlowMotion_canceled;
@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour
     private void ProcessDashInput(InputAction.CallbackContext ctx)
     {
         if (values.AllowInput == true && ctx.started == true)
-            onDashInvoked_started.Invoke();
+            OnDashInvoked_started.Invoke();
     }
     private void ProcessEscInput(InputAction.CallbackContext context)
     {

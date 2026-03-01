@@ -27,6 +27,7 @@ public class UI_HighscoreBoard : MonoBehaviour
     private void OnEnable()
     {
         backButton.onClick.AddListener(OnBackButton);
+        ShowHighscore();
     }
 
     private void OnDisable()
@@ -34,93 +35,52 @@ public class UI_HighscoreBoard : MonoBehaviour
         backButton.onClick.RemoveListener(OnBackButton);
     }
 
-    private async void Start()
+    private async void ShowHighscore()
     {
-        var _timeBetween = values.TimeBetweenBeats;
-        Debug.Log("Time between beats: " + _timeBetween);
-        await ShowHighscoreScreen(_timeBetween, cts.Token);
+        Debug.Log(values.TimeBetweenBeats);
+        await ShowHighscoreScreen(values.TimeBetweenBeats, cts.Token);
     }
 
     private async UniTask ShowHighscoreScreen(float _timeBetween, CancellationToken _token)
     {
         _token.ThrowIfCancellationRequested();
 
-        await UniTask.Delay((int)(_timeBetween * 2 * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 2 * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsFired.text = Get_ShotsFired();
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         ShotsHit.text = Get_ShotsHit();
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         Accuracy.text = Get_Accuracy();
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         PointsPerKill.text = Get_PointsPerKill();
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         PointsPerHit.text = Get_PointsPerHit();
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         Kills.text = Get_Kills();
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
         OnBeatActions.text = Get_OnBeatActions();
 
         Cursor.lockState = CursorLockMode.None;
 
-        await UniTask.Delay((int)(_timeBetween * 1000), false);
+        await UniTask.Delay((int)(_timeBetween * 1000), true);
         AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit2);
         YourScore.text = Get_YourScore();
 
         await UniTask.WaitForEndOfFrame();
     }
-
-    //private IEnumerator ShowHighscoreScreen(float _timeBetween)
-    //{
-    //    //increase volume here to roughly math song volume
-    //    yield return new WaitForSeconds(_timeBetween * 2);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    ShotsFired.text = Get_ShotsFired();
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    ShotsHit.text = Get_ShotsHit();
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    Accuracy.text = Get_Accuracy();
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    PointsPerKill.text = Get_PointsPerKill();
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    PointsPerHit.text = Get_PointsPerHit();
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    Kills.text = Get_Kills();
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit);
-    //    OnBeatActions.text = Get_OnBeatActions();
-
-    //    Cursor.lockState = CursorLockMode.None;
-
-    //    yield return new WaitForSeconds(_timeBetween);
-    //    AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.scoreboard_Hit2);
-    //    YourScore.text = Get_YourScore();
-
-    //    yield return new WaitForEndOfFrame();
-    //}
 
     private void OnBackButton()
     {

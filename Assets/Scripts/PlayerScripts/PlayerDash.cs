@@ -18,14 +18,15 @@ public class PlayerDash : MonoBehaviour
     private Vector3 dashForceVector = Vector3.zero;
 
     private CancellationTokenSource cts = new();
+
     private void OnEnable()
     {
-        controller.onDashInvoked_started.AddListener(Dash);
+        controller.OnDashInvoked_started.AddListener(Dash);
     }
 
     private void OnDisable()
     {
-        controller.onDashInvoked_started.RemoveListener(Dash);
+        controller.OnDashInvoked_started.RemoveListener(Dash);
     }
 
     private void Start()

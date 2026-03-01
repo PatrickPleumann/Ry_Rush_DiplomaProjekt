@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="CentralizedValues fungiert als zentrale &quot;Verteiler-Klasse&quot;.">
+    <Position X="12.144" Y="6.658" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Player Controller invoked lediglich Events worauf die anderen Player Klassen reagieren.">
+    <Position X="7.717" Y="1.441" Height="0.816" Width="1.736" />
+  </Comment>
+  <Comment CommentText="Die anderen PlayerKlassen geben ihre intern geänderten Werte an CentralizedValues weiter.">
+    <Position X="12.971" Y="3.88" Height="0.822" Width="1.887" />
+  </Comment>
+  <Comment CommentText="Beattracking z.B. stellt ebenfalls wichtige zentale Informationen bereit über den CentralizedValues Objektverweis.">
+    <Position X="4.239" Y="6.996" Height="0.804" Width="2.056" />
+  </Comment>
+  <Class Name="CentralizedValues" Collapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AALBAgAAACIAgYrBDABI4AqYJCCJiQAGCAAgCBCHhoQ=</HashCode>
+      <FileName>Assets\ScriptableObjects\CentralizedValues.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true">
+    <Position X="9.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DAQQAAAgA6QULCRSAagAAAKgBCAKmCQsGAQAWCAACFA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerDash" Collapsed="true">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAAEAACAAAAkAAAAhAABAQAAQACAoIAAAAAAgCAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerDash.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerMovement_New" Collapsed="true">
+    <Position X="7.25" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CgQAAICRAgCFIEFxIAIAAABACBgwAGQMSBEIBIEACEA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerMovement_New.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerCollisionCheck" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAlgCAAAhAAQBAIAAABAAgYBkAQgAEKAgIACAgQSAg=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerCollisionCheck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerShooting" Collapsed="true">
+    <Position X="11" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAgGAAAAAAIABCAAIACoIAAAABAAAKAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScripts\PlayerShooting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UI_Ammo" Collapsed="true">
+    <Position X="13.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAIAEAAAAAIAAQAAAAAACIAAIAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\UIScripts\UI_Ammo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeatTracking" Collapsed="true">
+    <Position X="5.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YQQJAgAEKSQEAANAgwEAgIAgcACABCBJJAAFAAIAGkQ=</HashCode>
+      <FileName>Assets\Scripts\AudioScripts\BeatTracking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UI_Healthbar" Collapsed="true">
+    <Position X="13.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAAAAAQAAgAAAAAAAAACAIAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\UIScripts\UI_Healthbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

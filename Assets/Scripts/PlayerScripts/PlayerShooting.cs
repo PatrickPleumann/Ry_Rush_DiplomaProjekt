@@ -1,19 +1,15 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 
 public class PlayerShooting : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerController controller;
-    [SerializeField] private Scoreboard_UI scoreboard;
-    [SerializeField] private BeatTracking beatTracking;
     [SerializeField] private CentralizedValues values;
     [SerializeField] private HitEffect hitEffect;
     
     [Space]
 
-    [SerializeField] private LayerMask targetLayerMask;
     [SerializeField] private float bulletDamage;
     [SerializeField] private float shootOnBeatMultiplier = 1;
 
@@ -46,7 +42,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         crosshairCenterRay = Camera.main.ViewportPointToRay(cameraCenterPoint);
-        var temp = Physics.Raycast(crosshairCenterRay, out hit, 200f, targetLayerMask);
+        var temp = Physics.Raycast(crosshairCenterRay, out hit, 200f);
 
         if (temp == true && hit.transform.TryGetComponent(out HurtboxBehaviour current))
         {
@@ -54,7 +50,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 values.OnEnemyHit.Invoke();
                 hitEffect.onEnemyHit.Invoke(hit.point);
-                current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value * shootOnBeatMultiplier, true); //more dmg pls
+                current.ApplyDamageToEnemy(bulletDamage * values.CurrentCombo_Value * shootOnBeatMultiplier, true);
                 AudioHandler.Instance.PlaySound_sourceActionAmbience(AudioHandler.Instance.hitmarker_2);
             }
 

@@ -86,7 +86,7 @@ public class BeatTracking : MonoBehaviour
 
     private void Awake()
     {
-        
+        values.SetDefaultValues();
         destPath = Application.persistentDataPath + "/";
         source = GetComponent<AudioSource>();
 
@@ -128,9 +128,9 @@ public class BeatTracking : MonoBehaviour
     }
     private void Start()
     {
-        
-        //values.AllowInput = true;
-        values.TimeBetweenBeats = Utility.FloorFloatToTwoDigits(60 / songData.BPM);
+        var temp = (float)(60 / songData.BPM);
+        values.TimeBetweenBeats = Utility.FloorFloatToTwoDigits(temp);
+        Debug.Log(values.TimeBetweenBeats);
         currentSamples += asyncValue;
         currentSamples_UI = currentSamples;
         currentSamples_UI += OnBeatOffset;
@@ -148,7 +148,7 @@ public class BeatTracking : MonoBehaviour
 
     private async void StartSong()
     {
-        values.SetDefaultValues();
+        
         await  StartSongDelayedAsync(timeTillSongStarts, cts.Token);
     }
 
