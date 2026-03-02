@@ -84,7 +84,7 @@ public class UI_HighscoreBoard : MonoBehaviour
 
     private void OnBackButton()
     {
-        values.SetDefaultValues();
+        //values.SetDefaultValues();
         var temp = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(temp);
         SceneManager.LoadSceneAsync(0);

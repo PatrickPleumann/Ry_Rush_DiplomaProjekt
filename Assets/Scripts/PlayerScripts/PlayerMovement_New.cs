@@ -67,16 +67,16 @@ public class PlayerMovement_New : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onJumpInvoked_started.AddListener(Jump);
-        controller.onJumpInvoked_started.AddListener(WallJump);
-        controller.onMoveInvoked.AddListener(MovePlayer_Sound);
+        controller.OnJumpInvoked_started.AddListener(Jump);
+        controller.OnJumpInvoked_started.AddListener(WallJump);
+        controller.OnMoveInvoked.AddListener(MovePlayer_Sound);
     }
 
     private void OnDisable()
     {
-        controller.onJumpInvoked_started.RemoveListener(Jump);
-        controller.onJumpInvoked_started.RemoveListener(WallJump);
-        controller.onMoveInvoked.RemoveListener(MovePlayer_Sound);
+        controller.OnJumpInvoked_started.RemoveListener(Jump);
+        controller.OnJumpInvoked_started.RemoveListener(WallJump);
+        controller.OnMoveInvoked.RemoveListener(MovePlayer_Sound);
     }
 
     private void Update()
@@ -124,10 +124,10 @@ public class PlayerMovement_New : MonoBehaviour
         }
 
         else if (collisionCheck.IsGrounded == true)
-            rb_player.AddForce(controller.moveDirection.normalized * acceleration, ForceMode.Force);
+            rb_player.AddForce(controller.MoveDirection.normalized * acceleration, ForceMode.Force);
 
         else if (collisionCheck.IsGrounded == false)
-            rb_player.AddForce(controller.moveDirection.normalized * acceleration * airMultiplier, ForceMode.Force);
+            rb_player.AddForce(controller.MoveDirection.normalized * acceleration * airMultiplier, ForceMode.Force);
 
         rb_player.useGravity = !collisionCheck.OnSlope();
     }
@@ -248,12 +248,12 @@ public class PlayerMovement_New : MonoBehaviour
 
     private Vector3 GetSlopeMoveDirection()
     {
-        return Vector3.ProjectOnPlane(controller.moveDirection, collisionCheck.SlopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(controller.MoveDirection, collisionCheck.SlopeHit.normal).normalized;
     }
 
     private void StateMachine()
     {
-        if (collisionCheck.AllowWallRun() == true && controller.moveInput.z > 0 && !collisionCheck.exitingWall)
+        if (collisionCheck.AllowWallRun() == true && controller.MoveInput.z > 0 && !collisionCheck.exitingWall)
         {
             if (!Wallrunning)
             {
@@ -298,7 +298,7 @@ public class PlayerMovement_New : MonoBehaviour
         if (Wallrunning)
             rb_player.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
-        if (!(collisionCheck.OnLeftWall && controller.moveInput.x > 0) && !(collisionCheck.OnRightWall && controller.moveInput.x < 0))
+        if (!(collisionCheck.OnLeftWall && controller.MoveInput.x > 0) && !(collisionCheck.OnRightWall && controller.MoveInput.x < 0))
             rb_player.AddForce(-wallNormal * pushToWallForce, ForceMode.Force);
     }
 

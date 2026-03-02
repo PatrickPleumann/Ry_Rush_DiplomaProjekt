@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Enemy_FSM&lt;T&gt;" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Enemy_FSM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyController" Collapsed="true">
+    <Position X="11.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASZgIBBoICBAAgGACAEAMAEBBWAACLACSEQAgaSDCAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BaseState&lt;T&gt;" Collapsed="true">
+    <Position X="10.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\BaseState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChaseState&lt;T&gt;" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\ChaseState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DyingState&lt;T&gt;" Collapsed="true">
+    <Position X="10.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\DyingState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IdleState&lt;T&gt;" Collapsed="true">
+    <Position X="12.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAQAABBAAAAAAIABAAAAAQ=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\IdleState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PatrolState&lt;T&gt;" Collapsed="true">
+    <Position X="9" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\PatrolState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShootState&lt;T&gt;" Collapsed="true">
+    <Position X="14" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAQAAQAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\ShootState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WalkBackwardsState&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAQAAAAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\WalkBackwardsState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WalkState&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAAAIABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\EnemyStates\WalkState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

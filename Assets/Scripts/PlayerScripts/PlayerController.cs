@@ -26,24 +26,24 @@ public class PlayerController : MonoBehaviour
     [Space]
 
     [Header("Unity Events")]
-    [HideInInspector] public UnityEvent<InputAction.CallbackContext> onMoveInvoked;
+    [HideInInspector] public UnityEvent<InputAction.CallbackContext> OnMoveInvoked;
 
-    [HideInInspector] public UnityEvent onShootInvoked_started;
+    [HideInInspector] public UnityEvent OnShootInvoked_started;
 
-    [HideInInspector] public UnityEvent onAimInvoked_started;
-    [HideInInspector] public UnityEvent onAimInvoked_canceled;
+    [HideInInspector] public UnityEvent OnAimInvoked_started;
+    [HideInInspector] public UnityEvent OnAimInvoked_canceled;
 
-    [HideInInspector] public UnityEvent onJumpInvoked_started;
+    [HideInInspector] public UnityEvent OnJumpInvoked_started;
 
     [HideInInspector] public UnityEvent OnDashInvoked_started;
 
-    [HideInInspector] public UnityEvent onSlowMotion_started;
-    [HideInInspector] public UnityEvent onSlowMotion_canceled;
+    [HideInInspector] public UnityEvent OnSlowMotion_started;
+    [HideInInspector] public UnityEvent OnSlowMotion_canceled;
 
-    [HideInInspector] public UnityEvent onReload_started;
-    [HideInInspector] public UnityEvent onReload_Finished;
+    [HideInInspector] public UnityEvent OnReload_started;
+    [HideInInspector] public UnityEvent OnReload_Finished;
 
-    [HideInInspector] public UnityEvent onEsc_started;
+    [HideInInspector] public UnityEvent OnEsc_started;
 
     [Space]
 
@@ -51,19 +51,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Transform Orientation;
     [SerializeField] private float shootingCooldownTimer;
 
-    [HideInInspector] public Vector3 moveInput; // into CV_SO
-    [HideInInspector] public Vector3 moveDirection;
+    [HideInInspector] public Vector3 MoveInput; // into CV_SO
+    [HideInInspector] public Vector3 MoveDirection;
 
     public bool AllowMovement;
     [HideInInspector] public bool IsOnBeat; // into CV_SO
     [HideInInspector] public bool LastActionOnBeat; // into CV_SO
-    [HideInInspector] public bool isReloading = false; // into CV_SO
-    [HideInInspector] public bool canShoot = true; // into CV_SO
+    [HideInInspector] public bool IsReloading = false; // into CV_SO
+    [HideInInspector] public bool CanShoot = true; // into CV_SO
 
     [Space]
 
-    [SerializeField] public int maxCurrentAmmo;
-    [SerializeField] public int maxRemainingAmmo;
+    [SerializeField] public int MaxCurrentAmmo;
+    [SerializeField] public int MaxRemainingAmmo;
 
     [Space]
 
@@ -73,8 +73,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        RemainingAmmo = maxRemainingAmmo; // into CV_SO
-        CurrentAmmo = maxCurrentAmmo; // into CV_SO
+        RemainingAmmo = MaxRemainingAmmo; // into CV_SO
+        CurrentAmmo = MaxCurrentAmmo; // into CV_SO
         Cursor.lockState = CursorLockMode.Locked;
         IsOnBeat = false; // into CV_SO
     }
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessMoveInput(InputAction.CallbackContext context)
     {
-        onMoveInvoked.Invoke(context);
+        OnMoveInvoked.Invoke(context);
     }
 
     private void OnDisable()
@@ -154,14 +154,14 @@ public class PlayerController : MonoBehaviour
     {
         if (values.AllowInput == true)
         {
-            if (canShoot == true && CurrentAmmo > 0) // into CV_SO
+            if (CanShoot == true && CurrentAmmo > 0) // into CV_SO
             {
                 AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.playerShoot);
                 CurrentAmmo--; // into CV_SO
-                onShootInvoked_started.Invoke();
+                OnShootInvoked_started.Invoke();
             }
 
-            else if (isReloading == false && CurrentAmmo == 0 && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+            else if (IsReloading == false && CurrentAmmo == 0 && CurrentAmmo < MaxCurrentAmmo && RemainingAmmo > 0)
             {
                 AudioHandler.Instance.PlaySound_sourceShooting(AudioHandler.Instance.noAmmoClick);
                 ProcessReloadInput(ctx);
@@ -172,10 +172,10 @@ public class PlayerController : MonoBehaviour
     }
     private void ProcessReloadInput(InputAction.CallbackContext ctx)
     {
-        if (values.AllowInput == true && isReloading == false && CurrentAmmo < maxCurrentAmmo && RemainingAmmo > 0)
+        if (values.AllowInput == true && IsReloading == false && CurrentAmmo < MaxCurrentAmmo && RemainingAmmo > 0)
         {
-            isReloading = true;
-            onReload_started.Invoke();
+            IsReloading = true;
+            OnReload_started.Invoke();
             if (IsOnBeat == true)
             {
                 values.OnBeatActions++;
@@ -187,24 +187,24 @@ public class PlayerController : MonoBehaviour
     private void ProcessJumpInput(InputAction.CallbackContext ctx)
     {
         if (values.AllowInput == true && ctx.started)
-            onJumpInvoked_started.Invoke();
+            OnJumpInvoked_started.Invoke();
     }
     private void ProcessAimInput(InputAction.CallbackContext ctx)
     {
         if (values.AllowInput == true && ctx.started == true)
-            onAimInvoked_started.Invoke();
+            OnAimInvoked_started.Invoke();
 
         else
-            onAimInvoked_canceled.Invoke();
+            OnAimInvoked_canceled.Invoke();
     }
     private void ProcessSlowMotionInput(InputAction.CallbackContext ctx)
     {
         if (values.AllowInput == true && ctx.started == true)
         {
-            onSlowMotion_started.Invoke();
+            OnSlowMotion_started.Invoke();
         }
         else
-            onSlowMotion_canceled.Invoke();
+            OnSlowMotion_canceled.Invoke();
     }
     private void ProcessDashInput(InputAction.CallbackContext ctx)
     {
@@ -213,25 +213,25 @@ public class PlayerController : MonoBehaviour
     }
     private void ProcessEscInput(InputAction.CallbackContext context)
     {
-        onEsc_started.Invoke();
+        OnEsc_started.Invoke();
     }
     #endregion
     private void GetMoveDirection()
     {
         if (AllowMovement == true)
         {
-            moveInput.x = Move.action.ReadValue<Vector2>().x;
-            moveInput.y = 0f;
-            moveInput.z = Move.action.ReadValue<Vector2>().y;
+            MoveInput.x = Move.action.ReadValue<Vector2>().x;
+            MoveInput.y = 0f;
+            MoveInput.z = Move.action.ReadValue<Vector2>().y;
 
-            moveDirection = Orientation.forward * moveInput.z + Orientation.right * moveInput.x;
+            MoveDirection = Orientation.forward * MoveInput.z + Orientation.right * MoveInput.x;
         }
     }
     private void ResetShoot(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled == true)
         {
-            canShoot = true;
+            CanShoot = true;
         }
     }
 }

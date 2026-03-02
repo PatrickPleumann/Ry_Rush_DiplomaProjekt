@@ -47,20 +47,20 @@ public class PlayerAim : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onAimInvoked_started.AddListener(Zoom_True);
-        controller.onAimInvoked_started.AddListener(ReduceMouseSensitivity);
+        controller.OnAimInvoked_started.AddListener(Zoom_True);
+        controller.OnAimInvoked_started.AddListener(ReduceMouseSensitivity);
 
-        controller.onAimInvoked_canceled.AddListener(Zoom_False);
-        controller.onAimInvoked_canceled.AddListener(ReIncreaseReducedMouseSensitivity);
+        controller.OnAimInvoked_canceled.AddListener(Zoom_False);
+        controller.OnAimInvoked_canceled.AddListener(ReIncreaseReducedMouseSensitivity);
     }
 
     private void OnDisable()
     {
-        controller.onAimInvoked_started.RemoveListener(Zoom_True);
-        controller.onAimInvoked_started.RemoveListener(ReduceMouseSensitivity);
+        controller.OnAimInvoked_started.RemoveListener(Zoom_True);
+        controller.OnAimInvoked_started.RemoveListener(ReduceMouseSensitivity);
 
-        controller.onAimInvoked_canceled.RemoveListener(Zoom_False);
-        controller.onAimInvoked_canceled.RemoveListener(ReIncreaseReducedMouseSensitivity);
+        controller.OnAimInvoked_canceled.RemoveListener(Zoom_False);
+        controller.OnAimInvoked_canceled.RemoveListener(ReIncreaseReducedMouseSensitivity);
     }
 
     private void LateUpdate()

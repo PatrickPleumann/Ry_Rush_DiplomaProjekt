@@ -127,7 +127,7 @@ public class ChooseSongManager : MonoBehaviour
         resetSong_Button.interactable = false;
 
         values.AllowInput = false;
-        values.SetDefaultValues();
+        //values.SetDefaultValues();
         OnStartGame(timeTillGameStarts);
 
     }

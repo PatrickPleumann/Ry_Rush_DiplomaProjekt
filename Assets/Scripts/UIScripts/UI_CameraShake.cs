@@ -20,12 +20,12 @@ public class UI_CameraShake : MonoBehaviour
     }
     private void OnEnable()
     {
-        controller.onShootInvoked_started.AddListener(ShakeCamera);
+        controller.OnShootInvoked_started.AddListener(ShakeCamera);
     }
 
     private void OnDisable()
     {
-        controller.onShootInvoked_started.RemoveListener(ShakeCamera);
+        controller.OnShootInvoked_started.RemoveListener(ShakeCamera);
     }
 
     private void ShakeCamera()

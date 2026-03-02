@@ -53,9 +53,9 @@ public class PlayerDash : MonoBehaviour
             canDash = false;
             rb_player.linearDamping = 0f;
 
-            dashForceVector.x = controller.moveDirection.x * dashForce;
+            dashForceVector.x = controller.MoveDirection.x * dashForce;
             dashForceVector.y = 0f;
-            dashForceVector.z = controller.moveDirection.z * dashForce;
+            dashForceVector.z = controller.MoveDirection.z * dashForce;
 
             rb_player.AddForce(dashForceVector, ForceMode.Impulse);
 

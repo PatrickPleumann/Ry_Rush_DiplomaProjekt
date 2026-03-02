@@ -60959,8 +60959,16 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: MaxCurrentAmmo
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: maxCurrentAmmo
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
+      propertyPath: MaxRemainingAmmo
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2904704638296487566, guid: 5068e90201dbab24884017325ec0e4ac, type: 3}
       propertyPath: SlowMotion_OnAim
@@ -138371,7 +138379,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427286168}
   m_Enabled: 1
-  m_Alpha: 0.95
+  m_Alpha: 0.75
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

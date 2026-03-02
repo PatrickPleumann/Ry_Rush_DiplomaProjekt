@@ -8,12 +8,12 @@ public class PlayerReload : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onReload_started.AddListener(StartReloadAnimation);
+        controller.OnReload_started.AddListener(StartReloadAnimation);
     }
 
     private void OnDisable()
     {
-        controller.onReload_started.RemoveListener(StartReloadAnimation);
+        controller.OnReload_started.RemoveListener(StartReloadAnimation);
     }
 
     private void StartReloadAnimation()
@@ -23,15 +23,15 @@ public class PlayerReload : MonoBehaviour
 
     public void StartReload()
     {
-        controller.canShoot = false;
+        controller.CanShoot = false;
     }
 
     public void FinishReload()
     {
-        if ((controller.RemainingAmmo + controller.CurrentAmmo) >= controller.maxCurrentAmmo) // weird but works
+        if ((controller.RemainingAmmo + controller.CurrentAmmo) >= controller.MaxCurrentAmmo) // weird but works
         {
-            controller.RemainingAmmo -= (controller.maxCurrentAmmo - controller.CurrentAmmo);
-            controller.CurrentAmmo = controller.maxCurrentAmmo;
+            controller.RemainingAmmo -= (controller.MaxCurrentAmmo - controller.CurrentAmmo);
+            controller.CurrentAmmo = controller.MaxCurrentAmmo;
         }
         else // weird but works
         {
@@ -39,8 +39,8 @@ public class PlayerReload : MonoBehaviour
             controller.RemainingAmmo = 0;
         }
 
-        controller.onReload_Finished.Invoke();
-        controller.isReloading = false;
-        controller.canShoot = true;
+        controller.OnReload_Finished.Invoke();
+        controller.IsReloading = false;
+        controller.CanShoot = true;
     }
 }

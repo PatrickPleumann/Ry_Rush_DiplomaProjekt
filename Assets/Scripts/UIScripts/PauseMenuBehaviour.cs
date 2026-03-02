@@ -16,7 +16,7 @@ public class PauseMenuBehaviour : MonoBehaviour
     {
         resume_Button.onClick.AddListener(OnResumeButton_Clicked);
         mainMenu_Button.onClick.AddListener(OnMainMenuButton_Clicked);
-        controller.onEsc_started.AddListener(EscButton_Clicked);
+        controller.OnEsc_started.AddListener(EscButton_Clicked);
 
         values.OnSessionEnds.AddListener(UnAssign_ESCButton);
         values.OnPlayerDeath.AddListener(UnAssign_ESCButton);
@@ -25,7 +25,7 @@ public class PauseMenuBehaviour : MonoBehaviour
     {
         resume_Button.onClick.RemoveListener(OnResumeButton_Clicked);
         mainMenu_Button.onClick.RemoveListener(OnMainMenuButton_Clicked);
-        controller.onEsc_started.RemoveListener(EscButton_Clicked);
+        controller.OnEsc_started.RemoveListener(EscButton_Clicked);
 
         values.OnSessionEnds.RemoveListener(UnAssign_ESCButton);
         values.OnPlayerDeath.RemoveListener(UnAssign_ESCButton);
@@ -33,7 +33,7 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     private void UnAssign_ESCButton()
     { 
-        controller.onEsc_started.RemoveListener(EscButton_Clicked);
+        controller.OnEsc_started.RemoveListener(EscButton_Clicked);
     }
 
     private void EscButton_Clicked()
@@ -59,7 +59,7 @@ public class PauseMenuBehaviour : MonoBehaviour
     private void OnMainMenuButton_Clicked()
     {
         Time.timeScale = 1f;
-        values.SetDefaultValues();
+        //values.SetDefaultValues();
         fadeOut_BG.SetActive(true);
         values.SessionIsOver = true;
         var temp = SceneManager.GetActiveScene();

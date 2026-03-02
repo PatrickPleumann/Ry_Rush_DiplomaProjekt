@@ -21,12 +21,12 @@ public class PlayerShooting : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onShootInvoked_started.AddListener(Player_ShootWeapon);
+        controller.OnShootInvoked_started.AddListener(Player_ShootWeapon);
     }
 
     private void OnDisable()
     {
-        controller.onShootInvoked_started.RemoveListener(Player_ShootWeapon);
+        controller.OnShootInvoked_started.RemoveListener(Player_ShootWeapon);
     }
 
     public void Player_ShootWeapon()

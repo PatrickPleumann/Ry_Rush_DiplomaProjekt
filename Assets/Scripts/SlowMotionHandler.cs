@@ -20,29 +20,29 @@ public class SlowMotionHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onSlowMotion_started.AddListener(StartSlowMotion);
-        controller.onSlowMotion_canceled.AddListener(StopSlowMotion);
+        controller.OnSlowMotion_started.AddListener(StartSlowMotion);
+        controller.OnSlowMotion_canceled.AddListener(StopSlowMotion);
 
         values.DisAllowSlowMotion.AddListener(StopSlowMotion);
 
         if (data.SlowMotionOnAim == true)
         {
-            controller.onAimInvoked_started.AddListener(StartSlowMotion);
-            controller.onAimInvoked_canceled.AddListener(StopSlowMotion);
+            controller.OnAimInvoked_started.AddListener(StartSlowMotion);
+            controller.OnAimInvoked_canceled.AddListener(StopSlowMotion);
         }
     }
 
     private void OnDisable()
     {
-        controller.onSlowMotion_started.RemoveListener(StartSlowMotion);
-        controller.onSlowMotion_canceled.RemoveListener(StopSlowMotion);
+        controller.OnSlowMotion_started.RemoveListener(StartSlowMotion);
+        controller.OnSlowMotion_canceled.RemoveListener(StopSlowMotion);
 
         values.DisAllowSlowMotion.RemoveListener(StopSlowMotion);
 
         if (data.SlowMotionOnAim == true)
         {
-            controller.onAimInvoked_started.RemoveListener(StartSlowMotion);
-            controller.onAimInvoked_canceled.RemoveListener(StopSlowMotion);
+            controller.OnAimInvoked_started.RemoveListener(StartSlowMotion);
+            controller.OnAimInvoked_canceled.RemoveListener(StopSlowMotion);
         }
     }
 

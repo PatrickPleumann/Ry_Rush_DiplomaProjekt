@@ -18,12 +18,12 @@ public class MuzzleFlash : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onShootInvoked_started.AddListener(ShowMuzzleFlash);
+        controller.OnShootInvoked_started.AddListener(ShowMuzzleFlash);
     }
 
     private void OnDisable()
     {
-        controller.onShootInvoked_started.RemoveListener(ShowMuzzleFlash);
+        controller.OnShootInvoked_started.RemoveListener(ShowMuzzleFlash);
     }
 
     private void ShowMuzzleFlash()

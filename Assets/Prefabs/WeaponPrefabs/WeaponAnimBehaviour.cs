@@ -16,12 +16,12 @@ public class WeaponAnimBehaviour : MonoBehaviour
     }
     private void OnEnable()
     {
-        controller.onShootInvoked_started.AddListener(SetShotAnim);   
+        controller.OnShootInvoked_started.AddListener(SetShotAnim);   
     }
 
     private void OnDisable()
     {
-        controller.onShootInvoked_started.RemoveListener(SetShotAnim);
+        controller.OnShootInvoked_started.RemoveListener(SetShotAnim);
     }
     public void SetShotAnim()
     {

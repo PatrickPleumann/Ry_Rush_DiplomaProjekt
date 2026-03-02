@@ -11,14 +11,14 @@ public class UI_Ammo : MonoBehaviour
 
     private void OnEnable()
     {
-        controller.onShootInvoked_started.AddListener(ShowCurrentAmmo_UI);
-        controller.onReload_Finished.AddListener(ShowRemainingAmmo_UI);
+        controller.OnShootInvoked_started.AddListener(ShowCurrentAmmo_UI);
+        controller.OnReload_Finished.AddListener(ShowRemainingAmmo_UI);
     }
 
     private void OnDisable()
     {
-        controller.onShootInvoked_started.RemoveListener(ShowCurrentAmmo_UI);
-        controller.onReload_Finished.RemoveListener(ShowRemainingAmmo_UI);
+        controller.OnShootInvoked_started.RemoveListener(ShowCurrentAmmo_UI);
+        controller.OnReload_Finished.RemoveListener(ShowRemainingAmmo_UI);
     }
     private void Start()
     {
