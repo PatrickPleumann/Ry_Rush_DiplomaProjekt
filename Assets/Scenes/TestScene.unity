@@ -789,7 +789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlignWeaponToCrosshair
   controller: {fileID: 0}
-  weapon: {fileID: 1985231618}
+  muzzleOrigin: {fileID: 0}
 --- !u!1 &1400283089
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,11 +980,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1985231618 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 891485910184650469, guid: 815fa272254758d45a36a78fb4239923, type: 3}
-  m_PrefabInstance: {fileID: 1034163589}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1998093032
 GameObject:
   m_ObjectHideFlags: 0

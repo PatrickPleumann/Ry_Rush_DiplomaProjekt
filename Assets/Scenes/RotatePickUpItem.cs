@@ -1,7 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RotatePickUpItem : MonoBehaviour
@@ -11,12 +9,14 @@ public class RotatePickUpItem : MonoBehaviour
     CancellationTokenSource cts = new();
     private void Start()
     {
-        StartRotation();
+        RotateObject();
     }
-    private async void StartRotation()
+
+    private async void RotateObject()
     {
         await RotateObjectAsync(cts.Token);
     }
+
     private async UniTask RotateObjectAsync(CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
@@ -26,6 +26,7 @@ public class RotatePickUpItem : MonoBehaviour
             await UniTask.WaitForEndOfFrame();
         }
     }
+
     private void OnDestroy()
     {
         cts.Cancel();
