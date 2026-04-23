@@ -148,7 +148,6 @@ public class BeatTracking : MonoBehaviour
 
     private async void StartSong()
     {
-        
         await  StartSongDelayedAsync(timeTillSongStarts, cts.Token);
     }
 

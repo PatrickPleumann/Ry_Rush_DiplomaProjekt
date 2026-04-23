@@ -48,7 +48,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        timePerBeat = (60f / data.BPM);
+        timePerBeat = Utility.FloorFloatToTwoDigits((60f / data.BPM));
         timeInSecondsPerSample = (1f / data.SamplesPerBeat);
 
         min = minSpawnDistanceToPlayer * minSpawnDistanceToPlayer;
@@ -83,7 +83,7 @@ public class SpawnManager : MonoBehaviour
     private float GetTimeTillNextBeatInSecondsFloored()
     {
         var temp = (values.CurrentSamples * timeInSecondsPerSample);
-        return Utility.FloorFloatToTwoDigits(temp);
+        return timePerBeat - Utility.FloorFloatToTwoDigits(temp);
     }
 
     private float GetTimeTillNextBeatCanSpawnEnemy(float _currentTimeTillNextBeat)
@@ -101,10 +101,8 @@ public class SpawnManager : MonoBehaviour
 
                 return (temp - timeBetweenVFXAndEnemySpawn);
             }
-            else
-                return 0f;
-
         }
+        return 0f;
     }
 
 
@@ -171,18 +169,19 @@ public class SpawnManager : MonoBehaviour
             cts.Cancel();
         }
 
-        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn - timeTillSoundHits), true);
-
-        AudioHandler.Instance.PlayActionAmbience_2_Sounds
-            (AudioHandler.Instance.enemySpawnSounds[Random.Range(0, AudioHandler.Instance.enemySpawnSounds.Length)]);
-
         _vfx.TryGetComponent(out ParticleSystem vfxEffect);
         _vfx.transform.position = _spawn.transform.position;
         _vfx.SetActive(true);
 
         vfxEffect.Play();
 
-        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn * 1000), true);
+        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn - timeTillSoundHits), true);
+
+        AudioHandler.Instance.PlayActionAmbience_2_Sounds
+            (AudioHandler.Instance.enemySpawnSounds[Random.Range(0, AudioHandler.Instance.enemySpawnSounds.Length)]);
+
+
+        await UniTask.Delay((int)(timeTillSoundHits * 1000), true);
 
         _enemy.transform.position = _spawn.transform.position;
         _enemy.SetActive(true);
@@ -222,7 +221,7 @@ public class SpawnManager : MonoBehaviour
             return false;
 
         if (spawnPointDistanceToPlayer.sqrMagnitude > min && spawnPointDistanceToPlayer.sqrMagnitude < max)
-            return true;    
+            return true;
 
         return false;
     }

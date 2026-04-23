@@ -15,8 +15,11 @@ public class ObjectPoolBehaviour : MonoBehaviour
 
     public void EnqueueObject(GameObject _objectToPool)
     {
-        _objectToPool.SetActive(false);
-        objectPool.Enqueue(_objectToPool);
+        if (_objectToPool != null)
+        {
+            _objectToPool.SetActive(false);
+            objectPool.Enqueue(_objectToPool);
+        }
     }
 
     public GameObject DeQueueObject()
