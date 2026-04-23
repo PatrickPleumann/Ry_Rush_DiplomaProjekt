@@ -83,6 +83,8 @@ public class SpawnManager : MonoBehaviour
     private float GetTimeTillNextBeatInSecondsFloored()
     {
         var temp = (values.CurrentSamples * timeInSecondsPerSample);
+
+        Debug.Log("Time till next Beat: " + temp);
         return timePerBeat - Utility.FloorFloatToTwoDigits(temp);
     }
 
@@ -152,11 +154,15 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    
+
     private async UniTask OnValidateRespawnEnemy(GameObject _spawn, CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
 
         var time = GetTimeTillNextBeatCanSpawnEnemy(GetTimeTillNextBeatInSecondsFloored());
+
+        Debug.Log("Time till respawn action gets performed: " + time); //
 
         await UniTask.Delay((int)(time * 1000), true);
 

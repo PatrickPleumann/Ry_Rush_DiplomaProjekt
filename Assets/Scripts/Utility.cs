@@ -11,9 +11,14 @@ public class Utility
     {
         if (_value > 0)
         {
-            var temp = (Mathf.FloorToInt(_value * 100f)) * 0.01f;
+            var temp = _value * 100;
+            temp = Mathf.FloorToInt(temp);
+            temp = temp * 0.01f;
+            //var temp = (Mathf.FloorToInt(_value * 100f)) * 0.01f;
+            Debug.Log("Value from parameter: " + _value);
+            Debug.Log("Return value " + temp);
             return temp;
         }
         return 0f;
-    } 
+    }
 }

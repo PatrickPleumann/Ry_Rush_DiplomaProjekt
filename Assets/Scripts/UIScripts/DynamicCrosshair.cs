@@ -67,8 +67,8 @@ public class DynamicCrosshair : MonoBehaviour
         while (hitmarker_canvasGrp.alpha > 0)
         {
             token.ThrowIfCancellationRequested();
-            await UniTask.Delay((int)(Time.deltaTime * 1000 * _timeInSec), true);
             hitmarker_canvasGrp.alpha -= Time.deltaTime;
+            await UniTask.Delay((int)(Time.deltaTime * 1000 * _timeInSec), true);
         }
     }
 
