@@ -32,11 +32,15 @@
 -->
 
 <p align="center">
-  <!-- TODO: replace TODO_TRAILER_URL once the trailer's music rights are cleared (or export a royalty-free version). -->
-  <a href="TODO_TRAILER_URL"><b>▶ Watch the trailer</b></a>
-  &nbsp;·&nbsp;
   <i>On-beat shots deal bonus damage — every kill rides the rhythm.</i>
 </p>
+
+<!-- Trailer link removed for now: the current trailer uses copyrighted music
+     (Airbourne — "Back in the Game"), which has a Content ID claim and isn't
+     suitable for a public portfolio link. To restore: re-export the trailer with
+     royalty-free audio, then re-add the line below with the real URL.
+     <p align="center"><a href="TRAILER_URL"><b>▶ Watch the trailer</b></a></p>
+-->
 
 ## 🎯 What makes it different
 
