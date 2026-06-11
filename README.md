@@ -160,21 +160,19 @@ happy with, and a few I'd revisit:
   One source of truth would remove a whole class of bugs.
 - **Assembly definitions & namespaces.** Everything compiles into a single assembly with
   no namespaces; splitting into modules would speed up iteration and make boundaries clear.
-- **Treat timing code like it deserves tests.** The beat-synced spawn has a subtle units
-  bug (seconds vs. beat-fraction) I only fully understood in hindsight — a good reminder
-  that *"looks rhythmic"* isn't the same as *"is on the beat."*
+- **Treat timing code like it deserves tests.** The beat-synced enemy spawn once mixed
+  seconds with a unitless beat-fraction — the math *looked* rhythmic but drifted off the
+  beat in the back half of each bar. Tracking it down and correcting it drove the lesson
+  home: with timing code, *"looks rhythmic"* isn't the same as *"is on the beat,"* and that
+  kind of math earns a unit test instead of an eyeball check.
 
 **Biggest takeaway:** decoupling pays off. The event-driven systems were easy to extend
 and debug; the places that hurt were where timing, state, and side-effects got tangled.
 
 ## 🚧 Known limitations & roadmap
 
-This is an evolving project, and I track issues and next steps openly in
-**[BACKLOG.md](BACKLOG.md)**. Current highlights:
+This is an evolving project. A few of the next steps on my list:
 
-- **Beat-synced spawning isn't fully locked to the beat yet.** Enemies spawn with a
-  telegraphed cue at beat-scale intervals, but a units bug in the timing math keeps them
-  from landing *precisely* on the beat (root cause documented in the backlog).
 - **One source of truth for player state.** Finishing the `PlayerController` →
   `CentralizedValues` migration to remove duplicated state.
 - **Project structure & tooling.** Introduce namespaces and assembly definitions, add a

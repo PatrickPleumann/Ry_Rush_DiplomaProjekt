@@ -82,16 +82,22 @@ public class SpawnManager : MonoBehaviour
 
     private float GetTimeTillNextBeatInSecondsFloored()
     {
+        // temp = fraction of the CURRENT beat already elapsed (0..1).
+        // CurrentSamples is the sample offset within the beat; timeInSecondsPerSample = 1 / SamplesPerBeat,
+        // so (CurrentSamples / SamplesPerBeat) is a unitless beat-fraction, NOT a value in seconds.
         var temp = (values.CurrentSamples * timeInSecondsPerSample);
 
-        Debug.Log("Time till next Beat: " + temp);
-        return timePerBeat - Utility.FloorFloatToTwoDigits(temp);
+        Debug.Log("Beat fraction elapsed: " + temp);
+        // Seconds remaining until the next beat = beat length (sec) * fraction still to go.
+        return Utility.FloorFloatToTwoDigits(timePerBeat * (1f - temp));
     }
 
     private float GetTimeTillNextBeatCanSpawnEnemy(float _currentTimeTillNextBeat)
     {
         if (_currentTimeTillNextBeat > timeBetweenVFXAndEnemySpawn)
-            return _currentTimeTillNextBeat;
+            // Subtract the VFX->enemy pre-roll so the enemy lands ON the beat, not 0.8s after it
+            // (the else-branch already does this; the if-branch used to forget it).
+            return _currentTimeTillNextBeat - timeBetweenVFXAndEnemySpawn;
 
         else
         {
@@ -181,7 +187,8 @@ public class SpawnManager : MonoBehaviour
 
         vfxEffect.Play();
 
-        await UniTask.Delay((int)(timeBetweenVFXAndEnemySpawn - timeTillSoundHits), true);
+        // * 1000 -> milliseconds. Without it, (int)(0.8 - 0.5) truncates to 0ms and kills the VFX->sound pre-roll.
+        await UniTask.Delay((int)((timeBetweenVFXAndEnemySpawn - timeTillSoundHits) * 1000), true);
 
         AudioHandler.Instance.PlayActionAmbience_2_Sounds
             (AudioHandler.Instance.enemySpawnSounds[Random.Range(0, AudioHandler.Instance.enemySpawnSounds.Length)]);
