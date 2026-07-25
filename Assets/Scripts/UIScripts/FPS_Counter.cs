@@ -26,9 +26,7 @@ public class FPS_Counter : MonoBehaviour
         {
             fpsUpdateTime -= Time.deltaTime;
             if (fpsUpdateTime <= 0f)
-            {
                 ShowFPS();
-            }
         }
     }
 
