@@ -189,7 +189,6 @@ this repository. All rights to those assets remain with their respective authors
 
 **Tools & libraries**
 - UniTask — Cysharp (async/await for Unity)
-- DOTween — Demigiant (tweening)
 - StandaloneFileBrowser — in-game song import dialog
 - TextMesh Pro — Unity
 
@@ -200,7 +199,4 @@ this repository. All rights to those assets remain with their respective authors
 - FREE Skyboxes (Sci-Fi & Fantasy)
 - GeeKay3D · OccaSoftware · Wanzyee Studio · Heathen Engineering
 
-**Special thanks** for occasional asset support:
-- `TODO_NAME_1`
-- `TODO_NAME_2`
-- `TODO_NAME_3`
+
