@@ -6,6 +6,8 @@ public class HoldPlayerPosition : MonoBehaviour
     [SerializeField] private GameObject allEnemies;
     [SerializeField] private GameObject allSpawnpoints;
     [SerializeField] private GameObject navMesh;
+
+    //bad naming should mean "EnemyPoolInitializer" or something like that because it exactly does this after "finding" the player position
     private void Awake()
     {
         info.FindPlayerPosition();

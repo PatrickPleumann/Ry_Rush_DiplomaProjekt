@@ -65,7 +65,7 @@ engine locks onto a fixed BPM.
 | **Engine**   | Unity 6 (6000.2.6f2) · URP 17.2                                    |
 | **Language** | C# (.NET Standard)                                                |
 | **Platform** | Windows (standalone)                                              |
-| **Key tech** | Input System · Cinemachine 3 · UniTask · DOTween · AI Navigation (NavMesh) · VFX Graph · Shader Graph |
+| **Key tech** | Input System · Cinemachine 3 · UniTask · AI Navigation (NavMesh) · VFX Graph · Shader Graph |
 
 ## ✨ Features
 

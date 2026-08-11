@@ -202015,7 +202015,7 @@ MonoBehaviour:
   enqueueVFXObjTime: 2
   timeBetweenVFXAndEnemySpawn: 0.8
   timeTillSoundHits: 0.5
-  enemyCountOnGameStart: 20
+  enemyCountOnGameStart: 100
   slowMotionBasedDelay: 1
   min: 0
   max: 0
