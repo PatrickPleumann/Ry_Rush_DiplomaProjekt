@@ -108,7 +108,7 @@ engine locks onto a fixed BPM.
 ## 🏗️ Architecture highlights
 
 <!-- TODO: create ARCHITECTURE.md (deeper write-up) so the link below resolves. -->
-A few patterns the project leans on (a deeper write-up is planned in [`ARCHITECTURE.md`](ARCHITECTURE.md)):
+A few patterns the project leans on:
 
 - **Sample-accurate beat engine** — `BeatTracking` reads raw `AudioSource.timeSamples`
   (not the float `time`) and detects beats from per-song BPM/sample calibration, then
